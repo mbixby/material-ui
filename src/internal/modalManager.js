@@ -56,7 +56,9 @@ export function createModalManager({
 
     // Save our current overflow so we can revert
     // back to it when all modals are closed!
-    prevOverflow = container.style.overflow;
+    if (modalIdx === 1){
+      prevOverflow = container.style.overflow;
+    }
 
     if (bodyIsOverflowing((container))) {
       prevPadding = container.style.paddingRight;
