@@ -85,14 +85,16 @@ export default class Menu extends Component {
   handleEnter = (element) => {
     const list = ReactDOM.findDOMNode(this.menuList);
 
-    if (this.menuList && this.menuList.selectedItem) {
-       // $FlowFixMe
-      ReactDOM.findDOMNode(this.menuList.selectedItem)
-        .focus();
-    } else if (list) {
-       // $FlowFixMe
-      list.firstChild.focus();
-    }
+    // Race with <Modal> for item focus
+    setTimeout(() => {
+      if (this.menuList && this.menuList.selectedItem) {
+        // $FlowFixMe
+        ReactDOM.findDOMNode(this.menuList.selectedItem).focus()
+      } else if (list) {
+        // $FlowFixMe
+        list.firstChild.focus();
+      }
+    }, 0)
 
     // $FlowFixMe
     if (list && element.clientHeight < list.clientHeight) {
