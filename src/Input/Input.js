@@ -68,6 +68,12 @@ export const styleSheet = createStyleSheet('MuiInput', (theme) => {
         appearance: 'none',
       },
     },
+    multiLine: {
+      resize: 'none',
+      'line-height': 'inherit',
+      padding: '0px',
+      'margin-top': '12px',
+    },
     disabled: {
       color: theme.palette.text.disabled,
       cursor: 'not-allowed',
@@ -99,6 +105,10 @@ export default class Input extends Component {
       PropTypes.func,
     ]),
     /**
+     * The default value for the string
+     */
+    defaultValue: PropTypes.string,
+    /**
      * If `true`, the input will be disabled.
      */
     disabled: PropTypes.bool,
@@ -114,6 +124,10 @@ export default class Input extends Component {
      * The CSS class name of the input element.
      */
     inputClassName: PropTypes.string,
+    /**
+     * If true, a textarea element will be rendered.
+     */
+    multiLine: PropTypes.bool,
     /**
      * @ignore
      */
@@ -135,6 +149,10 @@ export default class Input extends Component {
      */
     onFocus: PropTypes.func,
     /**
+     * Number of rows to display when multiLine option is set to true.
+     */
+    rows: PropTypes.number,
+    /**
      * Type of the input element. It should be a valid HTML5 input type.
      */
     type: PropTypes.string,
@@ -153,6 +171,7 @@ export default class Input extends Component {
     disabled: false,
     type: 'text',
     disableUnderline: false,
+    multiLine: false,
   };
 
   static contextTypes = {
@@ -239,10 +258,12 @@ export default class Input extends Component {
     const {
       className: classNameProp,
       component: ComponentProp,
-      inputClassName: inputClassNameProp,
+      defaultValue,
       disabled,
       disableUnderline,
       error: errorProp,
+      inputClassName: inputClassNameProp,
+      multiLine,
       onBlur, // eslint-disable-line no-unused-vars
       onFocus, // eslint-disable-line no-unused-vars
       onChange, // eslint-disable-line no-unused-vars
@@ -266,6 +287,7 @@ export default class Input extends Component {
     }, classNameProp);
 
     const inputClassName = classNames(classes.input, {
+      [classes.multiLine]: multiLine,
       [classes.underline]: !disableUnderline,
       [classes.disabled]: disabled,
     }, inputClassNameProp);
@@ -281,6 +303,7 @@ export default class Input extends Component {
           onFocus={this.handleFocus}
           onChange={this.handleChange}
           disabled={disabled}
+          defaultValue={defaultValue}
           aria-required={required ? true : undefined}
           {...other}
         />

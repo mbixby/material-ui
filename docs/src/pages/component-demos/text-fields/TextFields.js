@@ -56,8 +56,15 @@ export default class TextFields extends Component {
           defaultValue="Hello World"
           className={classes.input}
         />
+        <TextField
+          id="multiLine"
+          label="MultiLine"
+          multiLine
+          rows={3}
+          defaultValue="Default Value"
+          className={classes.input}
+        />
       </div>
     );
   }
 }
-

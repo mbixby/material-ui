@@ -19,6 +19,10 @@ export default class TextField extends Component {
      */
     className: PropTypes.string,
     /**
+     * The default value for the TextField
+     */
+    defaultValue: PropTypes.string,
+    /**
      * If `true`, the input will be disabled.
      */
     disabled: PropTypes.bool,
@@ -47,6 +51,10 @@ export default class TextField extends Component {
      */
     labelClassName: PropTypes.string,
     /**
+     * If true, a textarea element will be rendered.
+     */
+    multiLine: PropTypes.bool,
+    /**
      * Name attribute of the `Input` element.
      */
     name: PropTypes.string,
@@ -54,6 +62,10 @@ export default class TextField extends Component {
      * If `true`, the label is displayed as required.
      */
     required: PropTypes.bool,
+    /**
+     * Number of rows to display when multiLine option is set to true.
+     */
+    rows: PropTypes.number,
     /**
      * Type attribute of the `Input` element. It should be a valid HTML5 input type.
      */
@@ -82,6 +94,7 @@ export default class TextField extends Component {
   render() {
     const {
       className,
+      defaultValue,
       disabled,
       error,
       inputClassName,
@@ -91,6 +104,8 @@ export default class TextField extends Component {
       name,
       required,
       type,
+      multiLine,
+      rows,
       value,
       ...other
     } = this.props;
@@ -109,10 +124,14 @@ export default class TextField extends Component {
         )}
         <Input
           className={inputClassName}
-          value={value}
-          name={name}
-          type={type}
+          component={multiLine ? 'textarea' : 'input'}
+          defaultValue={defaultValue}
           disabled={disabled}
+          multiLine={multiLine}
+          name={name}
+          rows={rows}
+          type={type}
+          value={value}
           {...inputProps}
         />
       </FormControl>
