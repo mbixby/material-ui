@@ -9,6 +9,10 @@ import { easing } from '../styles/transitions';
 
 const THICKNESS = 3.6;
 const PI = 3.1416; // Simple version of Math.PI for the CSS generated.
+const SIZE = 60;
+const getStrokeSize = function(percentage, coef = 1){
+  return (percentage * 0.01 * SIZE - THICKNESS) * coef * PI
+};
 
 export const styleSheet = createStyleSheet('MuiCircularProgress', (theme) => {
   return {
@@ -21,7 +25,7 @@ export const styleSheet = createStyleSheet('MuiCircularProgress', (theme) => {
       animation: 'rotate-progress-circle 1733ms linear infinite',
     },
     circle: {
-      strokeDasharray: '1, calc((100% - 3px) * 3.141)',
+      strokeDasharray: `1, ${getStrokeSize(100)}`,
       strokeDashoffset: '0%',
       stroke: 'currentColor',
       strokeLinecap: 'square',
@@ -38,19 +42,17 @@ export const styleSheet = createStyleSheet('MuiCircularProgress', (theme) => {
     },
     '@keyframes scale-progress-circle': {
       '8%': {
-        strokeDasharray: `1, calc((100% - ${THICKNESS}px) * ${PI})`,
-        strokeDashoffset: 0,
+        strokeDasharray: '1, ' + getStrokeSize(100),
+        strokeDashoffset: 0
       },
       '50%, 58%': {
-        strokeDasharray: `calc((65% - ${THICKNESS}px) * ${PI}), calc((100% - ${
-          THICKNESS}px) * ${PI})`,
-        strokeDashoffset: `calc((25% - ${THICKNESS}px) * -${PI})`,
+        strokeDasharray: getStrokeSize(65) + ', ' + getStrokeSize(100),
+        strokeDashoffset: getStrokeSize(25, -1)
       },
       '100%': {
-        strokeDasharray: `calc((65% - ${THICKNESS}px) * ${PI}), calc((100% - ${
-          THICKNESS}px) * ${PI})`,
-        strokeDashoffset: `calc((99% - ${THICKNESS}px) * -${PI})`,
-      },
+        strokeDasharray: getStrokeSize(65) + ', ' + getStrokeSize(100),
+        strokeDashoffset: getStrokeSize(99, -1)
+      }
     },
   };
 });
