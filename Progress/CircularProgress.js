@@ -63,6 +63,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var THICKNESS = 3.6;
 var PI = 3.1416; // Simple version of Math.PI for the CSS generated.
+var SIZE = 60;
+var getStrokeSize = function getStrokeSize(percentage) {
+  var coef = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+  return (percentage * 0.01 * SIZE - THICKNESS) * coef * PI;
+};
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiCircularProgress', function (theme) {
   return {
@@ -75,7 +81,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       animation: 'rotate-progress-circle 1733ms linear infinite'
     },
     circle: {
-      strokeDasharray: '1, calc((100% - 3px) * 3.141)',
+      strokeDasharray: '1, ' + getStrokeSize(100),
       strokeDashoffset: '0%',
       stroke: 'currentColor',
       strokeLinecap: 'square',
@@ -92,16 +98,16 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
     },
     '@keyframes scale-progress-circle': {
       '8%': {
-        strokeDasharray: '1, calc((100% - ' + THICKNESS + 'px) * ' + PI + ')',
+        strokeDasharray: '1, ' + getStrokeSize(100),
         strokeDashoffset: 0
       },
       '50%, 58%': {
-        strokeDasharray: 'calc((65% - ' + THICKNESS + 'px) * ' + PI + '), calc((100% - ' + THICKNESS + 'px) * ' + PI + ')',
-        strokeDashoffset: 'calc((25% - ' + THICKNESS + 'px) * -' + PI + ')'
+        strokeDasharray: getStrokeSize(65) + ', ' + getStrokeSize(100),
+        strokeDashoffset: getStrokeSize(25, -1)
       },
       '100%': {
-        strokeDasharray: 'calc((65% - ' + THICKNESS + 'px) * ' + PI + '), calc((100% - ' + THICKNESS + 'px) * ' + PI + ')',
-        strokeDashoffset: 'calc((99% - ' + THICKNESS + 'px) * -' + PI + ')'
+        strokeDasharray: getStrokeSize(65) + ', ' + getStrokeSize(100),
+        strokeDashoffset: getStrokeSize(99, -1)
       }
     }
   };
