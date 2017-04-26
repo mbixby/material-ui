@@ -1,22 +1,29 @@
 // @flow weak
 
 import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createStyleSheet } from 'jss-theme-reactor';
 import customPropTypes from '../utils/customPropTypes';
+import Textarea from './Textarea';
 
 function isDirty(obj) {
   return obj && obj.value && obj.value.length > 0;
 }
 
 export const styleSheet = createStyleSheet('MuiInput', (theme) => {
-  const { palette, transitions } = theme;
+  const { palette, transitions, typography } = theme;
   return {
     wrapper: {
       // Mimics the default input display property used by browsers for an input.
       display: 'inline-block',
       position: 'relative',
+      fontFamily: typography.fontFamily,
+      transition: transitions.create('height', {
+        duration: 100,
+        easing: transitions.easing.easeOut,
+      }),
     },
     formControl: {
       marginTop: 10,
@@ -57,7 +64,7 @@ export const styleSheet = createStyleSheet('MuiInput', (theme) => {
       verticalAlign: 'middle',
       whiteSpace: 'normal',
       background: 'none',
-      lineHeight: 1,
+      margin: 0, // Reset for Safari
       appearance: 'textfield', // Improve type search style.
       color: theme.palette.text.primary,
       width: '100%',
@@ -68,11 +75,8 @@ export const styleSheet = createStyleSheet('MuiInput', (theme) => {
         appearance: 'none',
       },
     },
-    multiLine: {
-      resize: 'none',
-      'line-height': 'inherit',
-      padding: '0px',
-      'margin-top': '12px',
+    textareaWrapper: {
+      padding: '6px 0',
     },
     disabled: {
       color: theme.palette.text.disabled,
@@ -201,7 +205,8 @@ export default class Input extends Component {
     }
   }
 
-  // Holds the input reference
+  // Holds the container and input reference
+  wrapper = null;
   input = null;
 
   focus = () => this.input.focus();
@@ -227,6 +232,13 @@ export default class Input extends Component {
     if (this.props.onChange) {
       this.props.onChange(event);
     }
+  };
+
+  handleTextareaHeightChange = (event, newHeight) => {
+    const node = findDOMNode(this)
+    setTimeout(() => {
+      node.style.height = `${node.children[0].clientHeight}px`
+    }, 0)
   };
 
   isControlled() {
@@ -257,12 +269,12 @@ export default class Input extends Component {
   render() {
     const {
       className: classNameProp,
-      component: ComponentProp,
-      defaultValue,
+      inputClassName: inputClassNameProp,
+      component,
       disabled,
       disableUnderline,
+      defaultValue,
       error: errorProp,
-      inputClassName: inputClassNameProp,
       multiLine,
       onBlur, // eslint-disable-line no-unused-vars
       onFocus, // eslint-disable-line no-unused-vars
@@ -279,26 +291,43 @@ export default class Input extends Component {
       error = muiFormControl.error;
     }
 
+    const { ComponentProp, props: componentProps } = (() => {
+      if (multiLine && component === this.constructor.defaultProps.component){
+        const props = {
+          className: classNames(classes.textareaWrapper),
+          textareaClassName: classNames(classes.input, classes.textarea, {
+            [classes.disabled]: disabled,
+          }, inputClassNameProp),
+          onHeightChange: this.handleTextareaHeightChange
+        }
+        return { ComponentProp: Textarea, props }
+      } else {
+        const props = {
+          className: classNames(classes.input, {
+            [classes.underline]: !disableUnderline,
+            [classes.disabled]: disabled,
+          }, inputClassNameProp),
+        }
+        return { ComponentProp: component, props }
+      }
+    })()
+
     const wrapperClassName = classNames(classes.wrapper, {
       [classes.formControl]: muiFormControl,
       [classes.inkbar]: !disableUnderline,
       [classes.focused]: this.state.focused,
       [classes.error]: error,
+      // When rendering Textarea, move the underline to this height-animatable wrapper
+      [classes.underline]: ComponentProp === Textarea && !disableUnderline,
     }, classNameProp);
-
-    const inputClassName = classNames(classes.input, {
-      [classes.multiLine]: multiLine,
-      [classes.underline]: !disableUnderline,
-      [classes.disabled]: disabled,
-    }, inputClassNameProp);
 
     const required = muiFormControl && muiFormControl.required === true;
 
     return (
-      <div className={wrapperClassName}>
+      <div className={wrapperClassName} ref={(c) => { this.wrapper = c; }}>
         <ComponentProp
+          {...componentProps}
           ref={(c) => { this.input = c; }}
-          className={inputClassName}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
           onChange={this.handleChange}

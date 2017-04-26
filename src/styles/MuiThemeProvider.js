@@ -23,7 +23,7 @@ export const MUI_SHEET_ORDER = [
   'MuiFormLabel',
   'MuiFormGroup',
 
-  'MuiText',
+  'MuiTypography',
   'MuiPaper',
   'MuiDivider',
 
@@ -62,6 +62,8 @@ export const MUI_SHEET_ORDER = [
   'MuiDrawer',
 
   'MuiAvatar',
+
+  'MuiChip',
 
   'MuiListItem',
   'MuiListItemText',

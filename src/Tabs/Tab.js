@@ -19,10 +19,12 @@ export const styleSheet = createStyleSheet('MuiTab', (theme) => {
       },
       background: 'none',
       padding: 0,
-      minHeight: 48,
+      height: 48,
+      flex: 'none',
+      overflow: 'hidden',
     },
     rootLabelIcon: {
-      minHeight: 72,
+      height: 72,
     },
     rootAccent: {
       color: theme.palette.text.secondary,
@@ -43,20 +45,32 @@ export const styleSheet = createStyleSheet('MuiTab', (theme) => {
     rootInheritDisabled: {
       opacity: 0.4,
     },
+    fullWidth: {
+      flex: '1 0 0',
+    },
+    labelContainer: {
+      paddingTop: 6,
+      paddingBottom: 6,
+      paddingLeft: 12,
+      paddingRight: 12,
+      [theme.breakpoints.up('md')]: {
+        paddingLeft: theme.spacing.unit * 3,
+        paddingRight: theme.spacing.unit * 3,
+      },
+    },
     label: {
       fontSize: theme.typography.fontSize,
       fontWeight: theme.typography.fontWeightMedium,
       fontFamily: theme.typography.fontFamily,
       textTransform: 'uppercase',
-      paddingLeft: 12,
-      paddingRight: 12,
-      paddingTop: 6,
-      paddingBottom: 6,
-      display: 'block',
-      [theme.breakpoints.up('sm')]: {
-        paddingLeft: 24,
-        paddingRight: 24,
+      whiteSpace: 'normal',
+      [theme.breakpoints.up('md')]: {
         fontSize: theme.typography.fontSize - 1,
+      },
+    },
+    labelWrapped: {
+      [theme.breakpoints.down('md')]: {
+        fontSize: theme.typography.fontSize - 2,
       },
     },
   };
@@ -128,6 +142,18 @@ export default class Tab extends Component {
     styleManager: customPropTypes.muiRequired,
   };
 
+  state = {
+    wrappedText: false,
+  }
+
+  componentDidMount() {
+    this.checkTextWrap();
+  }
+
+  componentDidUpdate() {
+    this.checkTextWrap();
+  }
+
   handleChange = (event) => {
     const { onChange, index, onClick } = this.props;
 
@@ -137,6 +163,17 @@ export default class Tab extends Component {
       onClick(event);
     }
   };
+
+  label = undefined;
+
+  checkTextWrap = () => {
+    if (this.label) {
+      const wrappedText = this.label.getClientRects().length > 1;
+      if (this.state.wrappedText !== wrappedText) {
+        this.setState({ wrappedText });
+      }
+    }
+  }
 
   render() {
     const {
@@ -168,9 +205,18 @@ export default class Tab extends Component {
 
     if (labelProp !== undefined) {
       label = (
-        <span className={classNames(classes.label, labelClassName)}>
-          {labelProp}
-        </span>
+        <div className={classes.labelContainer}>
+          <span
+            className={classNames(
+              classes.label,
+              { [classes.labelWrapped]: this.state.wrappedText },
+              labelClassName,
+            )}
+            ref={(node) => { this.label = node; }}
+          >
+            {labelProp}
+          </span>
+        </div>
       );
     }
 
@@ -182,13 +228,10 @@ export default class Tab extends Component {
       [classes.rootInheritDisabled]: disabled && textColor === 'inherit',
       [classes.rootInheritSelected]: selected && textColor === 'inherit',
       [classes.rootLabelIcon]: icon && label,
+      [classes.fullWidth]: fullWidth,
     }, classNameProp);
 
     let style = {};
-
-    if (fullWidth) {
-      style.width = '100%';
-    }
 
     if (textColor !== 'accent' && textColor !== 'inherit') {
       style.color = textColor;
