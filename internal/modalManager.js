@@ -76,23 +76,23 @@ function createModalManager() {
       (0, _manageAriaHidden.hideSiblings)(container, modal.mountNode);
     }
 
-    var containerStyle = {
-      overflow: 'hidden',
-      paddingRight: undefined
-    };
+    if (modals.length === 1) {
+      var containerStyle = {
+        overflow: 'hidden',
+        paddingRight: undefined
+      };
 
-    // Save our current overflow so we can revert
-    // back to it when all modals are closed!
-    if (modalIdx === 0) {
+      // Save our current overflow so we can revert
+      // back to it when all modals are closed!
       prevOverflow = container.style.overflow;
-    }
 
-    if (bodyIsOverflowing(container)) {
-      prevPadding = container.style.paddingRight;
-      containerStyle.paddingRight = parseInt(prevPadding || 0, 10) + (0, _scrollbarSize2.default)() + 'px';
-    }
+      if (bodyIsOverflowing(container)) {
+        prevPadding = container.style.paddingRight;
+        containerStyle.paddingRight = parseInt(prevPadding || 0, 10) + (0, _scrollbarSize2.default)() + 'px';
+      }
 
-    (0, _style2.default)(container, containerStyle);
+      (0, _style2.default)(container, containerStyle);
+    }
 
     return modalIdx;
   }

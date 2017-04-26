@@ -233,7 +233,7 @@ var MenuList = function (_Component) {
 }(_react.Component);
 
 exports.default = MenuList;
-process.env.NODE_ENV !== "production" ? MenuList.propTypes = {
+MenuList.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * MenuList contents, normally `MenuItem`s.
    */
@@ -250,4 +250,4 @@ process.env.NODE_ENV !== "production" ? MenuList.propTypes = {
    * @ignore
    */
   onKeyDown: _propTypes2.default.func
-} : void 0;
+} : {};

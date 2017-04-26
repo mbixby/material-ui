@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.RadioDocs = exports.LabelRadio = exports.styleSheet = undefined;
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -41,7 +37,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       color: theme.palette.text.secondary
     },
     checked: {
-      color: theme.palette.accent[500]
+      color: theme.palette.primary[500]
     },
     disabled: {
       color: theme.palette.action.disabled
@@ -52,8 +48,8 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
 var Radio = (0, _SwitchBase.createSwitch)({
   styleSheet: styleSheet,
   inputType: 'radio',
-  defaultIcon: (0, _jsx3.default)(_radioButtonUnchecked2.default, {}),
-  defaultCheckedIcon: (0, _jsx3.default)(_radioButtonChecked2.default, {})
+  defaultIcon: _react2.default.createElement(_radioButtonUnchecked2.default, null),
+  defaultCheckedIcon: _react2.default.createElement(_radioButtonChecked2.default, null)
 });
 
 Radio.displayName = 'Radio';
@@ -70,13 +66,13 @@ exports.LabelRadio = LabelRadio;
  * are switches used for selection from multiple options.
  */
 
-var _ref = (0, _jsx3.default)('span', {});
+var _ref = _react2.default.createElement('span', null);
 
 var RadioDocs = exports.RadioDocs = function RadioDocs() {
   return _ref;
 };
 
-process.env.NODE_ENV !== "production" ? RadioDocs.propTypes = {
+RadioDocs.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the component appears selected.
    */
@@ -132,4 +128,4 @@ process.env.NODE_ENV !== "production" ? RadioDocs.propTypes = {
    * The value of the component.
    */
   value: _propTypes2.default.string
-} : void 0;
+} : {};

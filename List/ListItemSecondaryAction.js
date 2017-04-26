@@ -4,11 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.styleSheet = undefined;
-
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 exports.default = ListItemSecondaryAction;
 
 var _react = require('react');
@@ -49,12 +44,14 @@ function ListItemSecondaryAction(props, context) {
   var classes = context.styleManager.render(styleSheet);
   var className = (0, _classnames2.default)(classes.secondaryAction, classNameProp);
 
-  return (0, _jsx3.default)('div', {
-    className: className
-  }, void 0, children);
+  return _react2.default.createElement(
+    'div',
+    { className: className },
+    children
+  );
 }
 
-process.env.NODE_ENV !== "production" ? ListItemSecondaryAction.propTypes = {
+ListItemSecondaryAction.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component, normally an `IconButton` or selection control.
    */
@@ -63,7 +60,7 @@ process.env.NODE_ENV !== "production" ? ListItemSecondaryAction.propTypes = {
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-} : void 0;
+} : {};
 
 ListItemSecondaryAction.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired

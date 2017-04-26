@@ -87,7 +87,7 @@ function ListItemAvatar(props, context) {
   }, other));
 }
 
-ListItemAvatar.propTypes = {
+ListItemAvatar.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component, normally `Avatar`.
    */
@@ -96,7 +96,7 @@ ListItemAvatar.propTypes = {
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-};
+} : {};
 
 ListItemAvatar.contextTypes = {
   dense: _propTypes2.default.bool,

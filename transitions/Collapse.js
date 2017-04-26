@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -186,15 +182,17 @@ var Collapse = function (_Component) {
           onExiting: this.handleExiting,
           onExit: this.handleExit
         }, other),
-        (0, _jsx3.default)('div', {
-          className: containerClasses
-        }, void 0, _react2.default.createElement(
+        _react2.default.createElement(
           'div',
-          { ref: function ref(c) {
-              _this2.wrapper = c;
-            } },
-          children
-        ))
+          { className: containerClasses },
+          _react2.default.createElement(
+            'div',
+            { ref: function ref(c) {
+                _this2.wrapper = c;
+              } },
+            children
+          )
+        )
       );
     }
   }]);
@@ -209,7 +207,7 @@ Collapse.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = Collapse;
-process.env.NODE_ENV !== "production" ? Collapse.propTypes = {
+Collapse.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content node to be collapsed.
    */
@@ -251,4 +249,4 @@ process.env.NODE_ENV !== "production" ? Collapse.propTypes = {
    * Set to 'auto' to automatically calculate transition time based on height.
    */
   transitionDuration: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
-} : void 0;
+} : {};

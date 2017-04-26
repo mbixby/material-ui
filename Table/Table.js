@@ -53,9 +53,10 @@ var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiTable', function () {
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiTable', function (theme) {
   return {
     root: {
+      fontFamily: theme.typography.fontFamily,
       width: '100%',
       borderCollapse: 'collapse',
       borderSpacing: 0,
@@ -118,7 +119,7 @@ Table.contextTypes = {
 };
 Table.childContextTypes = { table: _propTypes2.default.object };
 exports.default = Table;
-process.env.NODE_ENV !== "production" ? Table.propTypes = {
+Table.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the table, normally `TableHeader` and `TableBody`.
    */
@@ -127,4 +128,4 @@ process.env.NODE_ENV !== "production" ? Table.propTypes = {
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-} : void 0;
+} : {};

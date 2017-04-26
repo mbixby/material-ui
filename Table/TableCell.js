@@ -108,7 +108,7 @@ function TableCell(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? TableCell.propTypes = {
+TableCell.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the cell padding will be adjusted to accommodate a checkbox.
    */
@@ -133,7 +133,7 @@ process.env.NODE_ENV !== "production" ? TableCell.propTypes = {
    * If `true`, content will align to the right.
    */
   numeric: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 TableCell.defaultProps = {
   checkbox: false,

@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -45,6 +41,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -59,6 +57,10 @@ var _customPropTypes = require('../utils/customPropTypes');
 
 var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
 
+var _Textarea = require('./Textarea');
+
+var _Textarea2 = _interopRequireDefault(_Textarea);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function isDirty(obj) {
@@ -67,13 +69,19 @@ function isDirty(obj) {
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiInput', function (theme) {
   var palette = theme.palette,
-      transitions = theme.transitions;
+      transitions = theme.transitions,
+      typography = theme.typography;
 
   return {
     wrapper: {
       // Mimics the default input display property used by browsers for an input.
       display: 'inline-block',
-      position: 'relative'
+      position: 'relative',
+      fontFamily: typography.fontFamily,
+      transition: transitions.create('height', {
+        duration: 100,
+        easing: transitions.easing.easeOut
+      })
     },
     formControl: {
       marginTop: 10,
@@ -113,7 +121,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       verticalAlign: 'middle',
       whiteSpace: 'normal',
       background: 'none',
-      lineHeight: 1,
+      margin: 0, // Reset for Safari
       appearance: 'textfield', // Improve type search style.
       color: theme.palette.text.primary,
       width: '100%',
@@ -124,11 +132,8 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
         appearance: 'none'
       }
     },
-    multiLine: {
-      resize: 'none',
-      'line-height': 'inherit',
-      padding: '0px',
-      'margin-top': '12px'
+    textareaWrapper: {
+      padding: '6px 0'
     },
     disabled: {
       color: theme.palette.text.disabled,
@@ -163,7 +168,7 @@ var Input = function (_Component) {
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Input.__proto__ || (0, _getPrototypeOf2.default)(Input)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       focused: false
-    }, _this.input = null, _this.focus = function () {
+    }, _this.wrapper = null, _this.input = null, _this.focus = function () {
       return _this.input.focus();
     }, _this.handleFocus = function (event) {
       _this.setState({ focused: true });
@@ -182,6 +187,11 @@ var Input = function (_Component) {
       if (_this.props.onChange) {
         _this.props.onChange(event);
       }
+    }, _this.handleTextareaHeightChange = function (event, newHeight) {
+      var node = (0, _reactDom.findDOMNode)(_this);
+      setTimeout(function () {
+        node.style.height = node.children[0].clientHeight + 'px';
+      }, 0);
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
@@ -207,7 +217,7 @@ var Input = function (_Component) {
       }
     }
 
-    // Holds the input reference
+    // Holds the container and input reference
 
   }, {
     key: 'isControlled',
@@ -240,23 +250,22 @@ var Input = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _classNames,
-          _classNames2,
-          _this2 = this;
+      var _this2 = this,
+          _classNames3;
 
       var _props = this.props,
           classNameProp = _props.className,
-          ComponentProp = _props.component,
-          defaultValue = _props.defaultValue,
+          inputClassNameProp = _props.inputClassName,
+          component = _props.component,
           disabled = _props.disabled,
           disableUnderline = _props.disableUnderline,
+          defaultValue = _props.defaultValue,
           errorProp = _props.error,
-          inputClassNameProp = _props.inputClassName,
           multiLine = _props.multiLine,
           onBlur = _props.onBlur,
           onFocus = _props.onFocus,
           onChange = _props.onChange,
-          other = (0, _objectWithoutProperties3.default)(_props, ['className', 'component', 'defaultValue', 'disabled', 'disableUnderline', 'error', 'inputClassName', 'multiLine', 'onBlur', 'onFocus', 'onChange']);
+          other = (0, _objectWithoutProperties3.default)(_props, ['className', 'inputClassName', 'component', 'disabled', 'disableUnderline', 'defaultValue', 'error', 'multiLine', 'onBlur', 'onFocus', 'onChange']);
       var _context = this.context,
           muiFormControl = _context.muiFormControl,
           styleManager = _context.styleManager;
@@ -269,26 +278,47 @@ var Input = function (_Component) {
         error = muiFormControl.error;
       }
 
-      var wrapperClassName = (0, _classnames2.default)(classes.wrapper, (_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.formControl, muiFormControl), (0, _defineProperty3.default)(_classNames, classes.inkbar, !disableUnderline), (0, _defineProperty3.default)(_classNames, classes.focused, this.state.focused), (0, _defineProperty3.default)(_classNames, classes.error, error), _classNames), classNameProp);
+      var _ref2 = function () {
+        if (multiLine && component === _this2.constructor.defaultProps.component) {
+          var props = {
+            className: (0, _classnames2.default)(classes.textareaWrapper),
+            textareaClassName: (0, _classnames2.default)(classes.input, classes.textarea, (0, _defineProperty3.default)({}, classes.disabled, disabled), inputClassNameProp),
+            onHeightChange: _this2.handleTextareaHeightChange
+          };
+          return { ComponentProp: _Textarea2.default, props: props };
+        } else {
+          var _classNames2;
 
-      var inputClassName = (0, _classnames2.default)(classes.input, (_classNames2 = {}, (0, _defineProperty3.default)(_classNames2, classes.multiLine, multiLine), (0, _defineProperty3.default)(_classNames2, classes.underline, !disableUnderline), (0, _defineProperty3.default)(_classNames2, classes.disabled, disabled), _classNames2), inputClassNameProp);
+          var _props2 = {
+            className: (0, _classnames2.default)(classes.input, (_classNames2 = {}, (0, _defineProperty3.default)(_classNames2, classes.underline, !disableUnderline), (0, _defineProperty3.default)(_classNames2, classes.disabled, disabled), _classNames2), inputClassNameProp)
+          };
+          return { ComponentProp: component, props: _props2 };
+        }
+      }(),
+          ComponentProp = _ref2.ComponentProp,
+          componentProps = _ref2.props;
+
+      var wrapperClassName = (0, _classnames2.default)(classes.wrapper, (_classNames3 = {}, (0, _defineProperty3.default)(_classNames3, classes.formControl, muiFormControl), (0, _defineProperty3.default)(_classNames3, classes.inkbar, !disableUnderline), (0, _defineProperty3.default)(_classNames3, classes.focused, this.state.focused), (0, _defineProperty3.default)(_classNames3, classes.error, error), (0, _defineProperty3.default)(_classNames3, classes.underline, ComponentProp === _Textarea2.default && !disableUnderline), _classNames3), classNameProp);
 
       var required = muiFormControl && muiFormControl.required === true;
 
-      return (0, _jsx3.default)('div', {
-        className: wrapperClassName
-      }, void 0, _react2.default.createElement(ComponentProp, (0, _extends3.default)({
-        ref: function ref(c) {
-          _this2.input = c;
-        },
-        className: inputClassName,
-        onBlur: this.handleBlur,
-        onFocus: this.handleFocus,
-        onChange: this.handleChange,
-        disabled: disabled,
-        defaultValue: defaultValue,
-        'aria-required': required ? true : undefined
-      }, other)));
+      return _react2.default.createElement(
+        'div',
+        { className: wrapperClassName, ref: function ref(c) {
+            _this2.wrapper = c;
+          } },
+        _react2.default.createElement(ComponentProp, (0, _extends3.default)({}, componentProps, {
+          ref: function ref(c) {
+            _this2.input = c;
+          },
+          onBlur: this.handleBlur,
+          onFocus: this.handleFocus,
+          onChange: this.handleChange,
+          disabled: disabled,
+          defaultValue: defaultValue,
+          'aria-required': required ? true : undefined
+        }, other))
+      );
     }
   }]);
   return Input;
@@ -306,7 +336,7 @@ Input.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = Input;
-process.env.NODE_ENV !== "production" ? Input.propTypes = {
+Input.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the wrapper element.
    */
@@ -376,4 +406,4 @@ process.env.NODE_ENV !== "production" ? Input.propTypes = {
    * The input value, required for a controlled component.
    */
   value: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number])
-} : void 0;
+} : {};

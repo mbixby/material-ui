@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -214,17 +210,9 @@ var LinearProgress = function (_Component) {
       return _react2.default.createElement(
         'div',
         (0, _extends3.default)({ className: rootClasses }, rootProps, other),
-        (0, _jsx3.default)('div', {
-          className: dashedClasses
-        }),
-        (0, _jsx3.default)('div', {
-          className: bar1Classes,
-          style: styles.bar1
-        }),
-        (0, _jsx3.default)('div', {
-          className: bar2Classes,
-          style: styles.bar2
-        })
+        _react2.default.createElement('div', { className: dashedClasses }),
+        _react2.default.createElement('div', { className: bar1Classes, style: styles.bar1 }),
+        _react2.default.createElement('div', { className: bar2Classes, style: styles.bar2 })
       );
     }
   }]);
@@ -239,7 +227,7 @@ LinearProgress.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = LinearProgress;
-process.env.NODE_ENV !== "production" ? LinearProgress.propTypes = {
+LinearProgress.propTypes = process.env.NODE_ENV !== "production" ? {
   className: _propTypes2.default.string,
   /**
    * The mode of show your progress, indeterminate
@@ -256,4 +244,4 @@ process.env.NODE_ENV !== "production" ? LinearProgress.propTypes = {
    * Value between 0 and 100.
    */
   valueBuffer: _propTypes2.default.number
-} : void 0;
+} : {};

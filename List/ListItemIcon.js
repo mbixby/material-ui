@@ -101,7 +101,7 @@ var ListItemIcon = function (_Component) {
 exports.default = ListItemIcon;
 
 
-process.env.NODE_ENV !== "production" ? ListItemIcon.propTypes = {
+ListItemIcon.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component, normally `Icon`, `SvgIcon`,
    * or a `material-ui-icons` SVG icon component.
@@ -111,7 +111,7 @@ process.env.NODE_ENV !== "production" ? ListItemIcon.propTypes = {
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-} : void 0;
+} : {};
 
 ListItemIcon.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired

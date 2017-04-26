@@ -208,7 +208,7 @@ function Layout(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? Layout.propTypes = {
+Layout.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -286,7 +286,7 @@ process.env.NODE_ENV !== "production" ? Layout.propTypes = {
    */
   wrap: _propTypes2.default.oneOf([// eslint-disable-line react/sort-prop-types
   'nowrap', 'wrap', 'wrap-reverse'])
-} : void 0;
+} : {};
 
 Layout.defaultProps = {
   component: 'div',

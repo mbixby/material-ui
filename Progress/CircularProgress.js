@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -138,18 +134,19 @@ var CircularProgress = function (_Component) {
           className: (0, _classnames2.default)(classes.root, className),
           style: { width: size, height: size }
         }, other),
-        (0, _jsx3.default)('svg', {
-          className: classes.svg,
-          viewBox: '0 0 ' + size + ' ' + size
-        }, void 0, (0, _jsx3.default)('circle', {
-          className: classes.circle,
-          cx: radius,
-          cy: radius,
-          r: radius - THICKNESS / 2,
-          fill: 'none',
-          strokeWidth: THICKNESS,
-          strokeMiterlimit: '20'
-        }))
+        _react2.default.createElement(
+          'svg',
+          { className: classes.svg, viewBox: '0 0 ' + size + ' ' + size },
+          _react2.default.createElement('circle', {
+            className: classes.circle,
+            cx: radius,
+            cy: radius,
+            r: radius - THICKNESS / 2,
+            fill: 'none',
+            strokeWidth: THICKNESS,
+            strokeMiterlimit: '20'
+          })
+        )
       );
     }
   }]);
@@ -163,7 +160,7 @@ CircularProgress.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = CircularProgress;
-process.env.NODE_ENV !== "production" ? CircularProgress.propTypes = {
+CircularProgress.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the root element.
    */
@@ -178,4 +175,4 @@ process.env.NODE_ENV !== "production" ? CircularProgress.propTypes = {
    * TODO: Implement determinate mode.
    */
   value: _propTypes2.default.number
-} : void 0;
+} : {};

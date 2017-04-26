@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -67,6 +63,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       position: 'absolute',
       top: -radius,
       right: -radius,
+      fontFamily: theme.typography.fontFamily,
       fontWeight: typography.fontWeight,
       fontSize: radius,
       width: radius2x,
@@ -114,13 +111,15 @@ function Badge(props, context) {
     'div',
     (0, _extends3.default)({ className: className }, other),
     children,
-    (0, _jsx3.default)('span', {
-      className: badgeClassName
-    }, void 0, badgeContent)
+    _react2.default.createElement(
+      'span',
+      { className: badgeClassName },
+      badgeContent
+    )
   );
 }
 
-process.env.NODE_ENV !== "production" ? Badge.propTypes = {
+Badge.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the badge will use the accent badge colors.
    */
@@ -145,7 +144,7 @@ process.env.NODE_ENV !== "production" ? Badge.propTypes = {
    * If `true`, the badge will use the primary badge colors.
    */
   primary: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 Badge.defaultProps = {
   primary: false,

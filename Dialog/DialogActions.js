@@ -13,10 +13,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -90,9 +86,11 @@ var DialogActions = function (_Component) {
     }
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = DialogActions.__proto__ || (0, _getPrototypeOf2.default)(DialogActions)).call.apply(_ref, [this].concat(args))), _this), _this.classes = {}, _this.renderButton = function (button) {
-      return (0, _jsx3.default)('div', {
-        className: _this.classes.action
-      }, void 0, _react2.default.cloneElement(button, { className: (0, _classnames2.default)(_this.classes.button, button.props.className) }));
+      return _react2.default.createElement(
+        'div',
+        { className: _this.classes.action },
+        _react2.default.cloneElement(button, { className: (0, _classnames2.default)(_this.classes.button, button.props.className) })
+      );
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
@@ -123,7 +121,7 @@ DialogActions.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = DialogActions;
-process.env.NODE_ENV !== "production" ? DialogActions.propTypes = {
+DialogActions.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -132,4 +130,4 @@ process.env.NODE_ENV !== "production" ? DialogActions.propTypes = {
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-} : void 0;
+} : {};

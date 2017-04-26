@@ -101,7 +101,7 @@ var ButtonBase = function (_Component) {
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = ButtonBase.__proto__ || (0, _getPrototypeOf2.default)(ButtonBase)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       keyboardFocused: false
-    }, _this.ripple = undefined, _this.keyDown = false, _this.button = null, _this.keyboardFocusTimeout = undefined, _this.focus = function () {
+    }, _this.ripple = undefined, _this.keyDown = false, _this.button = null, _this.keyboardFocusTimeout = undefined, _this.keyboardFocusCheckTime = 40, _this.keyboardFocusMaxCheckTimes = 5, _this.focus = function () {
       return _this.button.focus();
     }, _this.handleKeyDown = function (event) {
       var _this$props = _this.props,
@@ -294,7 +294,7 @@ ButtonBase.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = ButtonBase;
-process.env.NODE_ENV !== "production" ? ButtonBase.propTypes = {
+ButtonBase.propTypes = process.env.NODE_ENV !== "production" ? {
   centerRipple: _propTypes2.default.bool,
   /**
    * The content of the component.
@@ -337,4 +337,4 @@ process.env.NODE_ENV !== "production" ? ButtonBase.propTypes = {
   role: _propTypes2.default.string,
   tabIndex: _propTypes2.default.string,
   type: _propTypes2.default.string
-} : void 0;
+} : {};

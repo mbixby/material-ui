@@ -159,7 +159,7 @@ var RadioGroup = function (_Component) {
 RadioGroup.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
-process.env.NODE_ENV !== "production" ? RadioGroup.propTypes = {
+RadioGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -191,5 +191,5 @@ process.env.NODE_ENV !== "production" ? RadioGroup.propTypes = {
    * Value of the selected radio button
    */
   selectedValue: _propTypes2.default.string
-} : void 0;
+} : {};
 exports.default = RadioGroup;

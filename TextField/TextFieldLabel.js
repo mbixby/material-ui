@@ -86,7 +86,7 @@ function TextFieldLabel(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? TextFieldLabel.propTypes = {
+TextFieldLabel.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -115,7 +115,7 @@ process.env.NODE_ENV !== "production" ? TextFieldLabel.propTypes = {
    * If `true`, the label is shrunk.
    */
   shrink: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 TextFieldLabel.defaultProps = {
   disableAnimation: false,

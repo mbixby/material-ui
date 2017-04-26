@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -100,13 +96,9 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
   };
 }); //  weak
 
-var _ref2 = (0, _jsx3.default)(_checkBoxOutlineBlank2.default, {
-  'aria-hidden': 'true'
-});
+var _ref2 = _react2.default.createElement(_checkBoxOutlineBlank2.default, { 'aria-hidden': 'true' });
 
-var _ref3 = (0, _jsx3.default)(_checkBox2.default, {
-  'aria-hidden': 'true'
-});
+var _ref3 = _react2.default.createElement(_checkBox2.default, { 'aria-hidden': 'true' });
 
 function createSwitch() {
   var _class, _temp2;
@@ -205,9 +197,11 @@ function createSwitch() {
         var icon = checked ? checkedIcon : iconProp;
 
         if (typeof icon === 'string') {
-          icon = (0, _jsx3.default)(_Icon2.default, {
-            'aria-hidden': 'true'
-          }, void 0, icon);
+          icon = _react2.default.createElement(
+            _Icon2.default,
+            { 'aria-hidden': 'true' },
+            icon
+          );
         }
 
         return _react2.default.createElement(

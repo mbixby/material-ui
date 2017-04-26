@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -41,9 +37,9 @@ var _customPropTypes = require('../utils/customPropTypes');
 
 var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
 
-var _Text = require('../Text');
+var _Typography = require('../Typography');
 
-var _Text2 = _interopRequireDefault(_Text);
+var _Typography2 = _interopRequireDefault(_Typography);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -88,19 +84,20 @@ function ListItemText(props, context) {
   return _react2.default.createElement(
     'div',
     (0, _extends3.default)({ className: className }, other),
-    primary && (typeof primary === 'string' ? (0, _jsx3.default)(_Text2.default, {
-      type: 'subheading',
-      className: (0, _classnames2.default)((0, _defineProperty3.default)({}, classes.text, dense))
-    }, void 0, primary) : primary),
-    secondary && (typeof secondary === 'string' ? (0, _jsx3.default)(_Text2.default, {
-      secondary: true,
-      type: 'body1',
-      className: (0, _classnames2.default)((0, _defineProperty3.default)({}, classes.text, dense))
-    }, void 0, secondary) : secondary)
+    primary && (typeof primary === 'string' ? _react2.default.createElement(
+      _Typography2.default,
+      { type: 'subheading', className: (0, _classnames2.default)((0, _defineProperty3.default)({}, classes.text, dense)) },
+      primary
+    ) : primary),
+    secondary && (typeof secondary === 'string' ? _react2.default.createElement(
+      _Typography2.default,
+      { secondary: true, type: 'body1', className: (0, _classnames2.default)((0, _defineProperty3.default)({}, classes.text, dense)) },
+      secondary
+    ) : secondary)
   );
 }
 
-process.env.NODE_ENV !== "production" ? ListItemText.propTypes = {
+ListItemText.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the root element.
    */
@@ -112,7 +109,7 @@ process.env.NODE_ENV !== "production" ? ListItemText.propTypes = {
   inset: _propTypes2.default.bool,
   primary: _propTypes2.default.node,
   secondary: _propTypes2.default.node
-} : void 0;
+} : {};
 
 ListItemText.defaultProps = {
   primary: false,

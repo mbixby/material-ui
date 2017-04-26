@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -233,9 +229,11 @@ var Button = function (_Component) {
           ripple: !disableRipple,
           keyboardFocusedClassName: classes.keyboardFocused
         }, other),
-        (0, _jsx3.default)('span', {
-          className: classes.label
-        }, void 0, children)
+        _react2.default.createElement(
+          'span',
+          { className: classes.label },
+          children
+        )
       );
     }
   }]);
@@ -259,7 +257,7 @@ Button.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = Button;
-process.env.NODE_ENV !== "production" ? Button.propTypes = {
+Button.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the button will use the theme's accent color.
    */
@@ -319,4 +317,4 @@ process.env.NODE_ENV !== "production" ? Button.propTypes = {
    * @ignore
    */
   type: _propTypes2.default.string
-} : void 0;
+} : {};

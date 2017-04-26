@@ -427,12 +427,12 @@ Object.defineProperty(exports, 'Tabs', {
   }
 });
 
-var _Text = require('./Text');
+var _Typography = require('./Typography');
 
-Object.defineProperty(exports, 'Text', {
+Object.defineProperty(exports, 'Typography', {
   enumerable: true,
   get: function get() {
-    return _Text.Text;
+    return _Typography.Typography;
   }
 });
 

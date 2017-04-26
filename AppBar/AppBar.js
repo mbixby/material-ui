@@ -130,7 +130,7 @@ AppBar.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = AppBar;
-process.env.NODE_ENV !== "production" ? AppBar.propTypes = {
+AppBar.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the AppBar will use the theme's accent color.
    */
@@ -143,4 +143,4 @@ process.env.NODE_ENV !== "production" ? AppBar.propTypes = {
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-} : void 0;
+} : {};

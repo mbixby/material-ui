@@ -179,7 +179,7 @@ Slide.contextTypes = {
   theme: _customPropTypes2.default.muiRequired
 };
 exports.default = Slide;
-process.env.NODE_ENV !== "production" ? Slide.propTypes = {
+Slide.propTypes = process.env.NODE_ENV !== "production" ? {
   children: _propTypes2.default.node,
   /**
    * The CSS class name of the root element.
@@ -228,4 +228,4 @@ process.env.NODE_ENV !== "production" ? Slide.propTypes = {
   /**
    * Callback fired when the component has exited.
    */
-  onExited: _propTypes2.default.func } : void 0;
+  onExited: _propTypes2.default.func } : {};

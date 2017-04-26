@@ -64,7 +64,7 @@ function DialogContent(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? DialogContent.propTypes = {
+DialogContent.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -73,7 +73,7 @@ process.env.NODE_ENV !== "production" ? DialogContent.propTypes = {
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-} : void 0;
+} : {};
 
 DialogContent.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired

@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.styleSheet = undefined;
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
@@ -79,6 +75,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       marginLeft: -12,
       marginRight: 16 },
     labelText: {
+      fontFamily: theme.typography.fontFamily,
       userSelect: 'none'
     },
     disabled: {
@@ -144,11 +141,16 @@ function withSwitchLabel(SwitchComponent) {
           return switchElement;
         }
 
-        return (0, _jsx3.default)('label', {
-          className: labelClassName
-        }, void 0, switchElement, (0, _jsx3.default)('span', {
-          className: labelTextClassName
-        }, void 0, label));
+        return _react2.default.createElement(
+          'label',
+          { className: labelClassName },
+          switchElement,
+          _react2.default.createElement(
+            'span',
+            { className: labelTextClassName },
+            label
+          )
+        );
       }
     }]);
     return SwitchLabel;

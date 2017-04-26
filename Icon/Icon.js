@@ -95,7 +95,7 @@ function Icon(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? Icon.propTypes = {
+Icon.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the button will use the theme's accent color.
    */
@@ -128,7 +128,7 @@ process.env.NODE_ENV !== "production" ? Icon.propTypes = {
    * If `true`, the button will use the theme's primary color.
    */
   primary: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 Icon.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired

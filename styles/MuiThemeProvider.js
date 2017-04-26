@@ -44,7 +44,7 @@ var _theme = require('./theme');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //  weak
-var MUI_SHEET_ORDER = exports.MUI_SHEET_ORDER = ['MuiLayout', 'MuiCollapse', 'MuiFade', 'MuiSlide', 'MuiBackdrop', 'MuiModal', 'MuiRipple', 'MuiTouchRipple', 'MuiButtonBase', 'MuiFormLabel', 'MuiFormGroup', 'MuiText', 'MuiPaper', 'MuiDivider', 'MuiPopover', 'MuiButton', 'MuiIconButton', 'MuiSvgIcon', 'MuiIcon', 'MuiSwitchBase', 'MuiSwitch', 'MuiCheckbox', 'MuiRadio', 'MuiRadioGroup', 'MuiSwitchLabel', 'MuiDialog', 'MuiDialogActions', 'MuiDialogContent', 'MuiDialogContentText', 'MuiDialogTitle', 'MuiTabIndicator', 'MuiTab', 'MuiTabs', 'MuiBottomNavigationButton', 'MuiBottomNavigation', 'MuiCircularProgress', 'MuiLinearProgress', 'MuiAppBar', 'MuiDrawer', 'MuiAvatar', 'MuiListItem', 'MuiListItemText', 'MuiListItemSecondaryAction', 'MuiListItemAvatar', 'MuiListItemIcon', 'MuiListSubheader', 'MuiList', 'MuiMenu', 'MuiMenuItem', 'MuiCardContent', 'MuiCardMedia', 'MuiCardActions', 'MuiCardHeader', 'MuiCard', 'MuiTextFieldLabel', 'MuiTextFieldInput', 'MuiTextField', 'MuiTable', 'MuiTableHead', 'MuiTableRow', 'MuiTableCell', 'MuiTableBody', 'MuiTableSortLabel', 'MuiToolbar', 'MuiBadge'];
+var MUI_SHEET_ORDER = exports.MUI_SHEET_ORDER = ['MuiLayout', 'MuiCollapse', 'MuiFade', 'MuiSlide', 'MuiBackdrop', 'MuiModal', 'MuiRipple', 'MuiTouchRipple', 'MuiButtonBase', 'MuiFormLabel', 'MuiFormGroup', 'MuiTypography', 'MuiPaper', 'MuiDivider', 'MuiPopover', 'MuiButton', 'MuiIconButton', 'MuiSvgIcon', 'MuiIcon', 'MuiSwitchBase', 'MuiSwitch', 'MuiCheckbox', 'MuiRadio', 'MuiRadioGroup', 'MuiSwitchLabel', 'MuiDialog', 'MuiDialogActions', 'MuiDialogContent', 'MuiDialogContentText', 'MuiDialogTitle', 'MuiTabIndicator', 'MuiTab', 'MuiTabs', 'MuiBottomNavigationButton', 'MuiBottomNavigation', 'MuiCircularProgress', 'MuiLinearProgress', 'MuiAppBar', 'MuiDrawer', 'MuiAvatar', 'MuiChip', 'MuiListItem', 'MuiListItemText', 'MuiListItemSecondaryAction', 'MuiListItemAvatar', 'MuiListItemIcon', 'MuiListSubheader', 'MuiList', 'MuiMenu', 'MuiMenuItem', 'MuiCardContent', 'MuiCardMedia', 'MuiCardActions', 'MuiCardHeader', 'MuiCard', 'MuiTextFieldLabel', 'MuiTextFieldInput', 'MuiTextField', 'MuiTable', 'MuiTableHead', 'MuiTableRow', 'MuiTableCell', 'MuiTableBody', 'MuiTableSortLabel', 'MuiToolbar', 'MuiBadge'];
 
 var MuiThemeProvider = function (_Component) {
   (0, _inherits3.default)(MuiThemeProvider, _Component);
@@ -130,8 +130,8 @@ MuiThemeProvider.childContextTypes = {
   theme: _propTypes2.default.object.isRequired
 };
 exports.default = MuiThemeProvider;
-process.env.NODE_ENV !== "production" ? MuiThemeProvider.propTypes = {
+MuiThemeProvider.propTypes = process.env.NODE_ENV !== "production" ? {
   children: _propTypes2.default.node.isRequired,
   styleManager: _propTypes2.default.object,
   theme: _propTypes2.default.object
-} : void 0;
+} : {};

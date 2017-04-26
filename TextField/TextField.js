@@ -8,10 +8,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -108,19 +104,19 @@ var TextField = function (_Component) {
           error: error,
           required: required
         }, other),
-        label && (0, _jsx3.default)(_Input.InputLabel, {
-          className: labelClassName
-        }, void 0, label),
+        label && _react2.default.createElement(
+          _Input.InputLabel,
+          { className: labelClassName },
+          label
+        ),
         _react2.default.createElement(_Input.Input, (0, _extends3.default)({
           className: inputClassName,
-          component: multiLine ? 'textarea' : 'input',
           defaultValue: defaultValue,
           disabled: disabled,
           multiLine: multiLine,
           name: name,
           rows: rows,
-          type: type,
-          value: value
+          type: type
         }, inputProps))
       );
     }
@@ -135,7 +131,7 @@ TextField.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = TextField;
-process.env.NODE_ENV !== "production" ? TextField.propTypes = {
+TextField.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the root element.
    */
@@ -196,4 +192,4 @@ process.env.NODE_ENV !== "production" ? TextField.propTypes = {
    * The value of the `Input` element, required for a controlled component.
    */
   value: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number])
-} : void 0;
+} : {};

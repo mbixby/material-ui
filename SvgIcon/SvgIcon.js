@@ -79,7 +79,7 @@ function SvgIcon(props, context) {
 
 SvgIcon.muiName = 'SvgIcon';
 
-process.env.NODE_ENV !== "production" ? SvgIcon.propTypes = {
+SvgIcon.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Elements passed into the SVG Icon.
    */
@@ -96,7 +96,7 @@ process.env.NODE_ENV !== "production" ? SvgIcon.propTypes = {
    * to bottom right (50,20) and each unit will be worth 10px.
    */
   viewBox: _propTypes2.default.string
-} : void 0;
+} : {};
 
 SvgIcon.defaultProps = {
   viewBox: '0 0 24 24'

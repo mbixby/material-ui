@@ -130,7 +130,7 @@ Fade.contextTypes = {
   theme: _customPropTypes2.default.muiRequired
 };
 exports.default = Fade;
-process.env.NODE_ENV !== "production" ? Fade.propTypes = {
+Fade.propTypes = process.env.NODE_ENV !== "production" ? {
   children: _propTypes2.default.node,
   /**
    * If `true`, the component will transition in.
@@ -167,4 +167,4 @@ process.env.NODE_ENV !== "production" ? Fade.propTypes = {
   /**
    * Callback fired when the component has exited.
    */
-  onExited: _propTypes2.default.func } : void 0;
+  onExited: _propTypes2.default.func } : {};

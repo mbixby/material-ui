@@ -82,7 +82,7 @@ function ListSubheader(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? ListSubheader.propTypes = {
+ListSubheader.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -99,7 +99,7 @@ process.env.NODE_ENV !== "production" ? ListSubheader.propTypes = {
    * If `true`, the List Subheader will have the theme primary color.
    */
   primary: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 ListSubheader.defaultProps = {
   inset: false,

@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -139,23 +135,27 @@ function IconButton(props, context) {
       ripple: !disableRipple,
       ref: buttonRef
     }, other),
-    (0, _jsx3.default)('span', {
-      className: classes.label
-    }, void 0, typeof children === 'string' ? (0, _jsx3.default)(_Icon2.default, {
-      className: iconClassName
-    }, void 0, children) : _react.Children.map(children, function (child) {
-      if (child.type && child.type.muiName === 'Icon') {
-        return (0, _react.cloneElement)(child, {
-          className: (0, _classnames2.default)(iconClassName, child.props.className)
-        });
-      }
+    _react2.default.createElement(
+      'span',
+      { className: classes.label },
+      typeof children === 'string' ? _react2.default.createElement(
+        _Icon2.default,
+        { className: iconClassName },
+        children
+      ) : _react.Children.map(children, function (child) {
+        if (child.type && child.type.muiName === 'Icon') {
+          return (0, _react.cloneElement)(child, {
+            className: (0, _classnames2.default)(iconClassName, child.props.className)
+          });
+        }
 
-      return child;
-    }))
+        return child;
+      })
+    )
   );
 }
 
-process.env.NODE_ENV !== "production" ? IconButton.propTypes = {
+IconButton.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, will use the theme's accent color.
    */
@@ -189,7 +189,7 @@ process.env.NODE_ENV !== "production" ? IconButton.propTypes = {
    * The CSS class name of the icon element if child is a string.
    */
   iconClassName: _propTypes2.default.string
-} : void 0;
+} : {};
 
 IconButton.defaultProps = {
   accent: false,

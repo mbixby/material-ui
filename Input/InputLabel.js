@@ -97,7 +97,7 @@ function InputLabel(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? InputLabel.propTypes = {
+InputLabel.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The contents of the `InputLabel`.
    */
@@ -126,7 +126,7 @@ process.env.NODE_ENV !== "production" ? InputLabel.propTypes = {
    * If `true`, the label is shrunk.
    */
   shrink: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 InputLabel.defaultProps = {
   disableAnimation: false

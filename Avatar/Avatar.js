@@ -54,6 +54,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       justifyContent: 'center',
       width: 40,
       height: 40,
+      fontFamily: theme.typography.fontFamily,
       fontSize: 20,
       borderRadius: '50%',
       overflow: 'hidden',
@@ -116,7 +117,7 @@ function Avatar(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? Avatar.propTypes = {
+Avatar.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Used in combination with `src` or `srcSet` to
    * provide an alt attribute for the rendered `img` element.
@@ -157,7 +158,7 @@ process.env.NODE_ENV !== "production" ? Avatar.propTypes = {
    * The `srcSet` attribute for the `img` element.
    */
   srcSet: _propTypes2.default.string
-} : void 0;
+} : {};
 
 Avatar.defaultProps = {
   alt: '',

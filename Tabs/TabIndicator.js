@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.styleSheet = undefined;
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
@@ -42,8 +38,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiTabIndicator', function (theme) {
   return {
     root: {
-      position: 'absolute',
-      bottom: 0,
+      position: 'relative',
       height: 2,
       marginTop: -2,
       transition: theme.transitions.create(),
@@ -67,16 +62,13 @@ function TabIndicator(props, context) {
     backgroundColor: indicatorColor
   }) : styleProp;
 
-  return (0, _jsx3.default)('div', {
-    className: className,
-    style: style
-  });
+  return _react2.default.createElement('div', { className: className, style: style });
 }
 
 /**
  * @ignore - internal component.
  */
-process.env.NODE_ENV !== "production" ? TabIndicator.propTypes = {
+TabIndicator.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * @ignore
    * The CSS class name of the root element.
@@ -95,7 +87,7 @@ process.env.NODE_ENV !== "production" ? TabIndicator.propTypes = {
     left: _propTypes2.default.number,
     width: _propTypes2.default.number
   }).isRequired
-} : void 0;
+} : {};
 
 TabIndicator.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired

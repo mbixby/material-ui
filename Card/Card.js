@@ -60,7 +60,7 @@ function Card(props, context) {
   return _react2.default.createElement(_Paper2.default, (0, _extends3.default)({ className: className, elevation: raised ? 8 : 2 }, other));
 }
 
-process.env.NODE_ENV !== "production" ? Card.propTypes = {
+Card.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the root element.
    */
@@ -69,7 +69,7 @@ process.env.NODE_ENV !== "production" ? Card.propTypes = {
    * If `true`, the card will use raised styling.
    */
   raised: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 Card.defaultProps = {
   raised: false

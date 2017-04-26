@@ -440,7 +440,7 @@ Transition.defaultProps = {
   onExiting: noop,
   onExited: noop
 };
-process.env.NODE_ENV !== "production" ? Transition.propTypes = propTypes : void 0;
+Transition.propTypes = process.env.NODE_ENV !== "production" ? propTypes : {};
 function noop() {}
 
 exports.default = Transition;

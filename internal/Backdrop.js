@@ -121,7 +121,7 @@ Backdrop.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = Backdrop;
-process.env.NODE_ENV !== "production" ? Backdrop.propTypes = {
+Backdrop.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Can be used, for instance, to render a letter inside the avatar.
    */
@@ -134,4 +134,4 @@ process.env.NODE_ENV !== "production" ? Backdrop.propTypes = {
    * If `true`, the backdrop is invisible.
    */
   invisible: _propTypes2.default.bool
-} : void 0;
+} : {};

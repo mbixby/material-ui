@@ -82,7 +82,7 @@ function Divider(props, context) {
   return _react2.default.createElement('hr', (0, _extends3.default)({ className: className }, other));
 }
 
-process.env.NODE_ENV !== "production" ? Divider.propTypes = {
+Divider.propTypes = process.env.NODE_ENV !== "production" ? {
   absolute: _propTypes2.default.bool,
   /**
    * The CSS class name of the root element.
@@ -96,7 +96,7 @@ process.env.NODE_ENV !== "production" ? Divider.propTypes = {
    * If `true`, the divider will have a lighter color.
    */
   light: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 Divider.defaultProps = {
   absolute: false,

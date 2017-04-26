@@ -13,10 +13,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
@@ -176,13 +172,14 @@ var TouchRipple = function (_Component) {
       }
 
       // Add a ripple to the ripples array
-      ripples = [].concat((0, _toConsumableArray3.default)(ripples), [(0, _jsx3.default)(_Ripple2.default, {
+      ripples = [].concat((0, _toConsumableArray3.default)(ripples), [_react2.default.createElement(_Ripple2.default, {
+        key: _this.state.nextKey,
         event: event,
         pulsate: pulsate,
         rippleX: rippleX,
         rippleY: rippleY,
         rippleSize: rippleSize
-      }, _this.state.nextKey)]);
+      })]);
 
       _this.setState({
         nextKey: _this.state.nextKey + 1,
@@ -247,7 +244,7 @@ TouchRipple.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = TouchRipple;
-process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
+TouchRipple.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the ripple starts at the center of the component
    * rather than at the point of interaction.
@@ -257,4 +254,4 @@ process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-} : void 0;
+} : {};

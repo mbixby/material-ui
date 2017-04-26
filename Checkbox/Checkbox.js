@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CheckboxDocs = exports.LabelCheckbox = exports.styleSheet = undefined;
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -57,13 +53,13 @@ exports.LabelCheckbox = LabelCheckbox;
  * allow the user to select multiple options from a set.
  */
 
-var _ref = (0, _jsx3.default)('span', {});
+var _ref = _react2.default.createElement('span', null);
 
 var CheckboxDocs = exports.CheckboxDocs = function CheckboxDocs() {
   return _ref;
 };
 
-process.env.NODE_ENV !== "production" ? CheckboxDocs.propTypes = {
+CheckboxDocs.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the component is checked.
    */
@@ -120,4 +116,4 @@ process.env.NODE_ENV !== "production" ? CheckboxDocs.propTypes = {
    * The value of the component.
    */
   value: _propTypes2.default.string
-} : void 0;
+} : {};

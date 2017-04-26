@@ -168,7 +168,7 @@ FormControl.childContextTypes = {
   muiFormControl: _propTypes2.default.object.isRequired
 };
 exports.default = FormControl;
-process.env.NODE_ENV !== "production" ? FormControl.propTypes = {
+FormControl.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The contents of the form control.
    */
@@ -185,4 +185,4 @@ process.env.NODE_ENV !== "production" ? FormControl.propTypes = {
    * If `true`, the label will indicate that the input is required.
    */
   required: _propTypes2.default.bool
-} : void 0;
+} : {};

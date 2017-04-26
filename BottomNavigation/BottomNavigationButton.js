@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -167,7 +163,11 @@ var BottomNavigationButton = function (_Component) {
 
       var iconClassName = (0, _classnames2.default)(classes.icon, (0, _react.isValidElement)(iconProp) ? iconProp.props.className : null);
 
-      var icon = (0, _react.isValidElement)(iconProp) ? (0, _react.cloneElement)(iconProp, { className: iconClassName }) : (0, _jsx3.default)(_Icon2.default, {}, void 0, iconProp);
+      var icon = (0, _react.isValidElement)(iconProp) ? (0, _react.cloneElement)(iconProp, { className: iconClassName }) : _react2.default.createElement(
+        _Icon2.default,
+        null,
+        iconProp
+      );
 
       var labelClassName = (0, _classnames2.default)(classes.label, (_classNames2 = {}, (0, _defineProperty3.default)(_classNames2, classes.selectedLabel, selected), (0, _defineProperty3.default)(_classNames2, classes.hiddenLabel, !showLabelProp && !selected), _classNames2));
 
@@ -180,9 +180,11 @@ var BottomNavigationButton = function (_Component) {
           onClick: this.handleChange
         }),
         icon,
-        (0, _jsx3.default)('span', {
-          className: labelClassName
-        }, void 0, label)
+        _react2.default.createElement(
+          'span',
+          { className: labelClassName },
+          label
+        )
       );
     }
   }]);
@@ -193,7 +195,7 @@ BottomNavigationButton.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = BottomNavigationButton;
-process.env.NODE_ENV !== "production" ? BottomNavigationButton.propTypes = {
+BottomNavigationButton.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the root element.
    */
@@ -226,4 +228,4 @@ process.env.NODE_ENV !== "production" ? BottomNavigationButton.propTypes = {
    * If `true`, the BottomNavigationButton will show its label.
    */
   showLabel: _propTypes2.default.bool
-} : void 0;
+} : {};

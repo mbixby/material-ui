@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -172,26 +168,36 @@ var Drawer = function (_Component) {
 
       var slideDirection = getSlideDirection(anchor);
 
-      var drawer = (0, _jsx3.default)(_Slide2.default, {
-        'in': open,
-        direction: slideDirection,
-        enterTransitionDuration: enterTransitionDuration,
-        leaveTransitionDuration: leaveTransitionDuration,
-        transitionAppear: true
-      }, void 0, (0, _jsx3.default)(_Paper2.default, {
-        elevation: docked ? 0 : elevation,
-        square: true,
-        className: (0, _classnames2.default)(classes.paper, classes[anchor], paperClassName)
-      }, void 0, children));
+      var drawer = _react2.default.createElement(
+        _Slide2.default,
+        {
+          'in': open,
+          direction: slideDirection,
+          enterTransitionDuration: enterTransitionDuration,
+          leaveTransitionDuration: leaveTransitionDuration,
+          transitionAppear: true
+        },
+        _react2.default.createElement(
+          _Paper2.default,
+          {
+            elevation: docked ? 0 : elevation,
+            square: true,
+            className: (0, _classnames2.default)(classes.paper, classes[anchor], paperClassName)
+          },
+          children
+        )
+      );
 
       var containerProps = (0, _extends3.default)({
         className: (0, _classnames2.default)(classes.modal, className)
       }, other);
 
       if (docked) {
-        return (0, _jsx3.default)('div', {
-          className: (0, _classnames2.default)(classes.docked, className)
-        }, void 0, drawer);
+        return _react2.default.createElement(
+          'div',
+          { className: (0, _classnames2.default)(classes.docked, className) },
+          drawer
+        );
       }
 
       return _react2.default.createElement(
@@ -220,7 +226,7 @@ Drawer.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = Drawer;
-process.env.NODE_ENV !== "production" ? Drawer.propTypes = {
+Drawer.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Side which will the drawer will appear from.
    */
@@ -262,4 +268,4 @@ process.env.NODE_ENV !== "production" ? Drawer.propTypes = {
    * The CSS class name of the paper element.
    */
   paperClassName: _propTypes2.default.string
-} : void 0;
+} : {};

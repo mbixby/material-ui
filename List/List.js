@@ -147,7 +147,7 @@ List.childContextTypes = {
   dense: _propTypes2.default.bool
 };
 exports.default = List;
-process.env.NODE_ENV !== "production" ? List.propTypes = {
+List.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -179,4 +179,4 @@ process.env.NODE_ENV !== "production" ? List.propTypes = {
    * The content of the component, normally `ListItem`.
    */
   subheader: _propTypes2.default.node
-} : void 0;
+} : {};

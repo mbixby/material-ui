@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.styleSheet = undefined;
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -212,12 +208,11 @@ var Ripple = function (_Component) {
 
       var rippleStyles = this.getRippleStyles();
 
-      return (0, _jsx3.default)('span', {
-        className: containerClasses
-      }, void 0, (0, _jsx3.default)('span', {
-        className: rippleClassName,
-        style: rippleStyles
-      }));
+      return _react2.default.createElement(
+        'span',
+        { className: containerClasses },
+        _react2.default.createElement('span', { className: rippleClassName, style: rippleStyles })
+      );
     }
   }]);
   return Ripple;
@@ -230,7 +225,7 @@ Ripple.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = Ripple;
-process.env.NODE_ENV !== "production" ? Ripple.propTypes = {
+Ripple.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the root element.
    */
@@ -251,4 +246,4 @@ process.env.NODE_ENV !== "production" ? Ripple.propTypes = {
    * Vertical position of the ripple center.
    */
   rippleY: _propTypes2.default.number.isRequired
-} : void 0;
+} : {};

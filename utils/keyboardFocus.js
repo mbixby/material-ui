@@ -38,10 +38,10 @@ function detectKeyboardFocus(instance, element, cb) {
   instance.keyboardFocusTimeout = setTimeout(function () {
     if (focusKeyPressed() && (document.activeElement === element || (0, _contains2.default)(element, document.activeElement))) {
       cb();
-    } else if (attempt < 5) {
+    } else if (attempt < instance.keyboardFocusMaxCheckTimes) {
       detectKeyboardFocus(instance, element, cb, attempt + 1);
     }
-  }, 40);
+  }, instance.keyboardFocusCheckTime);
 }
 
 function listenForFocusKeys() {

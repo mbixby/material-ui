@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -65,7 +61,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
   var deleteIconColor = (0, _colorManipulator.fade)(palette.text.primary, 0.26);
   return {
     root: {
-      fontFamily: 'inherit', // Override `button` default system font
+      fontFamily: theme.typography.fontFamily,
       fontSize: 13,
       display: 'flex',
       alignItems: 'center',
@@ -182,10 +178,7 @@ function Chip(props, context) {
   var deleteIcon = null;
   if (onRequestDelete) {
     var deleteIconClassName = (0, _classnames2.default)(classes.deleteIcon, deleteIconClassNameProp);
-    deleteIcon = (0, _jsx3.default)(_cancel2.default, {
-      className: deleteIconClassName,
-      onClick: handleDeleteIconClick
-    });
+    deleteIcon = _react2.default.createElement(_cancel2.default, { className: deleteIconClassName, onClick: handleDeleteIconClick });
   }
 
   var avatar = null;
@@ -210,14 +203,16 @@ function Chip(props, context) {
       }
     }, other),
     avatar,
-    (0, _jsx3.default)('span', {
-      className: labelClassName
-    }, void 0, label),
+    _react2.default.createElement(
+      'span',
+      { className: labelClassName },
+      label
+    ),
     deleteIcon
   );
 }
 
-process.env.NODE_ENV !== "production" ? Chip.propTypes = {
+Chip.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Avatar element.
    */
@@ -256,7 +251,7 @@ process.env.NODE_ENV !== "production" ? Chip.propTypes = {
    * @ignore
    */
   tabIndex: _propTypes2.default.number
-} : void 0;
+} : {};
 
 Chip.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired

@@ -140,7 +140,7 @@ MenuItem.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = MenuItem;
-process.env.NODE_ENV !== "production" ? MenuItem.propTypes = {
+MenuItem.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Menu item contents.
    */
@@ -162,4 +162,4 @@ process.env.NODE_ENV !== "production" ? MenuItem.propTypes = {
    * Use to apply selected styling.
    */
   selected: _propTypes2.default.bool
-} : void 0;
+} : {};

@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -106,18 +102,17 @@ function Switch(props, context) {
 
 
   var classes = context.styleManager.render(styleSheet);
-  var icon = (0, _jsx3.default)('div', {
-    className: classes.icon
-  });
+  var icon = _react2.default.createElement('div', { className: classes.icon });
 
-  return (0, _jsx3.default)('div', {
-    className: (0, _classnames2.default)(classes.root, className)
-  }, void 0, _react2.default.createElement(SwitchBase, (0, _extends3.default)({ icon: icon, checkedIcon: icon }, other)), (0, _jsx3.default)('div', {
-    className: classes.bar
-  }));
+  return _react2.default.createElement(
+    'div',
+    { className: (0, _classnames2.default)(classes.root, className) },
+    _react2.default.createElement(SwitchBase, (0, _extends3.default)({ icon: icon, checkedIcon: icon }, other)),
+    _react2.default.createElement('div', { className: classes.bar })
+  );
 }
 
-process.env.NODE_ENV !== "production" ? Switch.propTypes = {
+Switch.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the component appears selected.
    */
@@ -173,7 +168,7 @@ process.env.NODE_ENV !== "production" ? Switch.propTypes = {
    * The value of the component.
    */
   value: _propTypes2.default.string
-} : void 0;
+} : {};
 
 Switch.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired

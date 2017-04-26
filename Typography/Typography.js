@@ -17,7 +17,7 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = Text;
+exports.default = Typography;
 
 var _react = require('react');
 
@@ -39,7 +39,19 @@ var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiText', function (theme) {
+var headlineMapping = {
+  display4: 'h1',
+  display3: 'h1',
+  display2: 'h1',
+  display1: 'h1',
+  headline: 'h1',
+  title: 'h2',
+  subheading: 'h3',
+  body2: 'aside',
+  body1: 'p'
+}; //  weak
+
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiTypography', function (theme) {
   return {
     text: {
       display: 'block',
@@ -86,9 +98,9 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       color: theme.palette.text.secondary
     }
   };
-}); //  weak
+});
 
-function Text(props, context) {
+function Typography(props, context) {
   var _classNames;
 
   var align = props.align,
@@ -106,12 +118,12 @@ function Text(props, context) {
 
   var className = (0, _classnames2.default)(classes.text, classes[type], (_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.colorInherit, colorInherit), (0, _defineProperty3.default)(_classNames, classes.noWrap, noWrap), (0, _defineProperty3.default)(_classNames, classes.secondary, secondary), (0, _defineProperty3.default)(_classNames, classes.gutterBottom, gutterBottom), (0, _defineProperty3.default)(_classNames, classes.paragraph, paragraph), (0, _defineProperty3.default)(_classNames, classes['align-' + align], align), _classNames), classNameProp);
 
-  var Component = paragraph ? 'p' : componentProp;
+  var Component = componentProp || (paragraph ? 'p' : headlineMapping[type]) || 'span';
 
   return _react2.default.createElement(Component, (0, _extends3.default)({ className: className }, other));
 }
 
-process.env.NODE_ENV !== "production" ? Text.propTypes = {
+Typography.propTypes = process.env.NODE_ENV !== "production" ? {
   align: _propTypes2.default.oneOf(['left', 'center', 'right', 'justify']),
   children: _propTypes2.default.node,
   /**
@@ -125,6 +137,7 @@ process.env.NODE_ENV !== "production" ? Text.propTypes = {
   /**
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
+   * By default we map the type to a good default headline component.
    */
   component: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.func]),
   /**
@@ -147,11 +160,10 @@ process.env.NODE_ENV !== "production" ? Text.propTypes = {
    * Applies the theme typography styles.
    */
   type: _propTypes2.default.oneOf(['display4', 'display3', 'display2', 'display1', 'headline', 'title', 'subheading', 'body2', 'body1', 'caption', 'button'])
-} : void 0;
+} : {};
 
-Text.defaultProps = {
+Typography.defaultProps = {
   colorInherit: false,
-  component: 'span',
   gutterBottom: false,
   noWrap: false,
   paragraph: false,
@@ -159,6 +171,6 @@ Text.defaultProps = {
   type: 'body1'
 };
 
-Text.contextTypes = {
+Typography.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };

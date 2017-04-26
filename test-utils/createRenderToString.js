@@ -3,11 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 exports.default = createRenderToString;
 
 var _jss = require('jss');
@@ -37,10 +32,11 @@ function createRenderToString() {
   var jss = (0, _jss.create)((0, _jssPresetDefault2.default)());
   var styleManager = (0, _jssThemeReactor.createStyleManager)({ jss: jss, theme: theme });
   var renderToStringWithContext = function renderToStringWithContext(node) {
-    return (0, _server.renderToString)((0, _jsx3.default)(_MuiThemeProvider2.default, {
-      theme: theme,
-      styleManager: styleManager
-    }, void 0, node));
+    return (0, _server.renderToString)(_react2.default.createElement(
+      _MuiThemeProvider2.default,
+      { theme: theme, styleManager: styleManager },
+      node
+    ));
   };
 
   renderToStringWithContext.cleanUp = function () {

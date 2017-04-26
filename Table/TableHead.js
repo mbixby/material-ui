@@ -119,7 +119,7 @@ TableHead.contextTypes = {
 };
 TableHead.childContextTypes = { table: _propTypes2.default.object };
 exports.default = TableHead;
-process.env.NODE_ENV !== "production" ? TableHead.propTypes = {
+TableHead.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Should be valid `<thead>` children such as `TableRow`.
    */
@@ -128,4 +128,4 @@ process.env.NODE_ENV !== "production" ? TableHead.propTypes = {
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-} : void 0;
+} : {};

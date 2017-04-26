@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -159,32 +155,36 @@ var Menu = function (_Component) {
 
       var classes = this.context.styleManager.render(styleSheet);
 
-      return (0, _jsx3.default)(_Popover2.default, {
-        anchorEl: anchorEl,
-        getContentAnchorEl: this.getContentAnchorEl,
-        className: classes.popover,
-        open: open,
-        enteredClassName: classes.entered,
-        onEnter: this.handleEnter,
-        onEntering: onEntering,
-        onEntered: onEntered,
-        onExiting: onExiting,
-        onExit: onExit,
-        onExited: onExited,
-        onRequestClose: onRequestClose,
-        transitionDuration: transitionDuration
-      }, void 0, _react2.default.createElement(
-        _MenuList2.default,
-        (0, _extends3.default)({
-          role: 'menu',
-          ref: function ref(c) {
-            _this2.menuList = c;
-          },
-          className: className,
-          onKeyDown: this.handleListKeyDown
-        }, other),
-        children
-      ));
+      return _react2.default.createElement(
+        _Popover2.default,
+        {
+          anchorEl: anchorEl,
+          getContentAnchorEl: this.getContentAnchorEl,
+          className: classes.popover,
+          open: open,
+          enteredClassName: classes.entered,
+          onEnter: this.handleEnter,
+          onEntering: onEntering,
+          onEntered: onEntered,
+          onExiting: onExiting,
+          onExit: onExit,
+          onExited: onExited,
+          onRequestClose: onRequestClose,
+          transitionDuration: transitionDuration
+        },
+        _react2.default.createElement(
+          _MenuList2.default,
+          (0, _extends3.default)({
+            role: 'menu',
+            ref: function ref(c) {
+              _this2.menuList = c;
+            },
+            className: className,
+            onKeyDown: this.handleListKeyDown
+          }, other),
+          children
+        )
+      );
     }
   }]);
   return Menu;
@@ -198,7 +198,7 @@ Menu.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = Menu;
-process.env.NODE_ENV !== "production" ? Menu.propTypes = {
+Menu.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The DOM element used to set the position of the menu.
    */
@@ -249,4 +249,4 @@ process.env.NODE_ENV !== "production" ? Menu.propTypes = {
    * The length of the transition in `ms`, or 'auto'
    */
   transitionDuration: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
-} : void 0;
+} : {};

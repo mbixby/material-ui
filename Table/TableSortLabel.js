@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -121,13 +117,11 @@ function TableSortLabel(props, context) {
       ripple: false
     }, other),
     children,
-    (0, _jsx3.default)(_arrowDownward2.default, {
-      className: iconClasses
-    })
+    _react2.default.createElement(_arrowDownward2.default, { className: iconClasses })
   );
 }
 
-process.env.NODE_ENV !== "production" ? TableSortLabel.propTypes = {
+TableSortLabel.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the label will have the active styling (should be true for the sorted column).
    */
@@ -144,7 +138,7 @@ process.env.NODE_ENV !== "production" ? TableSortLabel.propTypes = {
    * The current sort direction.
    */
   direction: _propTypes2.default.oneOf(['asc', 'desc'])
-} : void 0;
+} : {};
 
 TableSortLabel.defaultProps = {
   active: false,

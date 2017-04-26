@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.styleSheet = undefined;
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
@@ -169,13 +165,16 @@ var ListItem = function (_Component) {
 
       if (children.length && children[children.length - 1].type && children[children.length - 1].type.muiName === 'ListItemSecondaryAction') {
         var secondaryAction = children.pop();
-        return (0, _jsx3.default)('div', {
-          className: classes.listItemContainer
-        }, void 0, _react2.default.createElement(
-          ComponentMain,
-          listItemProps,
-          children
-        ), secondaryAction);
+        return _react2.default.createElement(
+          'div',
+          { className: classes.listItemContainer },
+          _react2.default.createElement(
+            ComponentMain,
+            listItemProps,
+            children
+          ),
+          secondaryAction
+        );
       }
 
       return _react2.default.createElement(
@@ -204,7 +203,7 @@ ListItem.childContextTypes = {
   dense: _propTypes2.default.bool
 };
 exports.default = ListItem;
-process.env.NODE_ENV !== "production" ? ListItem.propTypes = {
+ListItem.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the ListItem will be a button.
    */
@@ -238,4 +237,4 @@ process.env.NODE_ENV !== "production" ? ListItem.propTypes = {
    * If `true`, a 1px light border is added to the bottom of the list item.
    */
   divider: _propTypes2.default.bool
-} : void 0;
+} : {};

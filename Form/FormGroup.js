@@ -75,7 +75,7 @@ function FormGroup(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? FormGroup.propTypes = {
+FormGroup.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -88,7 +88,7 @@ process.env.NODE_ENV !== "production" ? FormGroup.propTypes = {
    * Display group of elements in a compact row.
    */
   row: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 FormGroup.defaultProps = {
   row: false

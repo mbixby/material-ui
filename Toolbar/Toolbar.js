@@ -72,7 +72,7 @@ function Toolbar(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? Toolbar.propTypes = {
+Toolbar.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Can be a `ToolbarGroup` to render a group of related items.
    */
@@ -85,7 +85,7 @@ process.env.NODE_ENV !== "production" ? Toolbar.propTypes = {
    * If `true`, disables gutter padding.
    */
   disableGutters: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 Toolbar.defaultProps = {
   disableGutters: false

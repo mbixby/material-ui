@@ -54,12 +54,12 @@ function CardMedia(props, context) {
   return _react2.default.createElement('div', (0, _extends3.default)({ className: className }, other));
 }
 
-process.env.NODE_ENV !== "production" ? CardMedia.propTypes = {
+CardMedia.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-} : void 0;
+} : {};
 
 CardMedia.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired

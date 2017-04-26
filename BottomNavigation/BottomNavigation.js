@@ -73,7 +73,7 @@ function BottomNavigation(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? BottomNavigation.propTypes = {
+BottomNavigation.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -95,7 +95,7 @@ process.env.NODE_ENV !== "production" ? BottomNavigation.propTypes = {
    * By default only the selected `BottomNavigationButton` will show its label.
    */
   showLabels: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 BottomNavigation.defaultProps = {
   showLabels: false

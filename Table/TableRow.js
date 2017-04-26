@@ -101,7 +101,7 @@ function TableRow(props, context) {
   );
 }
 
-process.env.NODE_ENV !== "production" ? TableRow.propTypes = {
+TableRow.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Should be valid `<tr>` children such as `TableCell`.
    */
@@ -118,7 +118,7 @@ process.env.NODE_ENV !== "production" ? TableRow.propTypes = {
    * If `true`, the table row will have the selected shading.
    */
   selected: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 TableRow.defaultProps = {
   hover: false,

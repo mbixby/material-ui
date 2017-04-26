@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -149,7 +145,9 @@ function withWidth() {
       }, {
         key: 'render',
         value: function render() {
-          var width = this.state.width;
+          var props = (0, _extends3.default)({
+            width: this.state.width
+          }, this.props);
 
           /**
            * When rendering the component on the server,
@@ -161,16 +159,15 @@ function withWidth() {
            * But the browser support of this API is low:
            * http://caniuse.com/#search=client%20hint
            */
-          if (width === null) {
+          if (props.width === null) {
             return null;
           }
 
-          return (0, _jsx3.default)(_reactEventListener2.default, {
-            target: 'window',
-            onResize: this.handleResize
-          }, void 0, factory((0, _extends3.default)({
-            width: width
-          }, this.props)));
+          return _react2.default.createElement(
+            _reactEventListener2.default,
+            { target: 'window', onResize: this.handleResize },
+            factory(props)
+          );
         }
       }]);
       return WithWidth;

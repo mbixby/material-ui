@@ -13,10 +13,6 @@ var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -193,10 +189,14 @@ var Dialog = function (_Component) {
           onRequestClose: onRequestClose,
           show: open
         }, other),
-        createTransitionFn(transition, transitionProps, (0, _jsx3.default)(_Paper2.default, {
-          elevation: 24,
-          className: (0, _classnames2.default)(classes.dialog, classes['dialogWidth-' + maxWidth], paperClassName, (0, _defineProperty3.default)({}, classes.fullScreen, fullScreen))
-        }, void 0, children))
+        createTransitionFn(transition, transitionProps, _react2.default.createElement(
+          _Paper2.default,
+          {
+            elevation: 24,
+            className: (0, _classnames2.default)(classes.dialog, classes['dialogWidth-' + maxWidth], paperClassName, (0, _defineProperty3.default)({}, classes.fullScreen, fullScreen))
+          },
+          children
+        ))
       );
     }
   }]);
@@ -217,7 +217,7 @@ Dialog.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = Dialog;
-process.env.NODE_ENV !== "production" ? Dialog.propTypes = {
+Dialog.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Dialog children, usually the included sub-components.
    */
@@ -227,7 +227,7 @@ process.env.NODE_ENV !== "production" ? Dialog.propTypes = {
    */
   className: _propTypes2.default.string,
   /**
-   * If `true`, The dialog will be full-screen.
+   * If `true`, the dialog will be full-screen.
    */
   fullScreen: _propTypes2.default.bool,
   /**
@@ -301,4 +301,4 @@ process.env.NODE_ENV !== "production" ? Dialog.propTypes = {
    * Transition component.
    */
   transition: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.element])
-} : void 0;
+} : {};

@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -47,6 +43,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
   var focusColor = theme.palette.primary.A200;
   return {
     root: {
+      fontFamily: theme.typography.fontFamily,
       color: theme.palette.text.secondary,
       lineHeight: 1
     },
@@ -98,13 +95,15 @@ function FormLabel(props, context) {
     'label',
     (0, _extends3.default)({ className: className }, other),
     children,
-    required && (0, _jsx3.default)('span', {
-      className: asteriskClassName
-    }, void 0, '\u2009*')
+    required && _react2.default.createElement(
+      'span',
+      { className: asteriskClassName },
+      '\u2009*'
+    )
   );
 }
 
-process.env.NODE_ENV !== "production" ? FormLabel.propTypes = {
+FormLabel.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -125,7 +124,7 @@ process.env.NODE_ENV !== "production" ? FormLabel.propTypes = {
    * If `true`, the label will indicate that the input is required.
    */
   required: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 FormLabel.contextTypes = {
   muiFormControl: _propTypes2.default.object,

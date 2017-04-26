@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -37,9 +33,9 @@ var _customPropTypes = require('../utils/customPropTypes');
 
 var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
 
-var _Text = require('../Text');
+var _Typography = require('../Typography');
 
-var _Text2 = _interopRequireDefault(_Text);
+var _Typography2 = _interopRequireDefault(_Typography);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59,7 +55,8 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
 function DialogTitle(props, context) {
   var children = props.children,
       className = props.className,
-      other = (0, _objectWithoutProperties3.default)(props, ['children', 'className']);
+      disableTypography = props.disableTypography,
+      other = (0, _objectWithoutProperties3.default)(props, ['children', 'className', 'disableTypography']);
 
 
   var classes = context.styleManager.render(styleSheet);
@@ -69,13 +66,15 @@ function DialogTitle(props, context) {
     (0, _extends3.default)({
       className: (0, _classnames2.default)(classes.root, className)
     }, other),
-    typeof children === 'string' ? (0, _jsx3.default)(_Text2.default, {
-      type: 'title'
-    }, void 0, children) : children
+    disableTypography ? children : _react2.default.createElement(
+      _Typography2.default,
+      { type: 'title' },
+      children
+    )
   );
 }
 
-process.env.NODE_ENV !== "production" ? DialogTitle.propTypes = {
+DialogTitle.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
@@ -83,8 +82,17 @@ process.env.NODE_ENV !== "production" ? DialogTitle.propTypes = {
   /**
    * The CSS class name of the root element.
    */
-  className: _propTypes2.default.string
-} : void 0;
+  className: _propTypes2.default.string,
+  /**
+   * If `true`, the children won't be wrapped by a typography component.
+   * For instance, that can be usefull to can render an h4 instead of a
+   */
+  disableTypography: _propTypes2.default.bool
+} : {};
+
+DialogTitle.defaultProps = {
+  disableTypography: false
+};
 
 DialogTitle.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired

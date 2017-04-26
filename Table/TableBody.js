@@ -118,7 +118,7 @@ TableBody.contextTypes = {
 };
 TableBody.childContextTypes = { table: _propTypes2.default.object };
 exports.default = TableBody;
-process.env.NODE_ENV !== "production" ? TableBody.propTypes = {
+TableBody.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component, normally `TableRow`.
    */
@@ -127,4 +127,4 @@ process.env.NODE_ENV !== "production" ? TableBody.propTypes = {
    * The CSS class name of the root element.
    */
   className: _propTypes2.default.string
-} : void 0;
+} : {};

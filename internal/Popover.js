@@ -9,10 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -197,7 +193,7 @@ var Popover = function (_Component) {
         return (_this.autoTransitionDuration || 0) + 20;
       }
       return _this.props.transitionDuration + 20;
-    }, _this.handleGetOffsetTop = getOffsetTop, _this.handleGetOffsetLeft = getOffsetLeft, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+    }, _this.marginThreshold = 16, _this.handleGetOffsetTop = getOffsetTop, _this.handleGetOffsetLeft = getOffsetLeft, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(Popover, [{
@@ -222,13 +218,12 @@ var Popover = function (_Component) {
       var right = left + elemRect.width;
 
       // Window thresholds taking required margin into account
-      var marginThreshold = 16;
-      var heightThreshold = window.innerHeight - marginThreshold;
-      var widthThreshold = window.innerWidth - marginThreshold;
+      var heightThreshold = window.innerHeight - this.marginThreshold;
+      var widthThreshold = window.innerWidth - this.marginThreshold;
 
       // Check if the vertical axis needs shifting
-      if (top < marginThreshold) {
-        var diff = top - marginThreshold;
+      if (top < this.marginThreshold) {
+        var diff = top - this.marginThreshold;
         top -= diff;
         transformOrigin.vertical += diff;
       } else if (bottom > heightThreshold) {
@@ -238,8 +233,8 @@ var Popover = function (_Component) {
       }
 
       // Check if the horizontal axis needs shifting
-      if (left < marginThreshold) {
-        var _diff2 = left - marginThreshold;
+      if (left < this.marginThreshold) {
+        var _diff2 = left - this.marginThreshold;
         left -= _diff2;
         transformOrigin.horizontal += _diff2;
       } else if (right > widthThreshold) {
@@ -344,33 +339,41 @@ var Popover = function (_Component) {
 
       var classes = this.context.styleManager.render(styleSheet);
 
-      return (0, _jsx3.default)(_Modal2.default, {
-        show: open,
-        backdropInvisible: true,
-        onRequestClose: onRequestClose
-      }, void 0, (0, _jsx3.default)(_Transition2.default, {
-        'in': open,
-        enteredClassName: enteredClassName,
-        enteringClassName: enteringClassName,
-        exitedClassName: exitedClassName,
-        exitingClassName: exitingClassName,
-        onEnter: this.handleEnter,
-        onEntering: this.handleEntering,
-        onEntered: onEntered,
-        onExit: this.handleExit,
-        onExiting: onExiting,
-        onExited: onExited,
-        role: role,
-        onRequestTimeout: this.handleRequestTimeout,
-        transitionAppear: true
-      }, void 0, _react2.default.createElement(
-        _Paper2.default,
-        (0, _extends3.default)({
-          className: (0, _classnames2.default)(classes.popover, className),
-          elevation: elevation
-        }, other),
-        children
-      )));
+      return _react2.default.createElement(
+        _Modal2.default,
+        {
+          show: open,
+          backdropInvisible: true,
+          onRequestClose: onRequestClose
+        },
+        _react2.default.createElement(
+          _Transition2.default,
+          {
+            'in': open,
+            enteredClassName: enteredClassName,
+            enteringClassName: enteringClassName,
+            exitedClassName: exitedClassName,
+            exitingClassName: exitingClassName,
+            onEnter: this.handleEnter,
+            onEntering: this.handleEntering,
+            onEntered: onEntered,
+            onExit: this.handleExit,
+            onExiting: onExiting,
+            onExited: onExited,
+            role: role,
+            onRequestTimeout: this.handleRequestTimeout,
+            transitionAppear: true
+          },
+          _react2.default.createElement(
+            _Paper2.default,
+            (0, _extends3.default)({
+              className: (0, _classnames2.default)(classes.popover, className),
+              elevation: elevation
+            }, other),
+            children
+          )
+        )
+      );
     }
   }], [{
     key: 'getScale',
@@ -399,7 +402,7 @@ Popover.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = Popover;
-process.env.NODE_ENV !== "production" ? Popover.propTypes = {
+Popover.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * This is the DOM element that will be used
    * to set the position of the popover.
@@ -495,4 +498,4 @@ process.env.NODE_ENV !== "production" ? Popover.propTypes = {
    * Set to 'auto' to automatically calculate transition time based on height
    */
   transitionDuration: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
-} : void 0;
+} : {};

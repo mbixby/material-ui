@@ -9,10 +9,6 @@ var _keys = require('babel-runtime/core-js/object/keys');
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _jsx2 = require('babel-runtime/helpers/jsx');
-
-var _jsx3 = _interopRequireDefault(_jsx2);
-
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -82,9 +78,9 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       minWidth: 72
     }, (0, _defineProperty3.default)(_extends2, theme.breakpoints.up('md'), {
       minWidth: 160
-    }), (0, _defineProperty3.default)(_extends2, 'background', 'none'), (0, _defineProperty3.default)(_extends2, 'padding', 0), (0, _defineProperty3.default)(_extends2, 'minHeight', 48), _extends2)),
+    }), (0, _defineProperty3.default)(_extends2, 'background', 'none'), (0, _defineProperty3.default)(_extends2, 'padding', 0), (0, _defineProperty3.default)(_extends2, 'height', 48), (0, _defineProperty3.default)(_extends2, 'flex', 'none'), (0, _defineProperty3.default)(_extends2, 'overflow', 'hidden'), _extends2)),
     rootLabelIcon: {
-      minHeight: 72
+      height: 72
     },
     rootAccent: {
       color: theme.palette.text.secondary
@@ -105,20 +101,29 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
     rootInheritDisabled: {
       opacity: 0.4
     },
+    fullWidth: {
+      flex: '1 0 0'
+    },
+    labelContainer: (0, _defineProperty3.default)({
+      paddingTop: 6,
+      paddingBottom: 6,
+      paddingLeft: 12,
+      paddingRight: 12
+    }, theme.breakpoints.up('md'), {
+      paddingLeft: theme.spacing.unit * 3,
+      paddingRight: theme.spacing.unit * 3
+    }),
     label: (0, _defineProperty3.default)({
       fontSize: theme.typography.fontSize,
       fontWeight: theme.typography.fontWeightMedium,
       fontFamily: theme.typography.fontFamily,
       textTransform: 'uppercase',
-      paddingLeft: 12,
-      paddingRight: 12,
-      paddingTop: 6,
-      paddingBottom: 6,
-      display: 'block'
-    }, theme.breakpoints.up('sm'), {
-      paddingLeft: 24,
-      paddingRight: 24,
+      whiteSpace: 'normal'
+    }, theme.breakpoints.up('md'), {
       fontSize: theme.typography.fontSize - 1
+    }),
+    labelWrapped: (0, _defineProperty3.default)({}, theme.breakpoints.down('md'), {
+      fontSize: theme.typography.fontSize - 2
     })
   };
 }); //  weak
@@ -137,7 +142,9 @@ var Tab = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Tab.__proto__ || (0, _getPrototypeOf2.default)(Tab)).call.apply(_ref, [this].concat(args))), _this), _this.handleChange = function (event) {
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Tab.__proto__ || (0, _getPrototypeOf2.default)(Tab)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      wrappedText: false
+    }, _this.handleChange = function (event) {
       var _this$props = _this.props,
           onChange = _this$props.onChange,
           index = _this$props.index,
@@ -149,13 +156,31 @@ var Tab = function (_Component) {
       if (onClick) {
         onClick(event);
       }
+    }, _this.label = undefined, _this.checkTextWrap = function () {
+      if (_this.label) {
+        var wrappedText = _this.label.getClientRects().length > 1;
+        if (_this.state.wrappedText !== wrappedText) {
+          _this.setState({ wrappedText: wrappedText });
+        }
+      }
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(Tab, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.checkTextWrap();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.checkTextWrap();
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _classNames;
+      var _this2 = this,
+          _classNames2;
 
       var _props = this.props,
           classNameProp = _props.className,
@@ -177,24 +202,35 @@ var Tab = function (_Component) {
       var icon = void 0;
 
       if (iconProp !== undefined) {
-        icon = (0, _react.isValidElement)(iconProp) ? iconProp : (0, _jsx3.default)(_Icon2.default, {}, void 0, iconProp);
+        icon = (0, _react.isValidElement)(iconProp) ? iconProp : _react2.default.createElement(
+          _Icon2.default,
+          null,
+          iconProp
+        );
       }
 
       var label = void 0;
 
       if (labelProp !== undefined) {
-        label = (0, _jsx3.default)('span', {
-          className: (0, _classnames2.default)(classes.label, labelClassName)
-        }, void 0, labelProp);
+        label = _react2.default.createElement(
+          'div',
+          { className: classes.labelContainer },
+          _react2.default.createElement(
+            'span',
+            {
+              className: (0, _classnames2.default)(classes.label, (0, _defineProperty3.default)({}, classes.labelWrapped, this.state.wrappedText), labelClassName),
+              ref: function ref(node) {
+                _this2.label = node;
+              }
+            },
+            labelProp
+          )
+        );
       }
 
-      var className = (0, _classnames2.default)(classes.root, (_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.rootAccent, textColor === 'accent'), (0, _defineProperty3.default)(_classNames, classes.rootAccentDisabled, disabled && textColor === 'accent'), (0, _defineProperty3.default)(_classNames, classes.rootAccentSelected, selected && textColor === 'accent'), (0, _defineProperty3.default)(_classNames, classes.rootInherit, textColor === 'inherit'), (0, _defineProperty3.default)(_classNames, classes.rootInheritDisabled, disabled && textColor === 'inherit'), (0, _defineProperty3.default)(_classNames, classes.rootInheritSelected, selected && textColor === 'inherit'), (0, _defineProperty3.default)(_classNames, classes.rootLabelIcon, icon && label), _classNames), classNameProp);
+      var className = (0, _classnames2.default)(classes.root, (_classNames2 = {}, (0, _defineProperty3.default)(_classNames2, classes.rootAccent, textColor === 'accent'), (0, _defineProperty3.default)(_classNames2, classes.rootAccentDisabled, disabled && textColor === 'accent'), (0, _defineProperty3.default)(_classNames2, classes.rootAccentSelected, selected && textColor === 'accent'), (0, _defineProperty3.default)(_classNames2, classes.rootInherit, textColor === 'inherit'), (0, _defineProperty3.default)(_classNames2, classes.rootInheritDisabled, disabled && textColor === 'inherit'), (0, _defineProperty3.default)(_classNames2, classes.rootInheritSelected, selected && textColor === 'inherit'), (0, _defineProperty3.default)(_classNames2, classes.rootLabelIcon, icon && label), (0, _defineProperty3.default)(_classNames2, classes.fullWidth, fullWidth), _classNames2), classNameProp);
 
       var style = {};
-
-      if (fullWidth) {
-        style.width = '100%';
-      }
 
       if (textColor !== 'accent' && textColor !== 'inherit') {
         style.color = textColor;
@@ -229,7 +265,7 @@ Tab.contextTypes = {
   styleManager: _customPropTypes2.default.muiRequired
 };
 exports.default = Tab;
-process.env.NODE_ENV !== "production" ? Tab.propTypes = {
+Tab.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the root element.
    */
@@ -278,4 +314,4 @@ process.env.NODE_ENV !== "production" ? Tab.propTypes = {
    * @ignore
    */
   textColor: _propTypes2.default.oneOfType([_propTypes2.default.oneOf(['accent', 'inherit']), _propTypes2.default.string])
-} : void 0;
+} : {};

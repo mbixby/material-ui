@@ -461,7 +461,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Modal;
-process.env.NODE_ENV !== "production" ? Modal.propTypes = {
+Modal.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the backdrop element.
    */
@@ -542,4 +542,4 @@ process.env.NODE_ENV !== "production" ? Modal.propTypes = {
    * If `true`, the Modal is visible.
    */
   show: _propTypes2.default.bool
-} : void 0;
+} : {};

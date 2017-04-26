@@ -85,7 +85,7 @@ function Paper(props, context) {
   return _react2.default.createElement('div', (0, _extends3.default)({ className: className }, other));
 }
 
-process.env.NODE_ENV !== "production" ? Paper.propTypes = {
+Paper.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The CSS class name of the root element.
    */
@@ -98,7 +98,7 @@ process.env.NODE_ENV !== "production" ? Paper.propTypes = {
    * If `true`, rounded corners are disabled.
    */
   square: _propTypes2.default.bool
-} : void 0;
+} : {};
 
 Paper.defaultProps = {
   elevation: 2,
