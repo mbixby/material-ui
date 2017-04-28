@@ -69,6 +69,18 @@ var _Paper2 = _interopRequireDefault(_Paper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function getScrollParent(node, until) {
+  if (node === null || node === until) {
+    return null;
+  }
+
+  if (node.scrollHeight > node.clientHeight) {
+    return node;
+  } else {
+    return getScrollParent(node.parentNode);
+  }
+} //  weak
+
 function getOffsetTop(rect, vertical) {
   var offset = 0;
 
@@ -81,7 +93,7 @@ function getOffsetTop(rect, vertical) {
   }
 
   return offset;
-} //  weak
+}
 
 function getOffsetLeft(rect, horizontal) {
   var offset = 0;
@@ -284,8 +296,9 @@ var Popover = function (_Component) {
 
       if (this.props.getContentAnchorEl) {
         var contentAnchorEl = this.props.getContentAnchorEl(element);
+        var scrollParent = getScrollParent(contentAnchorEl, element.parentElement);
         if (contentAnchorEl && (0, _contains2.default)(element, contentAnchorEl)) {
-          contentAnchorOffset = contentAnchorEl.offsetTop + contentAnchorEl.clientHeight / 2 || 0;
+          contentAnchorOffset = contentAnchorEl.offsetTop - scrollParent.scrollTop + contentAnchorEl.clientHeight / 2 || 0;
         }
       }
 

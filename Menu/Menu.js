@@ -92,16 +92,13 @@ var Menu = function (_Component) {
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Menu.__proto__ || (0, _getPrototypeOf2.default)(Menu)).call.apply(_ref, [this].concat(args))), _this), _this.menuList = undefined, _this.handleEnter = function (element) {
       var list = _reactDom2.default.findDOMNode(_this.menuList);
 
-      // Race with <Modal> for item focus
-      setTimeout(function () {
-        if (_this.menuList && _this.menuList.selectedItem) {
-          // $FlowFixMe
-          _reactDom2.default.findDOMNode(_this.menuList.selectedItem).focus();
-        } else if (list) {
-          // $FlowFixMe
-          list.firstChild.focus();
-        }
-      }, 0);
+      if (_this.menuList && _this.menuList.selectedItem) {
+        // $FlowFixMe
+        _reactDom2.default.findDOMNode(_this.menuList.selectedItem).focus();
+      } else if (list) {
+        // $FlowFixMe
+        list.firstChild.focus();
+      }
 
       // $FlowFixMe
       if (list && element.clientHeight < list.clientHeight) {
