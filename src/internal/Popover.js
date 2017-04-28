@@ -10,6 +10,18 @@ import Modal from './Modal';
 import Transition from './Transition';
 import Paper from '../Paper';
 
+function getScrollParent(node, until) {
+  if (node === null || node === until) {
+    return null;
+  }
+
+  if (node.scrollHeight > node.clientHeight) {
+    return node;
+  } else {
+    return getScrollParent(node.parentNode);
+  }
+}
+
 function getOffsetTop(rect, vertical) {
   let offset = 0;
 
@@ -340,8 +352,9 @@ export default class Popover extends Component {
 
     if (this.props.getContentAnchorEl) {
       const contentAnchorEl = this.props.getContentAnchorEl(element);
+      const scrollParent = getScrollParent(contentAnchorEl, element.parentElement)
       if (contentAnchorEl && contains(element, contentAnchorEl)) {
-        contentAnchorOffset = contentAnchorEl.offsetTop + (contentAnchorEl.clientHeight / 2) || 0;
+        contentAnchorOffset = contentAnchorEl.offsetTop - scrollParent.scrollTop + (contentAnchorEl.clientHeight / 2) || 0;
       }
     }
 

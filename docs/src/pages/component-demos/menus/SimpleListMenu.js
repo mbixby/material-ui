@@ -18,6 +18,12 @@ const options = [
   'Show all notification content',
   'Hide sensitive notification content',
   'Hide all notification content',
+  'Show all notification content',
+  'Hide sensitive notification content',
+  'Hide all notification content',
+  'Show all notification content',
+  'Hide sensitive notification content',
+  'Hide all notification content',
 ];
 
 export default class SimpleListMenu extends Component {
@@ -67,7 +73,7 @@ export default class SimpleListMenu extends Component {
           {options.map((option, index) => {
             return (
               <MenuItem
-                key={option}
+                key={index}
                 selected={index === this.state.selectedIndex}
                 onClick={(event) => this.handleMenuItemClick(event, index)}
               >
