@@ -1,7 +1,7 @@
 {
   "name": "material-ui",
   "author": "Material-UI Team",
-  "version": "1.0.0-alpha.11",
+  "version": "1.0.0-alpha.12",
   "description": "Material Design UI components built with React",
   "main": "./index.js",
   "module": "./index.es.js",
@@ -36,7 +36,7 @@
     "object-assign": "^4.1.1",
     "prop-types": "^15.0.0",
     "react-event-listener": "^0.4.5",
-    "react-scrollbar-size": "^1.0.0",
+    "react-scrollbar-size": "^1.0.1",
     "react-transition-group": "^1.1.2",
     "recompose": "^0.23.0",
     "scroll": "^2.0.0",

@@ -53,14 +53,36 @@ var _breakpoints = require('../styles/breakpoints');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * By default, returns true if screen width is the same or greater than the given breakpoint.
+ * @param screenWidth
+ * @param breakpoint
+ * @param inclusive - defaults to true
+ */
 //  weak
 
-var isWidthUp = exports.isWidthUp = function isWidthUp(baseWidth, width) {
-  return _breakpoints.keys.indexOf(baseWidth) <= _breakpoints.keys.indexOf(width);
+var isWidthUp = exports.isWidthUp = function isWidthUp(screenWidth, breakpoint) {
+  var inclusive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+  if (inclusive) {
+    return _breakpoints.keys.indexOf(screenWidth) <= _breakpoints.keys.indexOf(breakpoint);
+  }
+  return _breakpoints.keys.indexOf(screenWidth) < _breakpoints.keys.indexOf(breakpoint);
 };
 
-var isWidthDown = exports.isWidthDown = function isWidthDown(baseWidth, width) {
-  return _breakpoints.keys.indexOf(baseWidth) > _breakpoints.keys.indexOf(width);
+/**
+ * By default, returns true if screen less than the given breakpoint.
+ * @param screenWidth
+ * @param breakpoint
+ * @param inclusive - defaults to false
+ */
+var isWidthDown = exports.isWidthDown = function isWidthDown(screenWidth, breakpoint) {
+  var inclusive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+  if (inclusive) {
+    return _breakpoints.keys.indexOf(screenWidth) >= _breakpoints.keys.indexOf(breakpoint);
+  }
+  return _breakpoints.keys.indexOf(screenWidth) > _breakpoints.keys.indexOf(breakpoint);
 };
 
 function withWidth() {

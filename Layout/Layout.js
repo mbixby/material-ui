@@ -17,8 +17,7 @@ var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-var _assign = require('object-assign'); //  weak
-
+var _assign = require('object-assign');
 /**
  * A layout component using the following libs as inspiration.
  *
@@ -36,10 +35,6 @@ var _assign = require('object-assign'); //  weak
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _classnames = require('classnames');
 
@@ -68,8 +63,8 @@ function generateGrid(globalStyles, theme, breakpoint) {
     maxWidth: '100%'
   });
 
-  GRID_SIZES.forEach(function (size, index) {
-    if (index === 0) {
+  GRID_SIZES.forEach(function (size) {
+    if (typeof size === 'boolean') {
       // Skip the first one as handle above.
       return;
     }
@@ -181,7 +176,7 @@ function Layout(props, context) {
 
   var children = props.children,
       className = props.className,
-      ComponentProp = props.component,
+      component = props.component,
       container = props.container,
       item = props.item,
       align = props.align,
@@ -198,96 +193,35 @@ function Layout(props, context) {
 
 
   var classes = context.styleManager.render(styleSheet);
+  // workaround: see https://github.com/facebook/flow/issues/1660#issuecomment-297775427
+  var ComponentProp = component || Layout.defaultProps.component;
 
   return _react2.default.createElement(
     ComponentProp,
     (0, _extends3.default)({
-      className: (0, _classnames2.default)((_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.typeContainer, container), (0, _defineProperty3.default)(_classNames, classes.typeItem, item), (0, _defineProperty3.default)(_classNames, classes['gutter-xs-' + gutter], container && gutter !== 0), (0, _defineProperty3.default)(_classNames, classes['direction-xs-' + direction], direction !== Layout.defaultProps.direction), (0, _defineProperty3.default)(_classNames, classes['wrap-xs-' + wrap], wrap !== Layout.defaultProps.wrap), (0, _defineProperty3.default)(_classNames, classes['align-xs-' + align], align !== Layout.defaultProps.align), (0, _defineProperty3.default)(_classNames, classes['justify-xs-' + justify], justify !== Layout.defaultProps.justify), (0, _defineProperty3.default)(_classNames, classes['grid-xs'], xs === true), (0, _defineProperty3.default)(_classNames, classes['grid-xs-' + xs], xs && xs !== true), (0, _defineProperty3.default)(_classNames, classes['grid-sm'], sm === true), (0, _defineProperty3.default)(_classNames, classes['grid-sm-' + sm], sm && sm !== true), (0, _defineProperty3.default)(_classNames, classes['grid-md'], md === true), (0, _defineProperty3.default)(_classNames, classes['grid-md-' + md], md && md !== true), (0, _defineProperty3.default)(_classNames, classes['grid-lg'], lg === true), (0, _defineProperty3.default)(_classNames, classes['grid-lg-' + lg], lg && lg !== true), (0, _defineProperty3.default)(_classNames, classes['grid-xl'], xl === true), (0, _defineProperty3.default)(_classNames, classes['grid-xl-' + xl], xl && xl !== true), _classNames), className)
+      className: (0, _classnames2.default)((_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.typeContainer, container), (0, _defineProperty3.default)(_classNames, classes.typeItem, item), (0, _defineProperty3.default)(_classNames, classes['gutter-xs-' + String(gutter)], container && gutter !== 0), (0, _defineProperty3.default)(_classNames, classes['direction-xs-' + String(direction)], direction !== Layout.defaultProps.direction), (0, _defineProperty3.default)(_classNames, classes['wrap-xs-' + String(wrap)], wrap !== Layout.defaultProps.wrap), (0, _defineProperty3.default)(_classNames, classes['align-xs-' + String(align)], align !== Layout.defaultProps.align), (0, _defineProperty3.default)(_classNames, classes['justify-xs-' + String(justify)], justify !== Layout.defaultProps.justify), (0, _defineProperty3.default)(_classNames, classes['grid-xs'], xs === true), (0, _defineProperty3.default)(_classNames, classes['grid-xs-' + String(xs)], xs && xs !== true), (0, _defineProperty3.default)(_classNames, classes['grid-sm'], sm === true), (0, _defineProperty3.default)(_classNames, classes['grid-sm-' + String(sm)], sm && sm !== true), (0, _defineProperty3.default)(_classNames, classes['grid-md'], md === true), (0, _defineProperty3.default)(_classNames, classes['grid-md-' + String(md)], md && md !== true), (0, _defineProperty3.default)(_classNames, classes['grid-lg'], lg === true), (0, _defineProperty3.default)(_classNames, classes['grid-lg-' + String(lg)], lg && lg !== true), (0, _defineProperty3.default)(_classNames, classes['grid-xl'], xl === true), (0, _defineProperty3.default)(_classNames, classes['grid-xl-' + String(xl)], xl && xl !== true), _classNames), className)
     }, other),
     children
   );
 }
 
 Layout.propTypes = process.env.NODE_ENV !== "production" ? {
-  /**
-   * The content of the component.
-   */
-  children: _propTypes2.default.node,
-  /**
-   * The CSS class name of the root element.
-   */
-  className: _propTypes2.default.string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a DOM element or a component.
-   */
-  component: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.func]),
-  /**
-   * If `true`, the component will have the flex *container* behavior.
-   * You should be wrapping *items* with a *container*.
-   */
-  container: _propTypes2.default.bool,
-  /**
-   * It true, the component will have the flex *item* behavior.
-   * You should be wrapping *items* with a *container*.
-   */
-  item: _propTypes2.default.bool,
-  /**
-   * Defines the number of grids the component is going to use.
-   * It's applied for all the screen sizes with the lowest priority.
-   */
-  xs: _propTypes2.default.oneOf(GRID_SIZES),
-  /**
-   * Defines the number of grids the component is going to use.
-   * It's applied for the `sm` breakpoint and wider screens if not overridden.
-   */
-  sm: _propTypes2.default.oneOf(GRID_SIZES), // eslint-disable-line react/sort-prop-types
-  /**
-   * Defines the number of grids the component is going to use.
-   * It's applied for the `md` breakpoint and wider screens if not overridden.
-   */
-  md: _propTypes2.default.oneOf(GRID_SIZES), // eslint-disable-line react/sort-prop-types
-  /**
-   * Defines the number of grids the component is going to use.
-   * It's applied for the `lg` breakpoint and wider screens if not overridden.
-   */
-  lg: _propTypes2.default.oneOf(GRID_SIZES), // eslint-disable-line react/sort-prop-types
-  /**
-   * Defines the number of grids the component is going to use.
-   * It's applied for the `xl` breakpoint and wider screens.
-   */
-  xl: _propTypes2.default.oneOf(GRID_SIZES), // eslint-disable-line react/sort-prop-types
-  /**
-   * Defines the `align-items` style property.
-   * It's applied for all screen sizes.
-   */
-  align: _propTypes2.default.oneOf([// eslint-disable-line react/sort-prop-types
-  'flex-start', 'center', 'flex-end', 'stretch']),
-  /**
-   * Defines the `flex-direction` style property.
-   * It is applied for all screen sizes.
-   */
-  direction: _propTypes2.default.oneOf([// eslint-disable-line react/sort-prop-types
-  'row', 'row-reverse', 'column', 'column-reverse']),
-  /**
-   * Defines the space between the type `item` component.
-   * It can only be used on a type `container` component.
-   */
-  gutter: _propTypes2.default.oneOf(GUTTERS), // eslint-disable-line react/sort-prop-types
-  /**
-   * Defines the `justify-content` style property.
-   * It is applied for all screen sizes.
-   */
-  justify: _propTypes2.default.oneOf([// eslint-disable-line react/sort-prop-types
-  'flex-start', 'center', 'flex-end', 'space-between', 'space-around']),
-  /**
-   * Defines the `flex-wrap` style property.
-   * It's applied for all screen sizes.
-   */
-  wrap: _propTypes2.default.oneOf([// eslint-disable-line react/sort-prop-types
-  'nowrap', 'wrap', 'wrap-reverse'])
+  children: require('prop-types').any,
+  className: require('prop-types').string,
+  component: require('prop-types').oneOfType([require('prop-types').string, require('prop-types').func]),
+  container: require('prop-types').bool,
+  item: require('prop-types').bool,
+  xs: require('prop-types').oneOfType([require('prop-types').bool, require('prop-types').oneOf([1]), require('prop-types').oneOf([2]), require('prop-types').oneOf([3]), require('prop-types').oneOf([4]), require('prop-types').oneOf([5]), require('prop-types').oneOf([6]), require('prop-types').oneOf([7]), require('prop-types').oneOf([8]), require('prop-types').oneOf([9]), require('prop-types').oneOf([10]), require('prop-types').oneOf([11]), require('prop-types').oneOf([12])]),
+  sm: require('prop-types').oneOfType([require('prop-types').bool, require('prop-types').oneOf([1]), require('prop-types').oneOf([2]), require('prop-types').oneOf([3]), require('prop-types').oneOf([4]), require('prop-types').oneOf([5]), require('prop-types').oneOf([6]), require('prop-types').oneOf([7]), require('prop-types').oneOf([8]), require('prop-types').oneOf([9]), require('prop-types').oneOf([10]), require('prop-types').oneOf([11]), require('prop-types').oneOf([12])]),
+  md: require('prop-types').oneOfType([require('prop-types').bool, require('prop-types').oneOf([1]), require('prop-types').oneOf([2]), require('prop-types').oneOf([3]), require('prop-types').oneOf([4]), require('prop-types').oneOf([5]), require('prop-types').oneOf([6]), require('prop-types').oneOf([7]), require('prop-types').oneOf([8]), require('prop-types').oneOf([9]), require('prop-types').oneOf([10]), require('prop-types').oneOf([11]), require('prop-types').oneOf([12])]),
+  lg: require('prop-types').oneOfType([require('prop-types').bool, require('prop-types').oneOf([1]), require('prop-types').oneOf([2]), require('prop-types').oneOf([3]), require('prop-types').oneOf([4]), require('prop-types').oneOf([5]), require('prop-types').oneOf([6]), require('prop-types').oneOf([7]), require('prop-types').oneOf([8]), require('prop-types').oneOf([9]), require('prop-types').oneOf([10]), require('prop-types').oneOf([11]), require('prop-types').oneOf([12])]),
+  xl: require('prop-types').oneOfType([require('prop-types').bool, require('prop-types').oneOf([1]), require('prop-types').oneOf([2]), require('prop-types').oneOf([3]), require('prop-types').oneOf([4]), require('prop-types').oneOf([5]), require('prop-types').oneOf([6]), require('prop-types').oneOf([7]), require('prop-types').oneOf([8]), require('prop-types').oneOf([9]), require('prop-types').oneOf([10]), require('prop-types').oneOf([11]), require('prop-types').oneOf([12])]),
+  align: require('prop-types').oneOf(['flex-start', 'center', 'flex-end', 'stretch']),
+  direction: require('prop-types').oneOf(['row', 'row-reverse', 'column', 'column-reverse']),
+  gutter: require('prop-types').oneOf([0, 8, 16, 24, 40]),
+  justify: require('prop-types').oneOf(['flex-start', 'center', 'flex-end', 'space-between', 'space-around']),
+  wrap: require('prop-types').oneOf(['nowrap', 'wrap', 'wrap-reverse'])
 } : {};
-
 Layout.defaultProps = {
   component: 'div',
   container: false,

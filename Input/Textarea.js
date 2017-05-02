@@ -80,7 +80,8 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       // Visibility needed to hide the extra text area on ipads
       visibility: 'hidden',
       position: 'absolute',
-      height: 'auto'
+      height: 'auto',
+      whiteSpace: 'pre-wrap'
     }
   };
 });

@@ -55,9 +55,13 @@ var _reactEventListener = require('react-event-listener');
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
-var _throttle = require('lodash/throttle');
+var _debounce = require('lodash/debounce');
 
-var _throttle2 = _interopRequireDefault(_throttle);
+var _debounce2 = _interopRequireDefault(_debounce);
+
+var _isEqual = require('lodash/isEqual');
+
+var _isEqual2 = _interopRequireDefault(_isEqual);
 
 var _reactScrollbarSize = require('react-scrollbar-size');
 
@@ -85,8 +89,6 @@ var _TabScrollButton2 = _interopRequireDefault(_TabScrollButton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//  weak
-
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiTabs', function () {
   return {
     root: {
@@ -111,7 +113,7 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       justifyContent: 'center'
     }
   };
-});
+}); //  weak
 
 var Tabs = function (_Component) {
   (0, _inherits3.default)(Tabs, _Component);
@@ -134,7 +136,8 @@ var Tabs = function (_Component) {
       },
       showLeftScroll: false,
       showRightScroll: false
-    }, _this.tabs = undefined, _this.handleResize = (0, _throttle2.default)(function () {
+    }, _this.tabs = undefined, _this.handleResize = (0, _debounce2.default)(function () {
+      _this.updateIndicatorState(_this.props);
       _this.updateScrollButtonState();
     }, 100), _this.handleLeftScrollClick = function () {
       _this.moveTabsScroll(-_this.tabs.clientWidth);
@@ -148,7 +151,7 @@ var Tabs = function (_Component) {
           marginBottom: -scrollbarHeight
         }
       });
-    }, _this.handleTabsScroll = (0, _throttle2.default)(function () {
+    }, _this.handleTabsScroll = (0, _debounce2.default)(function () {
       _this.updateScrollButtonState();
     }, 100), _this.getClassGroups = function () {
       var _classNames;
@@ -185,11 +188,6 @@ var Tabs = function (_Component) {
 
       var showScrollButtons = scrollable && ((0, _withWidth.isWidthUp)('md', width) && scrollButtons === 'auto' || scrollButtons === 'on');
 
-      conditionalElements.windowResizeListener = showScrollButtons ? _react2.default.createElement(_reactEventListener2.default, {
-        target: 'window',
-        onResize: _this.handleResize
-      }) : null;
-
       conditionalElements.scrollButtonLeft = showScrollButtons ? _react2.default.createElement(_TabScrollButton2.default, {
         direction: 'left',
         onClick: _this.handleLeftScrollClick,
@@ -205,10 +203,19 @@ var Tabs = function (_Component) {
       }) : null;
 
       return conditionalElements;
+    }, _this.getTabsMeta = function (index) {
+      var tabsMeta = _this.tabs.getBoundingClientRect();
+      tabsMeta.scrollLeft = _this.tabs.scrollLeft;
+      var tabMeta = _this.tabs.children[0].children[index].getBoundingClientRect();
+      return { tabsMeta: tabsMeta, tabMeta: tabMeta };
     }, _this.moveTabsScroll = function (delta) {
       var nextScrollLeft = _this.tabs.scrollLeft + delta;
       _scroll2.default.left(_this.tabs, nextScrollLeft);
-    }, _this.scrollSelectedIntoView = function (tabsMeta, tabMeta) {
+    }, _this.scrollSelectedIntoView = function () {
+      var _this$getTabsMeta = _this.getTabsMeta(_this.props.index),
+          tabsMeta = _this$getTabsMeta.tabsMeta,
+          tabMeta = _this$getTabsMeta.tabMeta;
+
       if (tabMeta.left < tabsMeta.left) {
         // left side of button is out of view
         var nextScrollLeft = tabsMeta.scrollLeft + (tabMeta.left - tabsMeta.left);
@@ -219,14 +226,23 @@ var Tabs = function (_Component) {
         _scroll2.default.left(_this.tabs, _nextScrollLeft);
       }
     }, _this.updateScrollButtonState = function () {
-      var showLeftScroll = _this.tabs.scrollLeft > 0;
-      var showRightScroll = _this.tabs.scrollWidth > _this.tabs.clientWidth + _this.tabs.scrollLeft;
+      var _this$props3 = _this.props,
+          scrollable = _this$props3.scrollable,
+          scrollButtons = _this$props3.scrollButtons;
 
-      if (showLeftScroll !== _this.state.showLeftScroll || showRightScroll !== _this.state.showRightScroll) {
-        _this.setState({
-          showLeftScroll: showLeftScroll,
-          showRightScroll: showRightScroll
-        });
+
+      if (scrollable && scrollButtons !== 'off') {
+        var _this$tabs = _this.tabs,
+            scrollLeft = _this$tabs.scrollLeft,
+            scrollWidth = _this$tabs.scrollWidth,
+            clientWidth = _this$tabs.clientWidth;
+
+        var showLeftScroll = scrollLeft > 0;
+        var showRightScroll = scrollWidth > clientWidth + scrollLeft;
+
+        if (showLeftScroll !== _this.state.showLeftScroll || showRightScroll !== _this.state.showRightScroll) {
+          _this.setState({ showLeftScroll: showLeftScroll, showRightScroll: showRightScroll });
+        }
       }
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
@@ -234,31 +250,44 @@ var Tabs = function (_Component) {
   (0, _createClass3.default)(Tabs, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.updatePositionStates(this.props);
+      this.updateIndicatorState(this.props);
+      this.updateScrollButtonState();
     }
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      this.updatePositionStates(nextProps);
+      if (this.props.index !== nextProps.index) {
+        this.updateIndicatorState(nextProps);
+      }
     }
   }, {
-    key: 'updatePositionStates',
-    value: function updatePositionStates(props) {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (this.props.width !== prevProps.width || this.state.indicatorStyle !== prevState.indicatorStyle) {
+        this.scrollSelectedIntoView();
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.handleResize.cancel();
+      this.handleTabsScroll.cancel();
+    }
+  }, {
+    key: 'updateIndicatorState',
+    value: function updateIndicatorState(props) {
       if (this.tabs) {
-        var tabsMeta = this.tabs.getBoundingClientRect();
-        tabsMeta.scrollLeft = this.tabs.scrollLeft;
+        var _getTabsMeta = this.getTabsMeta(props.index),
+            tabsMeta = _getTabsMeta.tabsMeta,
+            tabMeta = _getTabsMeta.tabMeta;
 
-        var tabMeta = this.tabs.children[0].children[props.index].getBoundingClientRect();
+        var indicatorStyle = {
+          left: tabMeta.left + (tabsMeta.scrollLeft - tabsMeta.left),
+          width: tabMeta.width };
 
-        this.setState({
-          indicatorStyle: {
-            left: tabMeta.left + (tabsMeta.scrollLeft - tabsMeta.left),
-            width: tabMeta.width }
-        });
-
-        this.scrollSelectedIntoView(tabsMeta, tabMeta);
-
-        this.updateScrollButtonState(); // determine if scroll buttons should be shown
+        if (!(0, _isEqual2.default)(indicatorStyle, this.state.indicatorStyle)) {
+          this.setState({ indicatorStyle: indicatorStyle });
+        }
       }
     }
   }, {
@@ -300,7 +329,7 @@ var Tabs = function (_Component) {
       return _react2.default.createElement(
         'div',
         (0, _extends3.default)({ className: classGroups.root }, other),
-        conditionalElements.windowResizeListener,
+        _react2.default.createElement(_reactEventListener2.default, { target: 'window', onResize: this.handleResize }),
         conditionalElements.scrollbarSizeListener,
         _react2.default.createElement(
           'div',

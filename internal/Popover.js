@@ -297,9 +297,8 @@ var Popover = function (_Component) {
       if (this.props.getContentAnchorEl) {
         var contentAnchorEl = this.props.getContentAnchorEl(element);
         var scrollParent = getScrollParent(contentAnchorEl, element.parentElement);
-        var scrollTop = scrollParent ? scrollParent.scrollTop : 0
         if (contentAnchorEl && (0, _contains2.default)(element, contentAnchorEl)) {
-          contentAnchorOffset = contentAnchorEl.offsetTop - scrollTop + contentAnchorEl.clientHeight / 2 || 0;
+          contentAnchorOffset = contentAnchorEl.offsetTop - scrollParent.scrollTop + contentAnchorEl.clientHeight / 2 || 0;
         }
       }
 

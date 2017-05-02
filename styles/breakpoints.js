@@ -4,12 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = createBreakpoints;
-//  weak
+
 
 // Sorted ASC by size. That's important.
 var keys = exports.keys = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 // Keep in mind that @media is inclusive
+//  weak
 function createBreakpoints() {
   var breakpoints = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
     xs: 360,
@@ -26,7 +27,13 @@ function createBreakpoints() {
   });
 
   function up(name) {
-    var value = breakpoints[name] || name;
+    var value = void 0;
+    // min-width of xs starts at 0
+    if (name === 'xs') {
+      value = 0;
+    } else {
+      value = breakpoints[name] || name;
+    }
     return '@media (min-width:' + value + unit + ')';
   }
 
