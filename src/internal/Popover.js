@@ -353,8 +353,9 @@ export default class Popover extends Component {
     if (this.props.getContentAnchorEl) {
       const contentAnchorEl = this.props.getContentAnchorEl(element);
       const scrollParent = getScrollParent(contentAnchorEl, element.parentElement)
+      const scrollTop = scrollParent ? scrollParent.scrollTop : 0
       if (contentAnchorEl && contains(element, contentAnchorEl)) {
-        contentAnchorOffset = contentAnchorEl.offsetTop - scrollParent.scrollTop + (contentAnchorEl.clientHeight / 2) || 0;
+        contentAnchorOffset = contentAnchorEl.offsetTop - scrollTop + (contentAnchorEl.clientHeight / 2) || 0;
       }
     }
 
