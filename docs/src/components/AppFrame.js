@@ -15,6 +15,7 @@ import LightbulbOutlineIcon from 'material-ui-icons/LightbulbOutline';
 import customPropTypes from 'material-ui/utils/customPropTypes';
 import AppDrawer from 'docs/src/components/AppDrawer';
 import DemoButton from 'docs/src/components/DemoButton';
+import AppSearch from 'docs/src/components/AppSearch';
 import ApiMenu from 'docs/src/components/ApiMenu';
 
 function getTitle(routes) {
@@ -39,19 +40,11 @@ const styleSheet = createStyleSheet('AppFrame', (theme) => {
       body: {
         margin: 0,
         background: theme.palette.background.default,
-        fontFamily: theme.typography.fontFamily,
         color: theme.palette.text.primary,
         lineHeight: '1.2',
         overflowX: 'hidden',
         WebkitFontSmoothing: 'antialiased', // Antialiasing.
         MozOsxFontSmoothing: 'grayscale', // Antialiasing.
-      },
-      a: {
-        color: theme.palette.accent.A400,
-        textDecoration: 'none',
-      },
-      'a:hover': {
-        textDecoration: 'underline',
       },
       img: {
         maxWidth: '100%',
@@ -66,11 +59,11 @@ const styleSheet = createStyleSheet('AppFrame', (theme) => {
       width: '100%',
     },
     grow: {
-      flex: '1 1 100%',
+      flex: '1 1 auto',
     },
     title: {
       marginLeft: 24,
-      flex: '0 0 auto',
+      flex: '0 1 auto',
     },
     appBar: {
       left: 'auto',
@@ -96,17 +89,6 @@ const styleSheet = createStyleSheet('AppFrame', (theme) => {
 });
 
 class AppFrame extends Component {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    routes: PropTypes.array.isRequired,
-    width: PropTypes.string.isRequired,
-  };
-
-  static contextTypes = {
-    styleManager: customPropTypes.muiRequired,
-  };
-
   state = {
     drawerOpen: false,
   };
@@ -153,11 +135,17 @@ class AppFrame extends Component {
               <MenuIcon />
             </IconButton>
             {title !== null && (
-              <Typography className={classes.title} type="title" colorInherit>
+              <Typography
+                className={classes.title}
+                type="title"
+                colorInherit
+                noWrap
+              >
                 {title}
               </Typography>
             )}
             <div className={classes.grow} />
+            <AppSearch />
             <DemoButton routes={routes} />
             <ApiMenu routes={routes} />
             <IconButton contrast onClick={this.handleToggleShade}>
@@ -177,6 +165,17 @@ class AppFrame extends Component {
     );
   }
 }
+
+AppFrame.propTypes = {
+  children: PropTypes.node.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  routes: PropTypes.array.isRequired,
+  width: PropTypes.string.isRequired,
+};
+
+AppFrame.contextTypes = {
+  styleManager: customPropTypes.muiRequired,
+};
 
 export default compose(
   withWidth(),
