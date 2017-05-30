@@ -1,8 +1,8 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import { assert } from 'chai';
-import { createShallow } from 'src/test-utils';
+import { createShallow } from '../test-utils';
 import TextFieldLabel, { styleSheet } from './TextFieldLabel';
 
 describe('<TextFieldLabel />', () => {
@@ -10,13 +10,13 @@ describe('<TextFieldLabel />', () => {
   let classes;
 
   before(() => {
-    shallow = createShallow();
+    shallow = createShallow({ dive: true });
     classes = shallow.context.styleManager.render(styleSheet);
   });
 
   it('should render a FormLabel', () => {
     const wrapper = shallow(<TextFieldLabel />);
-    assert.strictEqual(wrapper.name(), 'FormLabel');
+    assert.strictEqual(wrapper.name(), 'withStyles(FormLabel)');
   });
 
   it('should animate by default', () => {
@@ -26,8 +26,11 @@ describe('<TextFieldLabel />', () => {
 
   it('should not animate', () => {
     const wrapper = shallow(<TextFieldLabel disableAnimation />);
-    assert.strictEqual(wrapper.hasClass(classes.animated), false,
-      'should not have the animated class');
+    assert.strictEqual(
+      wrapper.hasClass(classes.animated),
+      false,
+      'should not have the animated class',
+    );
   });
 
   it('should not shrink by default', () => {

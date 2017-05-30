@@ -1,5 +1,4 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
-
 const assert = require('chai').assert;
 const fs = require('fs');
 const path = require('path');
@@ -104,7 +103,7 @@ describe('--output-dir', () => {
     temp.cleanupSync();
   });
 
-  it('script outputs to directory', (done) => {
+  it('script outputs to directory', done => {
     builder.main(options, () => {
       assert.strictEqual(fs.lstatSync(tempPath).isDirectory(), true);
       assert.strictEqual(fs.lstatSync(path.join(tempPath, 'index.js')).isFile(), true);
@@ -112,7 +111,6 @@ describe('--output-dir', () => {
     });
   });
 });
-
 
 describe('--svg-dir, --innerPath, --fileSuffix', () => {
   const options = {
@@ -135,13 +133,20 @@ describe('--svg-dir, --innerPath, --fileSuffix', () => {
     temp.cleanupSync();
   });
 
-  it('script outputs to directory', (done) => {
+  it('script outputs to directory', done => {
     builder.main(options, () => {
       assert.strictEqual(fs.lstatSync(tempPath).isDirectory(), true);
       assert.strictEqual(fs.lstatSync(path.join(tempPath, 'delapouite')).isDirectory(), true);
 
-      const outputFilePath = path.join(tempPath, 'delapouite',
-        'dice', 'svg', '000000', 'transparent', 'dice-six-faces-four.js');
+      const outputFilePath = path.join(
+        tempPath,
+        'delapouite',
+        'dice',
+        'svg',
+        '000000',
+        'transparent',
+        'dice-six-faces-four.js',
+      );
       assert.strictEqual(fs.existsSync(outputFilePath), true);
 
       const outputFileData = fs.readFileSync(outputFilePath, {
@@ -176,7 +181,7 @@ describe('--mui-require', () => {
   });
 
   describe('absolute', () => {
-    it('default should be absolute', (done) => {
+    it('default should be absolute', done => {
       builder.main(options, () => {
         assert.strictEqual(fs.lstatSync(tempPath).isDirectory(), true);
         assert.strictEqual(fs.existsSync(outputFilePath), true);
@@ -189,7 +194,7 @@ describe('--mui-require', () => {
       });
     });
 
-    it('should load SvgIcon as absolute', (done) => {
+    it('should load SvgIcon as absolute', done => {
       const absoluteOptions = _.extend({}, options, { muiRequire: 'absolute' });
       builder.main(absoluteOptions, () => {
         assert.strictEqual(fs.lstatSync(tempPath).isDirectory(), true);
@@ -205,7 +210,7 @@ describe('--mui-require', () => {
   });
 
   describe('relative', () => {
-    it('should load SvgIcon as relative', (done) => {
+    it('should load SvgIcon as relative', done => {
       const relativeOptions = _.extend({}, options, { muiRequire: 'relative' });
       builder.main(relativeOptions, () => {
         assert.strictEqual(fs.lstatSync(tempPath).isDirectory(), true);
@@ -242,7 +247,7 @@ describe('Template rendering', () => {
     temp.cleanupSync();
   });
 
-  it('should produce the expected output', (done) => {
+  it('should produce the expected output', done => {
     builder.main(options, () => {
       const exampleFilePath = path.join(MUI_ICONS_ROOT, 'expected', 'Accessibility.js');
       const outputFilePath = path.join(tempPath, 'Accessibility.js');

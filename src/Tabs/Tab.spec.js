@@ -1,9 +1,9 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import { assert } from 'chai';
 import { spy, stub } from 'sinon';
-import { createShallow, createMount } from 'src/test-utils';
+import { createShallow, createMount } from '../test-utils';
 import Tab, { styleSheet } from './Tab';
 import Icon from '../Icon';
 
@@ -14,7 +14,7 @@ describe('<Tab />', () => {
   const icon = <Icon>restore</Icon>;
 
   before(() => {
-    shallow = createShallow();
+    shallow = createShallow({ dive: true });
     mount = createMount();
     classes = shallow.context.styleManager.render(styleSheet);
   });
@@ -24,16 +24,9 @@ describe('<Tab />', () => {
   });
 
   it('should render with the root class', () => {
-    const wrapper = shallow(
-      <Tab />,
-    );
+    const wrapper = shallow(<Tab />);
     assert.strictEqual(wrapper.name(), 'ButtonBase');
     assert.strictEqual(wrapper.hasClass(classes.root), true, 'should have the root class');
-  });
-
-  it('should have a ref on label property', () => {
-    const instance = mount(<Tab label="foo" />).instance();
-    assert.isDefined(instance.label, 'should be defined');
   });
 
   describe('prop: className', () => {
@@ -46,9 +39,7 @@ describe('<Tab />', () => {
 
   describe('prop: selected', () => {
     it('should render with the selected and root classes', () => {
-      const wrapper = shallow(
-        <Tab selected textColor="accent" />,
-      );
+      const wrapper = shallow(<Tab selected textColor="accent" />);
       assert.strictEqual(wrapper.hasClass(classes.rootAccentSelected), true);
       assert.strictEqual(wrapper.hasClass(classes.rootAccent), true);
       assert.strictEqual(wrapper.hasClass(classes.root), true);
@@ -58,9 +49,7 @@ describe('<Tab />', () => {
 
   describe('prop: disabled', () => {
     it('should render with the disabled and root classes', () => {
-      const wrapper = shallow(
-        <Tab disabled textColor="accent" />,
-      );
+      const wrapper = shallow(<Tab disabled textColor="accent" />);
       assert.strictEqual(wrapper.hasClass(classes.rootAccentDisabled), true);
       assert.strictEqual(wrapper.hasClass(classes.rootAccent), true);
       assert.strictEqual(wrapper.hasClass(classes.root), true);
@@ -70,9 +59,7 @@ describe('<Tab />', () => {
   describe('prop: onClick', () => {
     it('should be called when a click is triggered', () => {
       const handleClick = spy();
-      const wrapper = shallow(
-        <Tab onClick={handleClick} onChange={() => {}} />,
-      );
+      const wrapper = shallow(<Tab onClick={handleClick} onChange={() => {}} />);
       wrapper.simulate('click');
       assert.strictEqual(handleClick.callCount, 1, 'it should forward the onClick');
     });
@@ -93,8 +80,11 @@ describe('<Tab />', () => {
       };
       instance.checkTextWrap();
       const label = wrapper.childAt(0).childAt(0);
-      assert.strictEqual(label.hasClass(classes.labelWrapped), true,
-        'should have labelWrapped class');
+      assert.strictEqual(
+        label.hasClass(classes.labelWrapped),
+        true,
+        'should have labelWrapped class',
+      );
       assert.strictEqual(wrapper.state('wrappedText'), true, 'wrappedText state should be true');
     });
   });
@@ -112,21 +102,18 @@ describe('<Tab />', () => {
     it('should render icon element', () => {
       const wrapper = shallow(<Tab icon={icon} />);
       const iconWrapper = wrapper.childAt(0);
-      assert.strictEqual(iconWrapper.is('Icon'), true);
+      assert.strictEqual(iconWrapper.is(Icon), true);
     });
 
     it('should render a font icon if a icon string is provided', () => {
       const wrapper = shallow(<Tab icon="book" />);
-      assert.strictEqual(wrapper.find('Icon').length, 1,
-        'should have an Icon');
+      assert.strictEqual(wrapper.find(Icon).length, 1, 'should have an Icon');
     });
   });
 
   describe('prop: textColor', () => {
     it('should support the inherit value', () => {
-      const wrapper = shallow(
-        <Tab selected textColor="inherit" />,
-      );
+      const wrapper = shallow(<Tab selected textColor="inherit" />);
       assert.strictEqual(wrapper.hasClass(classes.rootInheritSelected), true);
       assert.strictEqual(wrapper.hasClass(classes.rootInherit), true);
       assert.strictEqual(wrapper.hasClass(classes.root), true);
@@ -134,9 +121,7 @@ describe('<Tab />', () => {
 
     it('should support an arbitrary value', () => {
       const textColor = '#eee';
-      const wrapper = shallow(
-        <Tab selected textColor={textColor} />,
-      );
+      const wrapper = shallow(<Tab selected textColor={textColor} />);
       assert.strictEqual(wrapper.props().style.color, textColor);
     });
   });
@@ -158,5 +143,10 @@ describe('<Tab />', () => {
       const wrapper = shallow(<Tab fullWidth textColor="#eee" style={style} />);
       assert.deepEqual(wrapper.props().style, style);
     });
+  });
+
+  it('should have a ref on label property', () => {
+    const instance = mount(<Tab.Naked label="foo" classes={classes} />).instance();
+    assert.isDefined(instance.label, 'should be defined');
   });
 });

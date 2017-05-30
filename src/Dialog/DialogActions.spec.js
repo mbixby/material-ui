@@ -1,8 +1,8 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import { assert } from 'chai';
-import { createShallow } from 'src/test-utils';
+import { createShallow } from '../test-utils';
 import DialogActions, { styleSheet } from './DialogActions';
 
 describe('<DialogActions />', () => {
@@ -10,14 +10,12 @@ describe('<DialogActions />', () => {
   let classes;
 
   before(() => {
-    shallow = createShallow();
+    shallow = createShallow({ dive: true });
     classes = shallow.context.styleManager.render(styleSheet);
   });
 
   it('should render a div', () => {
-    const wrapper = shallow(
-      <DialogActions />,
-    );
+    const wrapper = shallow(<DialogActions />);
     assert.strictEqual(wrapper.name(), 'div');
   });
 

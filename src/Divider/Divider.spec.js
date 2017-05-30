@@ -1,8 +1,8 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import { assert } from 'chai';
-import { createShallow } from 'src/test-utils';
+import { createShallow } from '../test-utils';
 import Divider, { styleSheet } from './Divider';
 
 describe('<Divider />', () => {
@@ -10,14 +10,12 @@ describe('<Divider />', () => {
   let classes;
 
   before(() => {
-    shallow = createShallow();
+    shallow = createShallow({ dive: true });
     classes = shallow.context.styleManager.render(styleSheet);
   });
 
   it('should render a hr', () => {
-    const wrapper = shallow(
-      <Divider />,
-    );
+    const wrapper = shallow(<Divider />);
     assert.strictEqual(wrapper.name(), 'hr');
   });
 

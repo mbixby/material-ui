@@ -1,15 +1,15 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import { assert } from 'chai';
-import { createShallow } from 'src/test-utils';
+import { createShallow } from '../test-utils';
 import MenuList from './MenuList';
 
 describe('<MenuList />', () => {
   let shallow;
 
   before(() => {
-    shallow = createShallow();
+    shallow = createShallow({ dive: true });
   });
 
   describe('list node', () => {

@@ -1,15 +1,11 @@
-Slide
-=====
+# Slide
 
 
 
-Props
------
-
+## Props
 | Name | Type | Default | Description |
 |:-----|:-----|:--------|:------------|
 | children | node |  |  |
-| className | string |  | The CSS class name of the root element. |
 | direction | enum:&nbsp;'left'<br>&nbsp;'right'<br>&nbsp;'up'<br>&nbsp;'down'<br> | 'down' | Direction the child element will enter from. |
 | enterTransitionDuration | number | duration.enteringScreen | Duration of the animation when the element is entering. |
 | in | bool |  | If `true`, show the component; triggers the enter or exit animation. |
@@ -23,3 +19,4 @@ Props
 | onExited | function |  | Callback fired when the component has exited. |
 
 Any other properties supplied will be spread to the root element.
+

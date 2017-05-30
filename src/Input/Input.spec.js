@@ -3,7 +3,8 @@
 import React from 'react';
 import { assert } from 'chai';
 import { spy } from 'sinon';
-import { createShallow, createMount } from 'src/test-utils';
+import { createShallow, createMount } from '../test-utils';
+import Textarea from './Textarea';
 import Input, { styleSheet } from './Input';
 
 describe('<Input />', () => {
@@ -11,7 +12,7 @@ describe('<Input />', () => {
   let classes;
 
   before(() => {
-    shallow = createShallow();
+    shallow = createShallow({ dive: true });
     classes = shallow.context.styleManager.render(styleSheet);
   });
 
@@ -20,17 +21,30 @@ describe('<Input />', () => {
     assert.strictEqual(wrapper.name(), 'div');
     assert.strictEqual(wrapper.hasClass(classes.wrapper), true, 'should have the wrapper class');
     assert.strictEqual(wrapper.hasClass(classes.inkbar), true, 'should have the inkbar class');
+    assert.strictEqual(
+      wrapper.hasClass(classes.underline),
+      true,
+      'should have the underline class',
+    );
   });
 
   it('should render an <input /> inside the div', () => {
     const wrapper = shallow(<Input />);
     const input = wrapper.find('input');
-    assert.strictEqual(input.is('input'), true, 'should be a <input>');
-    assert.strictEqual(input.prop('type'), 'text', 'should pass the text type prop');
+    assert.strictEqual(input.name(), 'input');
+    assert.strictEqual(input.props().type, 'text', 'should pass the text type prop');
     assert.strictEqual(input.hasClass(classes.input), true, 'should have the input class');
-    assert.strictEqual(input.hasClass(classes.underline), true, 'should have the underline class');
-    assert.strictEqual(input.prop('aria-required'), undefined,
-      'should not have the area-required prop');
+    assert.strictEqual(input.prop('aria-required'), undefined);
+  });
+
+  it('should render an <Textarea /> when passed the multiline prop', () => {
+    const wrapper = shallow(<Input multiline />);
+    assert.strictEqual(wrapper.find(Textarea).length, 1);
+  });
+
+  it('should render an <textarea /> when passed the multiline and rows props', () => {
+    const wrapper = shallow(<Input multiline rows="4" />);
+    assert.strictEqual(wrapper.find('textarea').length, 1);
   });
 
   it('should render an <textarea /> inside the div when passed component="textarea"', () => {
@@ -42,7 +56,7 @@ describe('<Input />', () => {
   it('should render a disabled <input />', () => {
     const wrapper = shallow(<Input disabled />);
     const input = wrapper.find('input');
-    assert.strictEqual(input.is('input'), true, 'should be a <input>');
+    assert.strictEqual(input.name(), 'input');
     assert.strictEqual(input.hasClass(classes.input), true, 'should have the input class');
     assert.strictEqual(input.hasClass(classes.disabled), true, 'should have the disabled class');
   });
@@ -51,10 +65,13 @@ describe('<Input />', () => {
     const wrapper = shallow(<Input disableUnderline />);
     const input = wrapper.find('input');
     assert.strictEqual(wrapper.hasClass(classes.inkbar), false, 'should not have the inkbar class');
-    assert.strictEqual(input.is('input'), true, 'should be a <input>');
+    assert.strictEqual(input.name(), 'input');
     assert.strictEqual(input.hasClass(classes.input), true, 'should have the input class');
-    assert.strictEqual(input.hasClass(classes.underline),
-      false, 'should not have the underline class');
+    assert.strictEqual(
+      input.hasClass(classes.underline),
+      false,
+      'should not have the underline class',
+    );
   });
 
   it('should fire event callbacks', () => {
@@ -66,20 +83,11 @@ describe('<Input />', () => {
 
     const wrapper = shallow(<Input {...handlers} />);
 
-    events.forEach((n) => {
+    events.forEach(n => {
       const event = n.charAt(2).toLowerCase() + n.slice(3);
       wrapper.find('input').simulate(event);
       assert.strictEqual(handlers[n].callCount, 1, `should have called the ${n} handler`);
     });
-  });
-
-  it('should call focus function on input property when focus is invoked', () => {
-    const wrapper = shallow(<Input />);
-    const instance = wrapper.instance();
-    instance.input = spy();
-    instance.input.focus = spy();
-    instance.focus();
-    assert.strictEqual(instance.input.focus.callCount, 1);
   });
 
   describe('controlled', () => {
@@ -90,9 +98,7 @@ describe('<Input />', () => {
     before(() => {
       handleClean = spy();
       handleDirty = spy();
-      wrapper = shallow(
-        <Input value="" onDirty={handleDirty} onClean={handleClean} />,
-      );
+      wrapper = shallow(<Input value="" onDirty={handleDirty} onClean={handleClean} />);
     });
 
     it('should check that the component is controlled', () => {
@@ -111,10 +117,20 @@ describe('<Input />', () => {
     });
 
     it('should fire the onClean callback when dirtied', () => {
-      assert.strictEqual(handleClean.callCount, 1,
-        'should have called the onClean cb once already');
+      assert.strictEqual(
+        handleClean.callCount,
+        1,
+        'should have called the onClean cb once already',
+      );
       wrapper.setProps({ value: '' });
       assert.strictEqual(handleClean.callCount, 2, 'should have called the onClean cb again');
+    });
+  });
+
+  describe('prop: component', () => {
+    it('should accept any component', () => {
+      const wrapper = shallow(<Input component="span" />);
+      assert.strictEqual(wrapper.find('span').length, 1);
     });
   });
 
@@ -130,9 +146,7 @@ describe('<Input />', () => {
     before(() => {
       handleClean = spy();
       handleDirty = spy();
-      wrapper = shallow(
-        <Input onDirty={handleDirty} onClean={handleClean} />,
-      );
+      wrapper = shallow(<Input onDirty={handleDirty} onClean={handleClean} />);
 
       // Mock the input ref
       wrapper.instance().input = { value: '' };
@@ -253,7 +267,7 @@ describe('<Input />', () => {
 
     before(() => {
       mount = createMount();
-      wrapper = mount(<Input />);
+      wrapper = mount(<Input.Naked classes={classes} />);
       instance = wrapper.instance();
     });
 
@@ -294,6 +308,30 @@ describe('<Input />', () => {
       instance.isControlled = () => true;
       instance.componentDidMount();
       assert.strictEqual(instance.checkDirty.callCount, 1);
+    });
+  });
+
+  describe('mount', () => {
+    let mount;
+
+    before(() => {
+      mount = createMount();
+    });
+
+    after(() => {
+      mount.cleanUp();
+    });
+
+    it('should be able to access the native input', () => {
+      const handleRef = spy();
+      mount(<Input inputRef={handleRef} />);
+      assert.strictEqual(handleRef.callCount, 1);
+    });
+
+    it('should be able to access the native textarea', () => {
+      const handleRef = spy();
+      mount(<Input multiline inputRef={handleRef} />);
+      assert.strictEqual(handleRef.callCount, 1);
     });
   });
 });

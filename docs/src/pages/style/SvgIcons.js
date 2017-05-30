@@ -1,13 +1,13 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import classNames from 'classnames';
-import { createStyleSheet } from 'jss-theme-reactor';
-import customPropTypes from 'material-ui/utils/customPropTypes';
+import PropTypes from 'prop-types';
+import { withStyles, createStyleSheet } from 'material-ui/styles';
 import { blue, red, green } from 'material-ui/styles/colors';
 import SvgIcon from 'material-ui/SvgIcon';
 
-const styleSheet = createStyleSheet('SvgIcons', (theme) => ({
+const styleSheet = createStyleSheet('SvgIcons', theme => ({
   icon: {
     margin: theme.spacing.unit,
   },
@@ -22,14 +22,14 @@ const styleSheet = createStyleSheet('SvgIcons', (theme) => ({
   },
 }));
 
-const HomeIcon = (props) => (
+const HomeIcon = props => (
   <SvgIcon {...props}>
     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
   </SvgIcon>
 );
 
-export default function SvgIcons(props, context) {
-  const classes = context.styleManager.render(styleSheet);
+function SvgIcons(props) {
+  const classes = props.classes;
   return (
     <div>
       <HomeIcon className={classes.icon} />
@@ -39,6 +39,8 @@ export default function SvgIcons(props, context) {
   );
 }
 
-SvgIcons.contextTypes = {
-  styleManager: customPropTypes.muiRequired,
+SvgIcons.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
+
+export default withStyles(styleSheet)(SvgIcons);

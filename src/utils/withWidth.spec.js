@@ -1,9 +1,9 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import { assert } from 'chai';
-import { createShallow, createMount } from 'src/test-utils';
-import withWidth, { isWidthUp, isWidthDown } from './withWidth';
+import { createMount, createShallow } from '../test-utils';
+import withWidth, { isWidthDown, isWidthUp } from './withWidth';
 
 const Empty = () => <div />;
 Empty.propTypes = {}; // Breaks the referencial transparency for testing purposes.
@@ -59,15 +59,15 @@ describe('withWidth', () => {
   });
 
   describe('isWidthDown', () => {
-    it('should work as default exclusive', () => {
-      assert.strictEqual(isWidthDown('md', 'lg'), false, 'should reject larger size');
-      assert.strictEqual(isWidthDown('md', 'md'), false, 'should be exclusive');
-      assert.strictEqual(isWidthDown('md', 'sm'), true, 'should accept smaller size');
-    });
-    it('should work as inclusive', () => {
+    it('should work as default inclusive', () => {
       assert.strictEqual(isWidthDown('md', 'lg', true), false, 'should reject larger size');
       assert.strictEqual(isWidthDown('md', 'md', true), true, 'should be inclusive');
       assert.strictEqual(isWidthDown('md', 'sm', true), true, 'should accept smaller size');
+    });
+    it('should work as exclusive', () => {
+      assert.strictEqual(isWidthDown('md', 'lg', false), false, 'should reject larger size');
+      assert.strictEqual(isWidthDown('md', 'md', false), false, 'should be exclusive');
+      assert.strictEqual(isWidthDown('md', 'sm', false), true, 'should accept smaller size');
     });
   });
 
@@ -78,7 +78,7 @@ describe('withWidth', () => {
       const updateWidth = instance.updateWidth.bind(instance);
       const breakpoints = wrapper.context().theme.breakpoints;
 
-      breakpoints.keys.forEach((key) => {
+      breakpoints.keys.forEach(key => {
         updateWidth(breakpoints.getWidth(key));
         assert.strictEqual(wrapper.state().width, key, 'should return the matching width');
       });

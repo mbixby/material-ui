@@ -1,13 +1,16 @@
 [ignore]
+
 <PROJECT_ROOT>/build
 .*/node_modules/react-event-listener/src/.*
 .*/node_modules/fbjs/lib/partitionObjectByKey.js
 .*/node_modules/jss/lib/.*\.js\.flow
 .*/node_modules/react-swipeable-views/src/.*
+.*/node_modules/eslint-plugin-jsx-a11y/src/.*
 .*/scripts/*
 .*/docs/webpack.*
 
 [libs]
+
 flow/interfaces
 
 [options]
@@ -23,3 +26,6 @@ module.name_mapper='^material-ui-icons\/\(.*\)$' -> '<PROJECT_ROOT>/packages/mat
 module.ignore_non_literal_requires=true
 module.system.node.resolve_dirname=node_modules
 module.system.node.resolve_dirname=.
+
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+suppress_type=$FlowToDo

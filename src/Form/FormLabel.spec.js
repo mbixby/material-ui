@@ -1,8 +1,8 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import { assert } from 'chai';
-import { createShallow } from 'src/test-utils';
+import { createShallow } from '../test-utils';
 import FormLabel, { styleSheet } from './FormLabel';
 
 describe('<FormLabel />', () => {
@@ -10,7 +10,7 @@ describe('<FormLabel />', () => {
   let classes;
 
   before(() => {
-    shallow = createShallow();
+    shallow = createShallow({ dive: true });
     classes = shallow.context.styleManager.render(styleSheet);
   });
 
@@ -46,11 +46,7 @@ describe('<FormLabel />', () => {
         true,
         'asterisk should have the error class',
       );
-      assert.strictEqual(
-        wrapper.hasClass(classes.error),
-        true,
-        'should have the error class',
-      );
+      assert.strictEqual(wrapper.hasClass(classes.error), true, 'should have the error class');
     });
   });
 
@@ -66,8 +62,7 @@ describe('<FormLabel />', () => {
     beforeEach(() => {
       wrapper = shallow(<FormLabel>Foo</FormLabel>);
     });
-
-    ['error', 'focused'].forEach((visualState) => {
+    ['error', 'focused'].forEach(visualState => {
       describe(visualState, () => {
         beforeEach(() => {
           setFormControlContext({ [visualState]: true });

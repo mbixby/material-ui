@@ -1,12 +1,9 @@
-// @flow weak
+// @flow
 
 import React from 'react';
-import { createStyleSheet } from 'jss-theme-reactor';
-import customPropTypes from 'material-ui/utils/customPropTypes';
-import {
-  Card,
-  CardContent,
-} from 'material-ui/Card';
+import PropTypes from 'prop-types';
+import { withStyles, createStyleSheet } from 'material-ui/styles';
+import Card, { CardContent } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious';
@@ -14,7 +11,7 @@ import PlayArrowIcon from 'material-ui-icons/PlayArrow';
 import SkipNextIcon from 'material-ui-icons/SkipNext';
 import albumCover from 'docs/src/assets/images/live-from-space.jpg';
 
-const styleSheet = createStyleSheet('NowPlayingCard', () => ({
+const styleSheet = createStyleSheet('NowPlayingCard', {
   card: {
     display: 'flex',
   },
@@ -39,10 +36,10 @@ const styleSheet = createStyleSheet('NowPlayingCard', () => ({
     height: 38,
     width: 38,
   },
-}));
+});
 
-export default function NowPlayingCard(props, context) {
-  const classes = context.styleManager.render(styleSheet);
+function NowPlayingCard(props) {
+  const classes = props.classes;
 
   return (
     <div>
@@ -74,6 +71,8 @@ export default function NowPlayingCard(props, context) {
   );
 }
 
-NowPlayingCard.contextTypes = {
-  styleManager: customPropTypes.muiRequired,
+NowPlayingCard.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
+
+export default withStyles(styleSheet)(NowPlayingCard);

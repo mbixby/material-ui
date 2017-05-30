@@ -1,16 +1,10 @@
-// @flow weak
+// @flow
 
 import React, { Component } from 'react';
-import { createStyleSheet } from 'jss-theme-reactor';
+import PropTypes from 'prop-types';
+import { withStyles, createStyleSheet } from 'material-ui/styles';
 import classnames from 'classnames';
-import customPropTypes from 'material-ui/utils/customPropTypes';
-import {
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  CardActions,
-} from 'material-ui/Card';
+import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
 import Collapse from 'material-ui/transitions/Collapse';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
@@ -21,7 +15,7 @@ import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import paellaImage from 'docs/src/assets/images/paella.jpg';
 
-const styleSheet = createStyleSheet('RecipeReviewCard', (theme) => ({
+const styleSheet = createStyleSheet('RecipeReviewCard', theme => ({
   card: { maxWidth: 400 },
   expand: {
     transform: 'rotate(0deg)',
@@ -36,17 +30,15 @@ const styleSheet = createStyleSheet('RecipeReviewCard', (theme) => ({
   flexGrow: { flex: '1 1 auto' },
 }));
 
-export default class RecipeReviewCard extends Component {
-  static contextTypes = {
-    styleManager: customPropTypes.muiRequired,
-  };
-
+class RecipeReviewCard extends Component {
   state = { expanded: false };
 
-  handleExpandClick = () => this.setState({ expanded: !this.state.expanded });
+  handleExpandClick = () => {
+    this.setState({ expanded: !this.state.expanded });
+  };
 
   render() {
-    const classes = this.context.styleManager.render(styleSheet);
+    const classes = this.props.classes;
 
     return (
       <div>
@@ -120,3 +112,9 @@ export default class RecipeReviewCard extends Component {
     );
   }
 }
+
+RecipeReviewCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styleSheet)(RecipeReviewCard);

@@ -1,27 +1,32 @@
-/* eslint-disable flowtype/require-valid-file-annotation, no-console */
+// @flow
+/* eslint-disable no-console */
 
 import { assert } from 'chai';
 import consoleErrorMock from './consoleErrorMock';
 
 describe('consoleErrorMock()', () => {
-  it('should throw error when calling callCount() before spy()', () => {
-    let errorCalledFlag = false;
+  describe('callCount()', () => {
+    it('should throw error when calling callCount() before spy()', () => {
+      assert.throws(() => {
+        consoleErrorMock.callCount();
+      }, 'Requested call count before spy() was called');
+    });
+  });
 
-    try {
-      consoleErrorMock.callCount();
-    } catch (error) {
-      errorCalledFlag = true;
-    }
-
-    assert.strictEqual(errorCalledFlag, true);
+  describe('args()', () => {
+    it('should throw error when calling args() before spy()', () => {
+      assert.throws(() => {
+        consoleErrorMock.args();
+      }, 'Requested call count before spy() was called');
+    });
   });
 
   describe('spy()', () => {
     it('should place a spy in console.error', () => {
       consoleErrorMock.spy();
-      assert.ok(console.error.hasOwnProperty('isSinonProxy'));
+      assert.strictEqual(console.error.hasOwnProperty('isSinonProxy'), true);
       consoleErrorMock.reset();
-      assert.notOk(console.error.hasOwnProperty('isSinonProxy'));
+      assert.strictEqual(console.error.hasOwnProperty('isSinonProxy'), false);
     });
 
     it('should keep the call count', () => {

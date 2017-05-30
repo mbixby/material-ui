@@ -1,8 +1,4 @@
-/* eslint-disable flowtype/require-valid-file-annotation */
-import Hidden from './Hidden';
-import HiddenJs from './HiddenJs';
+// @flow
 
-export default Hidden;
-export {
-  HiddenJs,
-};
+export { default } from './Hidden';
+export { default as HiddenJs } from './HiddenJs';

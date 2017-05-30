@@ -1,8 +1,8 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import { assert } from 'chai';
-import { createShallow } from 'src/test-utils';
+import { createShallow } from '../test-utils';
 import ListSubheader, { styleSheet } from './ListSubheader';
 
 describe('<ListSubheader />', () => {
@@ -10,14 +10,12 @@ describe('<ListSubheader />', () => {
   let classes;
 
   before(() => {
-    shallow = createShallow();
+    shallow = createShallow({ dive: true });
     classes = shallow.context.styleManager.render(styleSheet);
   });
 
   it('should render a div', () => {
-    const wrapper = shallow(
-      <ListSubheader />,
-    );
+    const wrapper = shallow(<ListSubheader />);
     assert.strictEqual(wrapper.name(), 'div');
   });
 

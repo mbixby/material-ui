@@ -1,8 +1,8 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import { assert } from 'chai';
-import { createShallow } from 'src/test-utils';
+import { createShallow } from '../test-utils';
 import TableBody, { styleSheet } from './TableBody';
 
 describe('<TableBody />', () => {
@@ -10,14 +10,12 @@ describe('<TableBody />', () => {
   let classes;
 
   before(() => {
-    shallow = createShallow();
+    shallow = createShallow({ dive: true });
     classes = shallow.context.styleManager.render(styleSheet);
   });
 
   it('should render a tbody', () => {
-    const wrapper = shallow(
-      <TableBody />,
-    );
+    const wrapper = shallow(<TableBody />);
     assert.strictEqual(wrapper.name(), 'tbody');
   });
 

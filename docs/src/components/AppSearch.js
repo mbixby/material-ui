@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import compose from 'recompose/compose';
@@ -38,79 +38,74 @@ function removeDocsearch() {
   clearInterval(searchTimer);
 }
 
-const styleSheet = createStyleSheet('AppSearch', (theme) => {
-  return {
-    '@global': {
-      '.algolia-autocomplete': {
-        fontFamily: theme.typography.fontFamily,
-        '& .algolia-docsearch-suggestion--title': {
-          ...theme.typography.title,
-        },
-        '& .algolia-docsearch-suggestion--text': {
-          ...theme.typography.body1,
-        },
-        '& .ds-dropdown-menu': {
-          boxShadow: theme.shadows[1],
-          borderRadius: 2,
-          '&::before': {
-            display: 'none',
-          },
-          '& [class^=ds-dataset-]': {
-            border: 0,
-            borderRadius: 2,
-          },
-        },
-      },
-    },
-    wrapper: {
+const styleSheet = createStyleSheet('AppSearch', theme => ({
+  '@global': {
+    '.algolia-autocomplete': {
       fontFamily: theme.typography.fontFamily,
-      position: 'relative',
-      borderRadius: 2,
-      background: fade(white, 0.15),
-      '&:hover': {
-        background: fade(white, 0.25),
+      '& .algolia-docsearch-suggestion--title': {
+        ...theme.typography.title,
       },
-      '& $input': {
-        transition: theme.transitions.create('width'),
-        width: 200,
-        '&:focus': {
-          width: 250,
+      '& .algolia-docsearch-suggestion--text': {
+        ...theme.typography.body1,
+      },
+      '& .ds-dropdown-menu': {
+        boxShadow: theme.shadows[1],
+        borderRadius: 2,
+        '&::before': {
+          display: 'none',
+        },
+        '& [class^=ds-dataset-]': {
+          border: 0,
+          borderRadius: 2,
         },
       },
     },
-    search: {
-      width: theme.spacing.unit * 9,
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+  },
+  wrapper: {
+    fontFamily: theme.typography.fontFamily,
+    position: 'relative',
+    borderRadius: 2,
+    background: fade(white, 0.15),
+    '&:hover': {
+      background: fade(white, 0.25),
     },
-    input: {
-      font: 'inherit',
-      padding: `${theme.spacing.unit}px ${theme.spacing.unit}px ${
-        theme.spacing.unit}px ${theme.spacing.unit * 9}px`,
-      border: 0,
-      display: 'block',
-      verticalAlign: 'middle',
-      whiteSpace: 'normal',
-      background: 'none',
-      margin: 0, // Reset for Safari
-      color: 'inherit',
-      width: '100%',
+    '& $input': {
+      transition: theme.transitions.create('width'),
+      width: 200,
       '&:focus': {
-        outline: 0,
+        width: 250,
       },
     },
-  };
-});
+  },
+  search: {
+    width: theme.spacing.unit * 9,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  input: {
+    font: 'inherit',
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit}px ` +
+      `${theme.spacing.unit}px ${theme.spacing.unit * 9}px`,
+    border: 0,
+    display: 'block',
+    verticalAlign: 'middle',
+    whiteSpace: 'normal',
+    background: 'none',
+    margin: 0, // Reset for Safari
+    color: 'inherit',
+    width: '100%',
+    '&:focus': {
+      outline: 0,
+    },
+  },
+}));
 
 function AppSearch(props) {
-  const {
-    classes,
-    width,
-  } = props;
+  const { classes, width } = props;
 
   if (!isWidthUp('sm', width)) {
     removeDocsearch();
@@ -134,8 +129,4 @@ AppSearch.propTypes = {
   width: PropTypes.string.isRequired,
 };
 
-export default compose(
-  pure,
-  withStyles(styleSheet),
-  withWidth(),
-)(AppSearch);
+export default compose(pure, withStyles(styleSheet), withWidth())(AppSearch);
