@@ -4,20 +4,17 @@ import createEagerFactory from 'recompose/createEagerFactory';
 import wrapDisplayName from 'recompose/wrapDisplayName';
 import customPropTypes from '../utils/customPropTypes';
 
-const withTheme = (BaseComponent) => {
+// Provide the theme object as a property to the input component.
+export default function withTheme(BaseComponent) {
   const factory = createEagerFactory(BaseComponent);
 
-  const WithTheme = (ownerProps, context) => (
-    factory({ theme: context.theme, ...ownerProps })
-  );
+  const WithTheme = (ownerProps, context) =>
+    factory({ theme: context.styleManager.theme, ...ownerProps });
 
   WithTheme.contextTypes = {
-    theme: customPropTypes.muiRequired,
+    styleManager: customPropTypes.muiRequired,
   };
-
   WithTheme.displayName = wrapDisplayName(BaseComponent, 'withTheme');
 
   return WithTheme;
-};
-
-export default withTheme;
+}

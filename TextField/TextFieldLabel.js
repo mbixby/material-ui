@@ -17,8 +17,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = TextFieldLabel;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33,9 +31,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _Form = require('../Form');
 
@@ -44,8 +42,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //  weak
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiTextFieldLabel', function (theme) {
-  var transitions = theme.transitions;
-
   return {
     root: {
       position: 'absolute',
@@ -58,24 +54,24 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       transform: 'translate(0, 0px) scale(0.75)'
     },
     animated: {
-      transition: transitions.create('transform', {
-        duration: transitions.duration.shorter,
-        easing: transitions.easing.easeOut
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shorter,
+        easing: theme.transitions.easing.easeOut
       })
     }
   };
 });
 
-function TextFieldLabel(props, context) {
+function TextFieldLabel(props) {
   var _classNames;
 
   var disableAnimation = props.disableAnimation,
       children = props.children,
+      classes = props.classes,
       classNameProp = props.className,
       shrink = props.shrink,
-      other = (0, _objectWithoutProperties3.default)(props, ['disableAnimation', 'children', 'className', 'shrink']);
+      other = (0, _objectWithoutProperties3.default)(props, ['disableAnimation', 'children', 'classes', 'className', 'shrink']);
 
-  var classes = context.styleManager.render(styleSheet);
 
   var className = (0, _classnames2.default)(classes.root, (_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.animated, !disableAnimation), (0, _defineProperty3.default)(_classNames, classes.shrink, shrink), _classNames), classNameProp);
 
@@ -92,7 +88,11 @@ TextFieldLabel.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -122,8 +122,6 @@ TextFieldLabel.defaultProps = {
   shrink: false
 };
 
-TextFieldLabel.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
-
 TextFieldLabel.muiName = 'TextFieldLabel';
+
+exports.default = (0, _withStyles2.default)(styleSheet)(TextFieldLabel);

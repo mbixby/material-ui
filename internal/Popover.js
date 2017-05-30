@@ -51,6 +51,10 @@ var _contains = require('dom-helpers/query/contains');
 
 var _contains2 = _interopRequireDefault(_contains);
 
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
 var _customPropTypes = require('../utils/customPropTypes');
 
 var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
@@ -69,6 +73,8 @@ var _Paper2 = _interopRequireDefault(_Paper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//  weak
+
 function getScrollParent(node, until) {
   if (node === null || node === until) {
     return null;
@@ -79,7 +85,7 @@ function getScrollParent(node, until) {
   } else {
     return getScrollParent(node.parentNode);
   }
-} //  weak
+}
 
 function getOffsetTop(rect, vertical) {
   var offset = 0;
@@ -115,17 +121,15 @@ function getTransformOriginValue(transformOrigin) {
   }).join(' ');
 }
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiPopover', function () {
-  return {
-    popover: {
-      position: 'absolute',
-      overflowY: 'auto',
-      overflowX: 'hidden',
-      '&:focus': {
-        outline: 'none'
-      }
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiPopover', {
+  paper: {
+    position: 'absolute',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    '&:focus': {
+      outline: 'none'
     }
-  };
+  }
 });
 
 var Popover = function (_Component) {
@@ -297,8 +301,9 @@ var Popover = function (_Component) {
       if (this.props.getContentAnchorEl) {
         var contentAnchorEl = this.props.getContentAnchorEl(element);
         var scrollParent = getScrollParent(contentAnchorEl, element.parentElement);
+        var scrollTop = scrollParent ? scrollParent.scrollTop : 0;
         if (contentAnchorEl && (0, _contains2.default)(element, contentAnchorEl)) {
-          contentAnchorOffset = contentAnchorEl.offsetTop - scrollParent.scrollTop + contentAnchorEl.clientHeight / 2 || 0;
+          contentAnchorOffset = contentAnchorEl.offsetTop - scrollTop + contentAnchorEl.clientHeight / 2 || 0;
         }
       }
 
@@ -326,6 +331,7 @@ var Popover = function (_Component) {
     value: function render() {
       var _props2 = this.props,
           children = _props2.children,
+          classes = _props2.classes,
           className = _props2.className,
           modal = _props2.modal,
           onRequestClose = _props2.onRequestClose,
@@ -347,18 +353,12 @@ var Popover = function (_Component) {
           onExiting = _props2.onExiting,
           onExited = _props2.onExited,
           elevation = _props2.elevation,
-          other = (0, _objectWithoutProperties3.default)(_props2, ['children', 'className', 'modal', 'onRequestClose', 'open', 'getContentAnchorEl', 'anchorEl', 'anchorOrigin', 'role', 'transformOrigin', 'transitionDuration', 'enteredClassName', 'enteringClassName', 'exitedClassName', 'exitingClassName', 'onEnter', 'onEntering', 'onEntered', 'onExit', 'onExiting', 'onExited', 'elevation']);
+          other = (0, _objectWithoutProperties3.default)(_props2, ['children', 'classes', 'className', 'modal', 'onRequestClose', 'open', 'getContentAnchorEl', 'anchorEl', 'anchorOrigin', 'role', 'transformOrigin', 'transitionDuration', 'enteredClassName', 'enteringClassName', 'exitedClassName', 'exitingClassName', 'onEnter', 'onEntering', 'onEntered', 'onExit', 'onExiting', 'onExited', 'elevation']);
 
-
-      var classes = this.context.styleManager.render(styleSheet);
 
       return _react2.default.createElement(
         _Modal2.default,
-        {
-          show: open,
-          backdropInvisible: true,
-          onRequestClose: onRequestClose
-        },
+        { show: open, backdropInvisible: true, onRequestClose: onRequestClose },
         _react2.default.createElement(
           _Transition2.default,
           {
@@ -380,7 +380,7 @@ var Popover = function (_Component) {
           _react2.default.createElement(
             _Paper2.default,
             (0, _extends3.default)({
-              className: (0, _classnames2.default)(classes.popover, className),
+              className: (0, _classnames2.default)(classes.paper, className),
               elevation: elevation
             }, other),
             children
@@ -411,10 +411,8 @@ Popover.defaultProps = {
   transitionDuration: 'auto',
   elevation: 8
 };
-Popover.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
-exports.default = Popover;
+
+
 Popover.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * This is the DOM element that will be used
@@ -434,7 +432,11 @@ Popover.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -512,3 +514,9 @@ Popover.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   transitionDuration: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
 } : {};
+
+Popover.contextTypes = {
+  styleManager: _customPropTypes2.default.muiRequired
+};
+
+exports.default = (0, _withStyles2.default)(styleSheet)(Popover);

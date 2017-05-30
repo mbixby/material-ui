@@ -3,28 +3,41 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.consoleErrorMock = exports.createRenderToString = exports.createMount = exports.createShallow = undefined;
 
-var _createShallow2 = require('./createShallow');
+var _createShallow = require('./createShallow');
 
-var _createShallow3 = _interopRequireDefault(_createShallow2);
+Object.defineProperty(exports, 'createShallow', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_createShallow).default;
+  }
+});
 
-var _createMount2 = require('./createMount');
+var _createMount = require('./createMount');
 
-var _createMount3 = _interopRequireDefault(_createMount2);
+Object.defineProperty(exports, 'createMount', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_createMount).default;
+  }
+});
 
-var _createRenderToString2 = require('./createRenderToString');
+var _createRenderToString = require('./createRenderToString');
 
-var _createRenderToString3 = _interopRequireDefault(_createRenderToString2);
+Object.defineProperty(exports, 'createRenderToString', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_createRenderToString).default;
+  }
+});
 
-var _consoleErrorMock2 = require('./consoleErrorMock');
+var _consoleErrorMock = require('./consoleErrorMock');
 
-var _consoleErrorMock3 = _interopRequireDefault(_consoleErrorMock2);
+Object.defineProperty(exports, 'consoleErrorMock', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_consoleErrorMock).default;
+  }
+});
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.createShallow = _createShallow3.default; /* eslint-disable flowtype/require-valid-file-annotation */
-
-exports.createMount = _createMount3.default;
-exports.createRenderToString = _createRenderToString3.default;
-exports.consoleErrorMock = _consoleErrorMock3.default;

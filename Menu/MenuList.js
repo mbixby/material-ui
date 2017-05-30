@@ -64,6 +64,8 @@ var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
 var _List = require('../List');
 
+var _List2 = _interopRequireDefault(_List);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //  weak
@@ -190,8 +192,8 @@ var MenuList = function (_Component) {
     }
   }, {
     key: 'setTabIndex',
-    value: function setTabIndex(n) {
-      this.setState({ currentTabIndex: n });
+    value: function setTabIndex(index) {
+      this.setState({ currentTabIndex: index });
     }
   }, {
     key: 'render',
@@ -207,11 +209,11 @@ var MenuList = function (_Component) {
 
 
       return _react2.default.createElement(
-        _List.List,
+        _List2.default,
         (0, _extends3.default)({
           role: 'menu',
-          rootRef: function rootRef(c) {
-            _this2.list = c;
+          rootRef: function rootRef(node) {
+            _this2.list = node;
           },
           className: className,
           onKeyDown: this.handleKeyDown,
@@ -220,8 +222,8 @@ var MenuList = function (_Component) {
         _react2.default.Children.map(children, function (child, index) {
           return _react2.default.cloneElement(child, {
             tabIndex: index === _this2.state.currentTabIndex ? '0' : '-1',
-            ref: child.props.selected ? function (c) {
-              _this2.selectedItem = c;
+            ref: child.props.selected ? function (node) {
+              _this2.selectedItem = node;
             } : undefined,
             onFocus: _this2.handleItemFocus
           });
@@ -232,14 +234,13 @@ var MenuList = function (_Component) {
   return MenuList;
 }(_react.Component);
 
-exports.default = MenuList;
 MenuList.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * MenuList contents, normally `MenuItem`s.
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -251,3 +252,5 @@ MenuList.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   onKeyDown: _propTypes2.default.func
 } : {};
+
+exports.default = MenuList;

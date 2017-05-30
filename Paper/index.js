@@ -3,14 +3,14 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Paper = exports.default = undefined;
 
-var _Paper2 = require('./Paper');
+var _Paper = require('./Paper');
 
-var _Paper3 = _interopRequireDefault(_Paper2);
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Paper).default;
+  }
+});
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _Paper3.default; /* eslint-disable flowtype/require-valid-file-annotation */
-
-exports.Paper = _Paper3.default;

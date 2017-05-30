@@ -1,25 +1,24 @@
 // @flow
-/**
- * Responsively hides children by omission.
- */
-import React, { Element } from 'react';
+import warning from 'warning';
 import { keys as breakpoints } from '../styles/breakpoints';
 import withWidth, { isWidthDown, isWidthUp } from '../utils/withWidth';
-import type { HiddenProps } from './Hidden';
-import { defaultProps } from './Hidden';
+import type { HiddenProps } from './types';
 
 type Props = HiddenProps & {
   /**
    * @ignore
    * width prop provided by withWidth decorator
    */
-    width: string,
+  width: string,
 };
 
-function HiddenJs(props: Props): ?Element<any> {
+/**
+ * @ignore
+ * Responsively hides by omission.
+ */
+function HiddenJs(props: Props) {
   const {
     children,
-    component,
     only,
     xsUp, // eslint-disable-line no-unused-vars
     smUp, // eslint-disable-line no-unused-vars
@@ -35,22 +34,33 @@ function HiddenJs(props: Props): ?Element<any> {
     ...other
   } = props;
 
-  // workaround: see https://github.com/facebook/flow/issues/1660#issuecomment-297775427
-  const ComponentProp = component || defaultProps.component;
   let visible = true;
 
-  // `only` takes priority.
-  if (only && width === only) {
-    visible = false;
-  } else {
+  // `only` check is faster to get out sooner if used.
+  if (only) {
+    if (Array.isArray(only)) {
+      for (let i = 0; i < only.length; i += 1) {
+        const breakpoint = only[i];
+        if (width === breakpoint) {
+          visible = false;
+          break;
+        }
+      }
+    } else if (only && width === only) {
+      visible = false;
+    }
+  }
+
+  // Allow `only` to be combined with other props. If already hidden, no need to check others.
+  if (visible) {
     // determine visibility based on the smallest size up
     for (let i = 0; i < breakpoints.length; i += 1) {
       const breakpoint = breakpoints[i];
       const breakpointUp = props[`${breakpoint}Up`];
       const breakpointDown = props[`${breakpoint}Down`];
       if (
-        (breakpointUp && isWidthUp(width, breakpoint)) ||
-        (breakpointDown && (isWidthDown(width, breakpoint, true)))
+        (breakpointUp && isWidthUp(breakpoint, width)) ||
+        (breakpointDown && isWidthDown(breakpoint, width))
       ) {
         visible = false;
         break;
@@ -62,13 +72,12 @@ function HiddenJs(props: Props): ?Element<any> {
     return null;
   }
 
-  return (
-    <ComponentProp {...other}>
-      {children}
-    </ComponentProp>
+  warning(
+    Object.keys(other).length === 0,
+    `Material-UI: Unsupported properties received ${JSON.stringify(other)}`,
   );
-}
 
-HiddenJs.defaultProps = defaultProps;
+  return children;
+}
 
 export default withWidth()(HiddenJs);

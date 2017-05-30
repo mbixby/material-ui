@@ -37,7 +37,7 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-exports.createSwitch = createSwitch;
+exports.default = createSwitch;
 
 var _react = require('react');
 
@@ -75,25 +75,23 @@ var _Icon2 = _interopRequireDefault(_Icon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiSwitchBase', function () {
-  return {
-    root: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      transition: 'none'
-    },
-    input: {
-      cursor: 'inherit',
-      position: 'absolute',
-      opacity: 0,
-      width: '100%',
-      height: '100%',
-      top: 0,
-      left: 0,
-      margin: 0,
-      padding: 0
-    }
-  };
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiSwitchBase', {
+  root: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    transition: 'none'
+  },
+  input: {
+    cursor: 'inherit',
+    position: 'absolute',
+    opacity: 0,
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    margin: 0,
+    padding: 0
+  }
 }); //  weak
 
 var _ref2 = _react2.default.createElement(_checkBoxOutlineBlank2.default, { 'aria-hidden': 'true' });
@@ -101,8 +99,6 @@ var _ref2 = _react2.default.createElement(_checkBoxOutlineBlank2.default, { 'ari
 var _ref3 = _react2.default.createElement(_checkBox2.default, { 'aria-hidden': 'true' });
 
 function createSwitch() {
-  var _class, _temp2;
-
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       _ref$defaultIcon = _ref.defaultIcon,
       defaultIcon = _ref$defaultIcon === undefined ? _ref2 : _ref$defaultIcon,
@@ -112,7 +108,10 @@ function createSwitch() {
       inputType = _ref$inputType === undefined ? 'checkbox' : _ref$inputType,
       switchStyleSheet = _ref.styleSheet;
 
-  return _temp2 = _class = function (_Component) {
+  /**
+   * @ignore - internal component.
+   */
+  var SwitchBase = function (_Component) {
     (0, _inherits3.default)(SwitchBase, _Component);
 
     function SwitchBase() {
@@ -126,9 +125,7 @@ function createSwitch() {
         args[_key] = arguments[_key];
       }
 
-      return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref4 = SwitchBase.__proto__ || (0, _getPrototypeOf2.default)(SwitchBase)).call.apply(_ref4, [this].concat(args))), _this), _this.state = {}, _this.input = undefined, _this.button = undefined, _this.isControlled = undefined, _this.focus = function () {
-        return _this.input.focus();
-      }, _this.handleInputChange = function (event) {
+      return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref4 = SwitchBase.__proto__ || (0, _getPrototypeOf2.default)(SwitchBase)).call.apply(_ref4, [this].concat(args))), _this), _this.state = {}, _this.input = null, _this.button = null, _this.isControlled = null, _this.handleInputChange = function (event) {
         var newChecked = void 0;
 
         if (_this.isControlled) {
@@ -146,11 +143,6 @@ function createSwitch() {
         }
       }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
     }
-    /**
-     ** NB: If changed, please update Checkbox, Switch and Radio
-     ** so that the API documentation is updated.
-     **/
-
 
     (0, _createClass3.default)(SwitchBase, [{
       key: 'componentWillMount',
@@ -181,11 +173,12 @@ function createSwitch() {
             disabled = _props.disabled,
             disabledClassName = _props.disabledClassName,
             iconProp = _props.icon,
+            inputProps = _props.inputProps,
             name = _props.name,
             onChange = _props.onChange,
             tabIndex = _props.tabIndex,
             value = _props.value,
-            other = (0, _objectWithoutProperties3.default)(_props, ['checked', 'className', 'checkedClassName', 'checkedIcon', 'disabled', 'disabledClassName', 'icon', 'name', 'onChange', 'tabIndex', 'value']);
+            other = (0, _objectWithoutProperties3.default)(_props, ['checked', 'className', 'checkedClassName', 'checkedIcon', 'disabled', 'disabledClassName', 'icon', 'inputProps', 'name', 'onChange', 'tabIndex', 'value']);
 
 
         var checked = this.isControlled ? checkedProp : this.state.checked;
@@ -199,7 +192,7 @@ function createSwitch() {
         if (typeof icon === 'string') {
           icon = _react2.default.createElement(
             _Icon2.default,
-            { 'aria-hidden': 'true' },
+            null,
             icon
           );
         }
@@ -208,8 +201,8 @@ function createSwitch() {
           _IconButton2.default,
           (0, _extends3.default)({
             component: 'span',
-            buttonRef: function buttonRef(c) {
-              _this2.button = c;
+            buttonRef: function buttonRef(node) {
+              _this2.button = node;
             },
             className: className,
             disabled: disabled,
@@ -217,9 +210,9 @@ function createSwitch() {
             role: undefined
           }, other),
           icon,
-          _react2.default.createElement('input', {
-            ref: function ref(c) {
-              _this2.input = c;
+          _react2.default.createElement('input', (0, _extends3.default)({
+            ref: function ref(node) {
+              _this2.input = node;
             },
             type: inputType,
             name: name,
@@ -229,12 +222,25 @@ function createSwitch() {
             disabled: disabled,
             tabIndex: tabIndex,
             value: value
-          })
+          }, inputProps))
         );
       }
     }]);
     return SwitchBase;
-  }(_react.Component), _class.propTypes = {
+  }(_react.Component);
+
+  /**
+   ** NB: If changed, please update Checkbox, Switch and Radio
+   ** so that the API documentation is updated.
+   **/
+
+
+  SwitchBase.defaultProps = {
+    icon: defaultIcon,
+    checkedIcon: defaultCheckedIcon,
+    disableRipple: false
+  };
+  SwitchBase.propTypes = process.env.NODE_ENV !== "production" ? {
     /**
      * If `true`, the component appears selected.
      */
@@ -248,7 +254,7 @@ function createSwitch() {
      */
     checkedIcon: _propTypes2.default.node,
     /**
-     * The CSS class name of the root element.
+     * @ignore
      */
     className: _propTypes2.default.string,
     /**
@@ -269,8 +275,13 @@ function createSwitch() {
     disableRipple: _propTypes2.default.bool,
     /**
      * The icon to display when the component is unchecked.
+     * If a string is provided, it will be used as a font ligature.
      */
     icon: _propTypes2.default.node,
+    /**
+     * Properties applied to the `input` element.
+     */
+    inputProps: _propTypes2.default.object,
     /*
      * @ignore
      */
@@ -290,10 +301,11 @@ function createSwitch() {
      * The value of the component.
      */
     value: _propTypes2.default.string
-  }, _class.defaultProps = {
-    icon: defaultIcon,
-    checkedIcon: defaultCheckedIcon
-  }, _class.contextTypes = {
+  } : {};
+
+  SwitchBase.contextTypes = {
     styleManager: _customPropTypes2.default.muiRequired
-  }, _temp2;
+  };
+
+  return SwitchBase;
 }

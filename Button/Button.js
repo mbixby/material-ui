@@ -17,26 +17,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
-
-var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = require('babel-runtime/helpers/inherits');
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -51,9 +31,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _colorManipulator = require('../styles/colorManipulator');
 
@@ -64,17 +44,11 @@ var _ButtonBase2 = _interopRequireDefault(_ButtonBase);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiButton', function (theme) {
-  var typography = theme.typography,
-      palette = theme.palette,
-      transitions = theme.transitions,
-      shadows = theme.shadows;
-
-
   return {
     root: {
-      fontSize: typography.fontSize,
-      fontWeight: typography.fontWeightMedium,
-      fontFamily: typography.fontFamily,
+      fontSize: theme.typography.fontSize,
+      fontWeight: theme.typography.fontWeightMedium,
+      fontFamily: theme.typography.fontFamily,
       textTransform: 'uppercase',
       display: 'inline-flex',
       alignItems: 'center',
@@ -84,14 +58,14 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       height: 36,
       padding: '0px 16px',
       borderRadius: 2,
-      color: palette.text.primary,
+      color: theme.palette.text.primary,
       backgroundColor: 'transparent',
-      transition: transitions.create(['background-color', 'box-shadow'], {
-        duration: transitions.duration.short
+      transition: theme.transitions.create(['background-color', 'box-shadow'], {
+        duration: theme.transitions.duration.short
       }),
       '&:hover': {
         textDecoration: 'none',
-        backgroundColor: (0, _colorManipulator.fade)(palette.text.primary, 0.12),
+        backgroundColor: (0, _colorManipulator.fade)(theme.palette.text.primary, 0.12),
         '&$disabled': {
           backgroundColor: 'transparent'
         }
@@ -108,64 +82,64 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       justifyContent: 'inherit'
     },
     primary: {
-      color: palette.primary[500],
+      color: theme.palette.primary[500],
       '&:hover': {
-        backgroundColor: (0, _colorManipulator.fade)(palette.primary[500], 0.12)
+        backgroundColor: (0, _colorManipulator.fade)(theme.palette.primary[500], 0.12)
       }
     },
     accent: {
-      color: palette.accent.A200,
+      color: theme.palette.accent.A200,
       '&:hover': {
-        backgroundColor: (0, _colorManipulator.fade)(palette.accent.A200, 0.12)
+        backgroundColor: (0, _colorManipulator.fade)(theme.palette.accent.A200, 0.12)
       }
     },
     contrast: {
-      color: palette.getContrastText(palette.primary[500]),
+      color: theme.palette.getContrastText(theme.palette.primary[500]),
       '&:hover': {
-        backgroundColor: (0, _colorManipulator.fade)(palette.getContrastText(palette.primary[500]), 0.12)
+        backgroundColor: (0, _colorManipulator.fade)(theme.palette.getContrastText(theme.palette.primary[500]), 0.12)
       }
     },
     raised: {
-      color: palette.getContrastText(palette.grey[300]),
-      backgroundColor: palette.grey[300],
-      boxShadow: shadows[2],
+      color: theme.palette.getContrastText(theme.palette.grey[300]),
+      backgroundColor: theme.palette.grey[300],
+      boxShadow: theme.shadows[2],
       '&$keyboardFocused': {
-        boxShadow: shadows[6]
+        boxShadow: theme.shadows[6]
       },
       '&:active': {
-        boxShadow: shadows[8]
+        boxShadow: theme.shadows[8]
       },
       '&$disabled': {
-        boxShadow: shadows[0],
-        backgroundColor: palette.text.divider
+        boxShadow: theme.shadows[0],
+        backgroundColor: theme.palette.text.divider
       },
       '&:hover': {
-        backgroundColor: palette.grey.A100,
+        backgroundColor: theme.palette.grey.A100,
         '&$disabled': {
-          backgroundColor: palette.text.divider
+          backgroundColor: theme.palette.text.divider
         }
       }
     },
     keyboardFocused: {},
     raisedPrimary: {
-      color: palette.getContrastText(palette.primary[500]),
-      backgroundColor: palette.primary[500],
+      color: theme.palette.getContrastText(theme.palette.primary[500]),
+      backgroundColor: theme.palette.primary[500],
       '&:hover': {
-        backgroundColor: palette.primary[700]
+        backgroundColor: theme.palette.primary[700]
       }
     },
     raisedAccent: {
-      color: palette.getContrastText(palette.accent.A200),
-      backgroundColor: palette.accent.A200,
+      color: theme.palette.getContrastText(theme.palette.accent.A200),
+      backgroundColor: theme.palette.accent.A200,
       '&:hover': {
-        backgroundColor: palette.accent.A400
+        backgroundColor: theme.palette.accent.A400
       }
     },
     raisedContrast: {
-      color: palette.getContrastText(palette.primary[500])
+      color: theme.palette.getContrastText(theme.palette.primary[500])
     },
     disabled: {
-      color: palette.action.disabled
+      color: theme.palette.action.disabled
     },
     fab: {
       borderRadius: '50%',
@@ -173,90 +147,52 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       minWidth: 0,
       width: 56,
       height: 56,
-      boxShadow: shadows[6],
+      boxShadow: theme.shadows[6],
       '&:active': {
-        boxShadow: shadows[12]
+        boxShadow: theme.shadows[12]
       }
     }
   };
-});
+}); //  weak
 
-/**
- * ```jsx
- * <Button>Hello World</Button>
- * ```
- */
-//  weak
+function Button(props) {
+  var _classNames;
 
-var Button = function (_Component) {
-  (0, _inherits3.default)(Button, _Component);
-
-  function Button() {
-    (0, _classCallCheck3.default)(this, Button);
-    return (0, _possibleConstructorReturn3.default)(this, (Button.__proto__ || (0, _getPrototypeOf2.default)(Button)).apply(this, arguments));
-  }
-
-  (0, _createClass3.default)(Button, [{
-    key: 'render',
-    value: function render() {
-      var _classNames;
-
-      var _props = this.props,
-          accent = _props.accent,
-          children = _props.children,
-          classNameProp = _props.className,
-          compact = _props.compact,
-          contrast = _props.contrast,
-          disabled = _props.disabled,
-          disableFocusRipple = _props.disableFocusRipple,
-          disableRipple = _props.disableRipple,
-          fab = _props.fab,
-          primary = _props.primary,
-          raised = _props.raised,
-          other = (0, _objectWithoutProperties3.default)(_props, ['accent', 'children', 'className', 'compact', 'contrast', 'disabled', 'disableFocusRipple', 'disableRipple', 'fab', 'primary', 'raised']);
+  var accent = props.accent,
+      children = props.children,
+      classes = props.classes,
+      classNameProp = props.className,
+      compact = props.compact,
+      contrast = props.contrast,
+      disabled = props.disabled,
+      disableFocusRipple = props.disableFocusRipple,
+      disableRipple = props.disableRipple,
+      fab = props.fab,
+      primary = props.primary,
+      raised = props.raised,
+      other = (0, _objectWithoutProperties3.default)(props, ['accent', 'children', 'classes', 'className', 'compact', 'contrast', 'disabled', 'disableFocusRipple', 'disableRipple', 'fab', 'primary', 'raised']);
 
 
-      var classes = this.context.styleManager.render(styleSheet);
-      var flat = !raised && !fab;
-      var className = (0, _classnames2.default)((_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.root, true), (0, _defineProperty3.default)(_classNames, classes.raised, raised || fab), (0, _defineProperty3.default)(_classNames, classes.fab, fab), (0, _defineProperty3.default)(_classNames, classes.primary, flat && primary), (0, _defineProperty3.default)(_classNames, classes.accent, flat && accent), (0, _defineProperty3.default)(_classNames, classes.contrast, flat && contrast), (0, _defineProperty3.default)(_classNames, classes.raisedPrimary, !flat && primary), (0, _defineProperty3.default)(_classNames, classes.raisedAccent, !flat && accent), (0, _defineProperty3.default)(_classNames, classes.raisedContrast, !flat && contrast), (0, _defineProperty3.default)(_classNames, classes.compact, compact), (0, _defineProperty3.default)(_classNames, classes.disabled, disabled), _classNames), classNameProp);
+  var flat = !raised && !fab;
+  var className = (0, _classnames2.default)((_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.root, true), (0, _defineProperty3.default)(_classNames, classes.raised, raised || fab), (0, _defineProperty3.default)(_classNames, classes.fab, fab), (0, _defineProperty3.default)(_classNames, classes.primary, flat && primary), (0, _defineProperty3.default)(_classNames, classes.accent, flat && accent), (0, _defineProperty3.default)(_classNames, classes.contrast, flat && contrast), (0, _defineProperty3.default)(_classNames, classes.raisedPrimary, !flat && primary), (0, _defineProperty3.default)(_classNames, classes.raisedAccent, !flat && accent), (0, _defineProperty3.default)(_classNames, classes.raisedContrast, !flat && contrast), (0, _defineProperty3.default)(_classNames, classes.compact, compact), (0, _defineProperty3.default)(_classNames, classes.disabled, disabled), _classNames), classNameProp);
 
-      return _react2.default.createElement(
-        _ButtonBase2.default,
-        (0, _extends3.default)({
-          className: className,
-          disabled: disabled,
-          focusRipple: !disableFocusRipple,
-          ripple: !disableRipple,
-          keyboardFocusedClassName: classes.keyboardFocused
-        }, other),
-        _react2.default.createElement(
-          'span',
-          { className: classes.label },
-          children
-        )
-      );
-    }
-  }]);
-  return Button;
-}(_react.Component);
+  return _react2.default.createElement(
+    _ButtonBase2.default,
+    (0, _extends3.default)({
+      className: className,
+      disabled: disabled,
+      focusRipple: !disableFocusRipple,
+      ripple: !disableRipple,
+      keyboardFocusedClassName: classes.keyboardFocused
+    }, other),
+    _react2.default.createElement(
+      'span',
+      { className: classes.label },
+      children
+    )
+  );
+}
 
-Button.defaultProps = {
-  accent: false,
-  component: 'button',
-  compact: false,
-  contrast: false,
-  disabled: false,
-  fab: false,
-  disableFocusRipple: false,
-  primary: false,
-  raised: false,
-  disableRipple: false,
-  type: 'button'
-};
-Button.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
-exports.default = Button;
 Button.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * If `true`, the button will use the theme's accent color.
@@ -267,7 +203,11 @@ Button.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node.isRequired,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -318,3 +258,19 @@ Button.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   type: _propTypes2.default.string
 } : {};
+
+Button.defaultProps = {
+  accent: false,
+  component: 'button',
+  compact: false,
+  contrast: false,
+  disabled: false,
+  fab: false,
+  disableFocusRipple: false,
+  primary: false,
+  raised: false,
+  disableRipple: false,
+  type: 'button'
+};
+
+exports.default = (0, _withStyles2.default)(styleSheet)(Button);

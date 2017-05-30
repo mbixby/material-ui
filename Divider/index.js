@@ -3,14 +3,14 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Divider = exports.default = undefined;
 
-var _Divider2 = require('./Divider');
+var _Divider = require('./Divider');
 
-var _Divider3 = _interopRequireDefault(_Divider2);
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Divider).default;
+  }
+});
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _Divider3.default; /* eslint-disable flowtype/require-valid-file-annotation */
-
-exports.Divider = _Divider3.default;

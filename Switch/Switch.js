@@ -27,20 +27,19 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _SwitchBase = require('../internal/SwitchBase');
+
+var _SwitchBase2 = _interopRequireDefault(_SwitchBase);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //  weak
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiSwitch', function (theme) {
-  var palette = theme.palette,
-      transitions = theme.transitions;
-
   return {
     root: {
       display: 'inline-flex',
@@ -48,24 +47,24 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       position: 'relative'
     },
     default: {
-      color: palette.type === 'light' ? palette.grey[50] : palette.grey[400],
-      transition: transitions.create('transform', {
-        duration: transitions.duration.shortest
+      color: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[400],
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest
       })
     },
     checked: {
-      color: palette.primary[500],
+      color: theme.palette.primary[500],
       transform: 'translateX(14px)',
       '& + $bar': {
-        backgroundColor: palette.primary[500],
+        backgroundColor: theme.palette.primary[500],
         opacity: 0.5
       }
     },
     disabled: {
-      color: palette.type === 'light' ? palette.grey[400] : palette.grey[800],
+      color: theme.palette.type === 'light' ? theme.palette.grey[400] : theme.palette.grey[800],
       '& + $bar': {
-        backgroundColor: palette.type === 'light' ? '#000' : '#fff',
-        opacity: palette.type === 'light' ? 0.12 : 0.1
+        backgroundColor: theme.palette.type === 'light' ? '#000' : '#fff',
+        opacity: theme.palette.type === 'light' ? 0.12 : 0.1
       }
     },
     bar: {
@@ -78,11 +77,11 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       marginTop: -7,
       left: '50%',
       marginLeft: -17,
-      transition: transitions.create(['opacity', 'background-color'], {
-        duration: transitions.duration.shortest
+      transition: theme.transitions.create(['opacity', 'background-color'], {
+        duration: theme.transitions.duration.shortest
       }),
-      backgroundColor: palette.type === 'light' ? '#000' : '#fff',
-      opacity: palette.type === 'light' ? 0.38 : 0.3
+      backgroundColor: theme.palette.type === 'light' ? '#000' : '#fff',
+      opacity: theme.palette.type === 'light' ? 0.38 : 0.3
     },
     icon: {
       boxShadow: theme.shadows[1],
@@ -94,14 +93,14 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
   };
 });
 
-var SwitchBase = (0, _SwitchBase.createSwitch)({ styleSheet: styleSheet });
+var SwitchBase = (0, _SwitchBase2.default)({ styleSheet: styleSheet });
 
-function Switch(props, context) {
-  var className = props.className,
-      other = (0, _objectWithoutProperties3.default)(props, ['className']);
+function Switch(props) {
+  var classes = props.classes,
+      className = props.className,
+      other = (0, _objectWithoutProperties3.default)(props, ['classes', 'className']);
 
 
-  var classes = context.styleManager.render(styleSheet);
   var icon = _react2.default.createElement('div', { className: classes.icon });
 
   return _react2.default.createElement(
@@ -126,7 +125,11 @@ Switch.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   checkedIcon: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -143,8 +146,13 @@ Switch.propTypes = process.env.NODE_ENV !== "production" ? {
   disabledClassName: _propTypes2.default.string,
   /**
    * The icon to display when the component is unchecked.
+   * If a string is provided, it will be used as a font ligature.
    */
   icon: _propTypes2.default.node,
+  /**
+   * Properties applied to the `input` element.
+   */
+  inputProps: _propTypes2.default.object,
   /*
    * @ignore
    */
@@ -170,8 +178,4 @@ Switch.propTypes = process.env.NODE_ENV !== "production" ? {
   value: _propTypes2.default.string
 } : {};
 
-Switch.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
-
-exports.default = Switch;
+exports.default = (0, _withStyles2.default)(styleSheet)(Switch);

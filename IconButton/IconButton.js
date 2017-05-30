@@ -17,8 +17,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = IconButton;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33,9 +31,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _ButtonBase = require('../internal/ButtonBase');
 
@@ -48,10 +46,6 @@ var _Icon2 = _interopRequireDefault(_Icon);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiIconButton', function (theme) {
-  var palette = theme.palette,
-      transitions = theme.transitions;
-
-
   return {
     iconButton: {
       display: 'inline-flex',
@@ -65,20 +59,20 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       padding: 0,
       borderRadius: '50%',
       backgroundColor: 'transparent',
-      color: palette.action.active,
+      color: theme.palette.action.active,
       zIndex: 1,
-      transition: transitions.create('background-color', {
-        duration: transitions.duration.shortest
+      transition: theme.transitions.create('background-color', {
+        duration: theme.transitions.duration.shortest
       })
     },
     disabled: {
-      color: palette.action.disabled
+      color: theme.palette.action.disabled
     },
     accent: {
-      color: palette.accent.A200
+      color: theme.palette.accent.A200
     },
     contrast: {
-      color: palette.getContrastText(palette.primary[500])
+      color: theme.palette.getContrastText(theme.palette.primary[500])
     },
     label: {
       width: '100%',
@@ -91,40 +85,33 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       height: '1em'
     },
     keyboardFocused: {
-      backgroundColor: palette.text.divider
+      backgroundColor: theme.palette.text.divider
     }
   };
 });
 
 /**
- * ```
- * <IconButton>account_circle</IconButton>
- * ```
- *
- * ```
- * <IconButton><AccountCircle></IconButton>
- * ```
- *
  * Refer to the [Icons](/style/icons) section of the documentation
  * regarding the available icon options.
  */
 //  weak
 
-function IconButton(props, context) {
+function IconButton(props) {
   var _classNames;
 
   var accent = props.accent,
       buttonRef = props.buttonRef,
       children = props.children,
+      classes = props.classes,
       className = props.className,
       contrast = props.contrast,
       disabled = props.disabled,
       disableRipple = props.disableRipple,
       iconClassNameProp = props.iconClassName,
-      other = (0, _objectWithoutProperties3.default)(props, ['accent', 'buttonRef', 'children', 'className', 'contrast', 'disabled', 'disableRipple', 'iconClassName']);
+      other = (0, _objectWithoutProperties3.default)(props, ['accent', 'buttonRef', 'children', 'classes', 'className', 'contrast', 'disabled', 'disableRipple', 'iconClassName']);
 
-  var classes = context.styleManager.render(styleSheet);
   var iconClassName = (0, _classnames2.default)(classes.icon, iconClassNameProp);
+
   return _react2.default.createElement(
     _ButtonBase2.default,
     (0, _extends3.default)({
@@ -170,7 +157,11 @@ IconButton.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -198,6 +189,4 @@ IconButton.defaultProps = {
   disableRipple: false
 };
 
-IconButton.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
+exports.default = (0, _withStyles2.default)(styleSheet)(IconButton);

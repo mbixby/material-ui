@@ -24,6 +24,120 @@ Below is a summary of major changes.
 - [Ripple/TouchRipple] Refactored and now works properly inside a button in firefox!
 - [Button] Raised/flat/fab are now combined into a single component.
 
+## 1.0.0-alpha.15
+###### _May 23, 2017_
+
+This release introduces an important change in the API and the implementation.
+Each exposed component is wrapped with a `withStyles` Higher-order component.
+This HOC has different responsibilities, the one you gonna be interested in is
+regarding the `classes` property. Now, we consider the CSS as a public API.
+You now have two way to customize absolutely all the CSS injected by Material-UI.
+Either the instance level with the `classes` property or the class level with the
+`overrides` theme property.
+
+To [learn more about it](https://material-ui-1dab0.firebaseapp.com/customization/overrides), have a look at the documentation. Also, these options are automatically [documented](http://0.0.0.0:3000/component-api/button#classes).
+
+##### Breaking changes
+
+- [core] Various fixes after using it on a real project (#6882) @oliviertassinari
+Apply the other properties (undocumented) on the root of the Menu.
+- [core] Add a new classes property to all the components #6911 @oliviertassinari
+If you where using the ref to access the internal of the component or native elements,
+you gonna have to change your strategy, either use `innerRef` or `inputRef`.
+
+##### Component Fixes / Enhancements
+
+- [Typography] Add missing style (#6873) @oliviertassinari
+- [Dialog] create responsive HOC `withResponsiveFullScreen` (#6898) @rosskevin
+- [core] Remove usage of 'not-allowed' (#6932) @oliviertassinari
+- [Switch] Remove the blue flash of death (#6933) @oliviertassinari
+- [TextField] Fix the inputClassName property (#6934) @oliviertassinari
+
+##### Docs
+
+- [docs] Enable flow on much more demos (#6881) @oliviertassinari
+- [docs] Better support IE11 (#6880) @oliviertassinari
+- [Tabs] Document that the index is required (#6935) @oliviertassinari
+
+##### Core
+
+- [eslint] enforce import plugin rules (#6923) @rosskevin
+- [core] Change style API (#6892) @oliviertassinari
+- [eslint] Fit closer to airbnb (#6894) @oliviertassinari
+- [core] Upgrade the dependencies (#6872) @oliviertassinari
+- [core] Add prettier (#6931) @oliviertassinari
+
+## 1.0.0-alpha.14
+###### _May 14, 2017_
+
+##### Breaking changes
+
+- [Hidden] Remove one degree of freedom (#6820) @oliviertassnari
+- [Hidden] Logical fixes for up/down (#6839) @rosskevin
+
+##### Component Fixes / Enhancements
+
+- [Icon] Add aria-hidden (#6829) @oliviertassinari
+- [Paper] Add elevation boundaries (#6817) @oliviertassinari
+- [Paper] Add a component property (#6830) @oliviertassinari
+- [Transition] Add flow proptypes (#6846) @rosskevin
+- [npm] Upgrade the recompose dependency (#6855) @oliviertassinari
+- [TextField] Add in support for multiline text fields (#6553) @peteratticusberg
+- [TextField] Second iteration on multilines (#6859) @oliviertassinari
+
+##### Docs
+
+- [docs] Fix link to material-ui-icons (#6825) @NiloCK
+- [docs] Add a direct link to GitHub (#6861) @oliviertassinari
+
+##### Core
+
+- [coverage] Remove the flow plugins as they were not needed (#6816) @rosskevin
+- [ButtonBase] Add test coverage for instance.focus (#6827) @agamrafaeli
+- [ButtonBase] Add test coverage for handleFocus (#6828) @agamrafaeli
+- [flow] Fix small issues (#6860) @oliviertassinari
+
+## 1.0.0-alpha.13
+###### _May 8, 2017_
+
+##### Breaking changes
+
+- [lint/flow] validate imports/exports with eslint and flow (#6757) @rosskevin
+Change some import:
+```diff
+-import { List, ListItem, ListItemText } from 'material-ui/List';
++import List, { ListItem, ListItemText } from 'material-ui/List';
+```
+
+- [Grid] Rename Layout to Grid (#6789) @rosskevin
+```diff
+-import Layout from 'material-ui/Layout';
++import Grid from 'material-ui/Grid';
+```
+
+##### Component Fixes / Enhancements
+
+- [Slide] Fix getTranslateValue for left & up cases (#6454) @josulliv101
+- [Hidden] Responsively hide content (js implementation) (#6748) @rosskevin
+- [Hidden] Fixes, demos, regression tests, and `only` functionality (#6782) @rosskevin
+- [Layout] Add a hidden property (#6754) @rosskevin
+- [Typography] Flow type (#6787) @rosskevin
+
+##### Docs
+
+- [palette] Require color shape that matches defaults (#6756) @kgregory
+- [docs] Document the Theme section (#6810) @oliviertassinari
+- [docs] Add a search bar (#6745) @oliviertassinari
+- [docs] Generate a summary of each section (#6772) @oliviertassinari
+- [docs] Start addressing documentation issues (#6758) @oliviertassinari
+- [docs] Hide the context implementation details (#6798) @oliviertassinari
+
+##### Core
+
+- Expanding use of flow for propType, include flow types in package, add flow-typed (#6724) @rosskevin
+- [core] Fix flow propTypes generation issue (#6749) @oliviertassinari
+- [createShallow] Remove cleanup (#6797) @agamrafaeli
+
 ## 1.0.0-alpha.12
 ###### _Apr 30, 2017_
 

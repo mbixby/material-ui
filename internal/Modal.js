@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.styleSheet = undefined;
 
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
 var _keys = require('babel-runtime/core-js/object/keys');
 
 var _keys2 = _interopRequireDefault(_keys);
@@ -37,13 +41,11 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
+var _ref2, _ref3;
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactDom = require('react-dom');
 
@@ -89,11 +91,13 @@ var _Fade = require('../transitions/Fade');
 
 var _Fade2 = _interopRequireDefault(_Fade);
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _modalManager = require('./modalManager');
+
+var _modalManager2 = _interopRequireDefault(_modalManager);
 
 var _Backdrop = require('./Backdrop');
 
@@ -109,9 +113,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Modals don't open on the server so this won't break concurrency.
  * Could also put this on context.
  */
-//  weak
-
-var modalManager = (0, _modalManager.createModalManager)();
+var modalManager = (0, _modalManager2.default)();
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiModal', function (theme) {
   return {
@@ -126,10 +128,6 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
     }
   };
 });
-
-/**
- * TODO: Still a WIP
- */
 
 var Modal = function (_Component) {
   (0, _inherits3.default)(Modal, _Component);
@@ -211,7 +209,7 @@ var Modal = function (_Component) {
 
         if (!modalContent.hasAttribute('tabIndex')) {
           modalContent.setAttribute('tabIndex', -1);
-          process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'The modal content node does not accept focus. ' + 'For the benefit of assistive technologies, ' + 'the tabIndex of the node is being set to "-1".') : void 0;
+          process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'Material-UI: The modal content node does not accept focus. ' + 'For the benefit of assistive technologies, ' + 'the tabIndex of the node is being set to "-1".') : void 0;
         }
 
         modalContent.focus();
@@ -238,8 +236,8 @@ var Modal = function (_Component) {
     key: 'handleHide',
     value: function handleHide() {
       this.props.modalManager.remove(this);
-      this.onDocumentKeyUpListener.remove();
-      this.onFocusListener.remove();
+      if (this.onDocumentKeyUpListener) this.onDocumentKeyUpListener.remove();
+      if (this.onFocusListener) this.onFocusListener.remove();
       this.restoreLastFocus();
     }
   }, {
@@ -284,6 +282,7 @@ var Modal = function (_Component) {
           ignoreBackdropClick = _props2.ignoreBackdropClick,
           ignoreEscapeKeyUp = _props2.ignoreEscapeKeyUp,
           children = _props2.children,
+          classes = _props2.classes,
           className = _props2.className,
           modalManagerProp = _props2.modalManager,
           onBackdropClick = _props2.onBackdropClick,
@@ -296,10 +295,9 @@ var Modal = function (_Component) {
           onExiting = _props2.onExiting,
           onExited = _props2.onExited,
           show = _props2.show,
-          other = (0, _objectWithoutProperties3.default)(_props2, ['disableBackdrop', 'backdropComponent', 'backdropClassName', 'backdropTransitionDuration', 'backdropInvisible', 'ignoreBackdropClick', 'ignoreEscapeKeyUp', 'children', 'className', 'modalManager', 'onBackdropClick', 'onEscapeKeyUp', 'onRequestClose', 'onEnter', 'onEntering', 'onEntered', 'onExit', 'onExiting', 'onExited', 'show']);
+          other = (0, _objectWithoutProperties3.default)(_props2, ['disableBackdrop', 'backdropComponent', 'backdropClassName', 'backdropTransitionDuration', 'backdropInvisible', 'ignoreBackdropClick', 'ignoreEscapeKeyUp', 'children', 'classes', 'className', 'modalManager', 'onBackdropClick', 'onEscapeKeyUp', 'onRequestClose', 'onEnter', 'onEntering', 'onEntered', 'onExit', 'onExiting', 'onExited', 'show']);
 
 
-      var classes = this.context.styleManager.render(styleSheet);
       var mount = show || !this.state.exited;
 
       if (!mount) {
@@ -347,15 +345,18 @@ var Modal = function (_Component) {
 
       return _react2.default.createElement(
         _Portal2.default,
-        { open: true, ref: function ref(c) {
-            _this2.mountNode = c ? c.getLayer() : c;
-          } },
+        {
+          open: true,
+          ref: function ref(node) {
+            _this2.mountNode = node ? node.getLayer() : node;
+          }
+        },
         _react2.default.createElement(
           'div',
           (0, _extends3.default)({
             className: (0, _classnames2.default)(classes.modal, className),
-            ref: function ref(c) {
-              _this2.modal = c;
+            ref: function ref(node) {
+              _this2.modal = node;
             }
           }, other),
           !disableBackdrop && this.renderBackdrop(backdropProps),
@@ -377,9 +378,6 @@ Modal.defaultProps = {
   modalManager: modalManager,
   show: false
 };
-Modal.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
 
 var _initialiseProps = function _initialiseProps() {
   var _this3 = this;
@@ -391,8 +389,8 @@ var _initialiseProps = function _initialiseProps() {
   this.lastFocus = undefined;
   this.modal = null;
   this.mountNode = null;
-  this.onDocumentKeyUpListener = undefined;
-  this.onFocusListener = undefined;
+  this.onDocumentKeyUpListener = null;
+  this.onFocusListener = null;
 
   this.handleFocusListener = function () {
     if (!_this3.mounted || !_this3.props.modalManager.isTopModal(_this3)) {
@@ -414,17 +412,17 @@ var _initialiseProps = function _initialiseProps() {
 
     if ((0, _keycode2.default)(event) === 'esc') {
       var _props3 = _this3.props,
-          onEscapeKeyUp = _props3.onEscapeKeyUp,
-          onRequestClose = _props3.onRequestClose,
-          ignoreEscapeKeyUp = _props3.ignoreEscapeKeyUp;
+          _onEscapeKeyUp = _props3.onEscapeKeyUp,
+          _onRequestClose = _props3.onRequestClose,
+          _ignoreEscapeKeyUp = _props3.ignoreEscapeKeyUp;
 
 
-      if (onEscapeKeyUp) {
-        onEscapeKeyUp(event);
+      if (_onEscapeKeyUp) {
+        _onEscapeKeyUp(event);
       }
 
-      if (onRequestClose && !ignoreEscapeKeyUp) {
-        onRequestClose(event);
+      if (_onRequestClose && !_ignoreEscapeKeyUp) {
+        _onRequestClose(event);
       }
     }
   };
@@ -460,86 +458,26 @@ var _initialiseProps = function _initialiseProps() {
   };
 };
 
-exports.default = Modal;
-Modal.propTypes = process.env.NODE_ENV !== "production" ? {
-  /**
-   * The CSS class name of the backdrop element.
-   */
-  backdropClassName: _propTypes2.default.string,
-  /**
-   * Pass a component class to use as the backdrop.
-   */
-  backdropComponent: _propTypes2.default.func,
-  /**
-   * If `true`, the backdrop is invisible.
-   */
-  backdropInvisible: _propTypes2.default.bool,
-  /**
-   * Duration in ms for the backgrop transition.
-   */
-  backdropTransitionDuration: _propTypes2.default.number,
-  /**
-   * Content of the modal.
-   */
-  children: _propTypes2.default.element,
-  /**
-   * The CSS class name of the root element.
-   */
-  className: _propTypes2.default.string,
-  /**
-   * If `true`, the backdrop is disabled.
-   */
-  disableBackdrop: _propTypes2.default.bool,
-  /**
-   * If `true`, clicking the backdrop will not fire the `onRequestClose` callback.
-   */
-  ignoreBackdropClick: _propTypes2.default.bool,
-  /**
-   * If `true`, hitting escape will not fire the `onRequestClose` callback.
-   */
-  ignoreEscapeKeyUp: _propTypes2.default.bool,
-  /**
-   * @ignore
-   */
-  modalManager: _propTypes2.default.object,
-  /**
-   * Callback fires when the backdrop is clicked on.
-   */
-  onBackdropClick: _propTypes2.default.func,
-  /**
-   * Callback fired before the modal is entering.
-   */
-  onEnter: _propTypes2.default.func,
-  /**
-   * Callback fired when the modal is entering.
-   */
-  onEntering: _propTypes2.default.func,
-  /**
-   * Callback fired when the modal has entered.
-   */
-  onEntered: _propTypes2.default.func, // eslint-disable-line react/sort-prop-types
-  /**
-   * Callback fires when the escape key is pressed and the modal is in focus.
-   */
-  onEscapeKeyUp: _propTypes2.default.func, // eslint-disable-line react/sort-prop-types
-  /**
-   * Callback fired before the modal is exiting.
-   */
-  onExit: _propTypes2.default.func,
-  /**
-   * Callback fired when the modal is exiting.
-   */
-  onExiting: _propTypes2.default.func,
-  /**
-   * Callback fired when the modal has exited.
-   */
-  onExited: _propTypes2.default.func, // eslint-disable-line react/sort-prop-types
-  /**
-   * Callback fired when the modal requests to be closed.
-   */
-  onRequestClose: _propTypes2.default.func,
-  /**
-   * If `true`, the Modal is visible.
-   */
-  show: _propTypes2.default.bool
-} : {};
+Modal.propTypes = process.env.NODE_ENV !== "production" ? (_ref2 = {
+  backdropComponent: require('prop-types').func.isRequired,
+  backdropTransitionDuration: require('prop-types').number.isRequired,
+  backdropInvisible: require('prop-types').bool.isRequired,
+  disableBackdrop: require('prop-types').bool.isRequired,
+  ignoreBackdropClick: require('prop-types').bool.isRequired,
+  ignoreEscapeKeyUp: require('prop-types').bool.isRequired,
+  modalManager: require('prop-types').object.isRequired,
+  show: require('prop-types').bool.isRequired,
+  backdropClassName: require('prop-types').string
+}, (0, _defineProperty3.default)(_ref2, 'backdropComponent', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'backdropInvisible', require('prop-types').bool), (0, _defineProperty3.default)(_ref2, 'backdropTransitionDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref2, 'children', typeof _react.Element === 'function' ? require('prop-types').instanceOf(_react.Element) : require('prop-types').any), (0, _defineProperty3.default)(_ref2, 'classes', require('prop-types').object.isRequired), (0, _defineProperty3.default)(_ref2, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref2, 'disableBackdrop', require('prop-types').bool), (0, _defineProperty3.default)(_ref2, 'ignoreBackdropClick', require('prop-types').bool), (0, _defineProperty3.default)(_ref2, 'ignoreEscapeKeyUp', require('prop-types').bool), (0, _defineProperty3.default)(_ref2, 'modalManager', require('prop-types').object), (0, _defineProperty3.default)(_ref2, 'onBackdropClick', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onEnter', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onEntering', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onEntered', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onEscapeKeyUp', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onExit', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onExiting', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onExited', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onRequestClose', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'show', require('prop-types').bool), _ref2) : {};
+Modal.propTypes = process.env.NODE_ENV !== "production" ? (_ref3 = {
+  backdropComponent: require('prop-types').func.isRequired,
+  backdropTransitionDuration: require('prop-types').number.isRequired,
+  backdropInvisible: require('prop-types').bool.isRequired,
+  disableBackdrop: require('prop-types').bool.isRequired,
+  ignoreBackdropClick: require('prop-types').bool.isRequired,
+  ignoreEscapeKeyUp: require('prop-types').bool.isRequired,
+  modalManager: require('prop-types').object.isRequired,
+  show: require('prop-types').bool.isRequired,
+  backdropClassName: require('prop-types').string
+}, (0, _defineProperty3.default)(_ref3, 'backdropComponent', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'backdropInvisible', require('prop-types').bool), (0, _defineProperty3.default)(_ref3, 'backdropTransitionDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref3, 'children', typeof _react.Element === 'function' ? require('prop-types').instanceOf(_react.Element) : require('prop-types').any), (0, _defineProperty3.default)(_ref3, 'classes', require('prop-types').object.isRequired), (0, _defineProperty3.default)(_ref3, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref3, 'disableBackdrop', require('prop-types').bool), (0, _defineProperty3.default)(_ref3, 'ignoreBackdropClick', require('prop-types').bool), (0, _defineProperty3.default)(_ref3, 'ignoreEscapeKeyUp', require('prop-types').bool), (0, _defineProperty3.default)(_ref3, 'modalManager', require('prop-types').object), (0, _defineProperty3.default)(_ref3, 'onBackdropClick', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onEnter', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onEntering', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onEntered', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onEscapeKeyUp', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onExit', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onExiting', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onExited', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onRequestClose', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'show', require('prop-types').bool), _ref3) : {};
+exports.default = (0, _withStyles2.default)(styleSheet)(Modal);

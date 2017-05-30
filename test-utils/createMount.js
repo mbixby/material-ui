@@ -21,6 +21,8 @@ var _enzyme = require('enzyme');
 
 var _theme = require('../styles/theme');
 
+var _theme2 = _interopRequireDefault(_theme);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //  weak
@@ -44,7 +46,7 @@ function createMount() {
   attachTo.className = 'app';
   attachTo.setAttribute('id', 'app');
   window.document.body.insertBefore(attachTo, window.document.body.firstChild);
-  var theme = (0, _theme.createMuiTheme)();
+  var theme = (0, _theme2.default)();
   var jss = (0, _jss.create)((0, _jssPresetDefault2.default)());
   var styleManager = (0, _jssThemeReactor.createStyleManager)({ jss: jss, theme: theme });
   var context = { theme: theme, styleManager: styleManager };

@@ -17,8 +17,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = Avatar;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33,9 +31,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _colorManipulator = require('../styles/colorManipulator');
 
@@ -44,8 +42,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //  weak
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiAvatar', function (theme) {
-  var palette = theme.palette;
-
   return {
     root: {
       position: 'relative',
@@ -61,8 +57,8 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       userSelect: 'none'
     },
     defaultColor: {
-      color: palette.background.default,
-      backgroundColor: (0, _colorManipulator.emphasize)(palette.background.default, 0.26)
+      color: theme.palette.background.default,
+      backgroundColor: (0, _colorManipulator.emphasize)(theme.palette.background.default, 0.26)
     },
     img: {
       maxWidth: '100%',
@@ -72,8 +68,9 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
   };
 });
 
-function Avatar(props, context) {
+function Avatar(props) {
   var alt = props.alt,
+      classes = props.classes,
       classNameProp = props.className,
       childrenProp = props.children,
       childrenClassNameProp = props.childrenClassName,
@@ -81,10 +78,9 @@ function Avatar(props, context) {
       sizes = props.sizes,
       src = props.src,
       srcSet = props.srcSet,
-      other = (0, _objectWithoutProperties3.default)(props, ['alt', 'className', 'children', 'childrenClassName', 'component', 'sizes', 'src', 'srcSet']);
+      other = (0, _objectWithoutProperties3.default)(props, ['alt', 'classes', 'className', 'children', 'childrenClassName', 'component', 'sizes', 'src', 'srcSet']);
 
 
-  var classes = context.styleManager.render(styleSheet);
   var className = (0, _classnames2.default)(classes.root, (0, _defineProperty3.default)({}, classes.defaultColor, childrenProp && !src && !srcSet), classNameProp);
   var containerProps = (0, _extends3.default)({
     className: className
@@ -100,14 +96,13 @@ function Avatar(props, context) {
       children = childrenProp;
     }
   } else if (src || srcSet) {
-    var imgProps = {
+    children = _react2.default.createElement('img', {
       alt: alt,
       src: src,
       srcSet: srcSet,
       sizes: sizes,
       className: classes.img
-    };
-    children = _react2.default.createElement('img', imgProps);
+    });
   }
 
   return _react2.default.createElement(
@@ -138,7 +133,11 @@ Avatar.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   childrenClassName: _propTypes2.default.string,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -165,6 +164,4 @@ Avatar.defaultProps = {
   component: 'div'
 };
 
-Avatar.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
+exports.default = (0, _withStyles2.default)(styleSheet)(Avatar);

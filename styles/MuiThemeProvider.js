@@ -41,10 +41,12 @@ var _jssPresetDefault2 = _interopRequireDefault(_jssPresetDefault);
 
 var _theme = require('./theme');
 
+var _theme2 = _interopRequireDefault(_theme);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //  weak
-var MUI_SHEET_ORDER = exports.MUI_SHEET_ORDER = ['MuiLayout', 'MuiCollapse', 'MuiFade', 'MuiSlide', 'MuiBackdrop', 'MuiModal', 'MuiRipple', 'MuiTouchRipple', 'MuiButtonBase', 'MuiFormLabel', 'MuiFormGroup', 'MuiTypography', 'MuiPaper', 'MuiDivider', 'MuiPopover', 'MuiButton', 'MuiIconButton', 'MuiSvgIcon', 'MuiIcon', 'MuiSwitchBase', 'MuiSwitch', 'MuiCheckbox', 'MuiRadio', 'MuiRadioGroup', 'MuiSwitchLabel', 'MuiDialog', 'MuiDialogActions', 'MuiDialogContent', 'MuiDialogContentText', 'MuiDialogTitle', 'MuiTabIndicator', 'MuiTab', 'MuiTabs', 'MuiBottomNavigationButton', 'MuiBottomNavigation', 'MuiCircularProgress', 'MuiLinearProgress', 'MuiAppBar', 'MuiDrawer', 'MuiAvatar', 'MuiChip', 'MuiListItem', 'MuiListItemText', 'MuiListItemSecondaryAction', 'MuiListItemAvatar', 'MuiListItemIcon', 'MuiListSubheader', 'MuiList', 'MuiMenu', 'MuiMenuItem', 'MuiCardContent', 'MuiCardMedia', 'MuiCardActions', 'MuiCardHeader', 'MuiCard', 'MuiTextFieldLabel', 'MuiTextFieldInput', 'MuiTextField', 'MuiTable', 'MuiTableHead', 'MuiTableRow', 'MuiTableCell', 'MuiTableBody', 'MuiTableSortLabel', 'MuiToolbar', 'MuiBadge'];
+var MUI_SHEET_ORDER = exports.MUI_SHEET_ORDER = ['MuiTextarea', 'MuiInput', 'MuiGrid', 'MuiCollapse', 'MuiFade', 'MuiSlide', 'MuiBackdrop', 'MuiModal', 'MuiRipple', 'MuiTouchRipple', 'MuiButtonBase', 'MuiFormLabel', 'MuiFormGroup', 'MuiTypography', 'MuiPaper', 'MuiDivider', 'MuiPopover', 'MuiButton', 'MuiIconButton', 'MuiSvgIcon', 'MuiIcon', 'MuiSwitchBase', 'MuiSwitch', 'MuiCheckbox', 'MuiRadio', 'MuiRadioGroup', 'MuiSwitchLabel', 'MuiDialog', 'MuiDialogActions', 'MuiDialogContent', 'MuiDialogContentText', 'MuiDialogTitle', 'MuiTabIndicator', 'MuiTab', 'MuiTabs', 'MuiBottomNavigationButton', 'MuiBottomNavigation', 'MuiCircularProgress', 'MuiLinearProgress', 'MuiAppBar', 'MuiDrawer', 'MuiAvatar', 'MuiChip', 'MuiListItem', 'MuiListItemText', 'MuiListItemSecondaryAction', 'MuiListItemAvatar', 'MuiListItemIcon', 'MuiListSubheader', 'MuiList', 'MuiMenu', 'MuiMenuItem', 'MuiCardContent', 'MuiCardMedia', 'MuiCardActions', 'MuiCardHeader', 'MuiCard', 'MuiTextFieldLabel', 'MuiTextFieldInput', 'MuiTextField', 'MuiTable', 'MuiTableHead', 'MuiTableRow', 'MuiTableCell', 'MuiTableBody', 'MuiTableSortLabel', 'MuiToolbar', 'MuiBadge'];
 
 var MuiThemeProvider = function (_Component) {
   (0, _inherits3.default)(MuiThemeProvider, _Component);
@@ -66,12 +68,8 @@ var MuiThemeProvider = function (_Component) {
   (0, _createClass3.default)(MuiThemeProvider, [{
     key: 'getChildContext',
     value: function getChildContext() {
-      var theme = this.theme,
-          styleManager = this.styleManager;
-
       return {
-        theme: theme,
-        styleManager: styleManager
+        styleManager: this.styleManager
       };
     }
   }, {
@@ -109,7 +107,7 @@ var MuiThemeProvider = function (_Component) {
     value: function createDefaultContext() {
       var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-      var theme = props.theme || (0, _theme.createMuiTheme)();
+      var theme = props.theme || (0, _theme2.default)();
       var styleManager = props.styleManager || (0, _styleManager.createStyleManager)({
         theme: theme,
         jss: (0, _jss.create)((0, _jssPresetDefault2.default)())
@@ -126,12 +124,11 @@ var MuiThemeProvider = function (_Component) {
 }(_react.Component);
 
 MuiThemeProvider.childContextTypes = {
-  styleManager: _propTypes2.default.object.isRequired,
-  theme: _propTypes2.default.object.isRequired
+  styleManager: _propTypes2.default.object.isRequired
 };
 exports.default = MuiThemeProvider;
 MuiThemeProvider.propTypes = process.env.NODE_ENV !== "production" ? {
-  children: _propTypes2.default.node.isRequired,
+  children: _propTypes2.default.element.isRequired,
   styleManager: _propTypes2.default.object,
   theme: _propTypes2.default.object
 } : {};

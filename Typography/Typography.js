@@ -17,15 +17,9 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = Typography;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _classnames = require('classnames');
 
@@ -33,23 +27,11 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var headlineMapping = {
-  display4: 'h1',
-  display3: 'h1',
-  display2: 'h1',
-  display1: 'h1',
-  headline: 'h1',
-  title: 'h2',
-  subheading: 'h3',
-  body2: 'aside',
-  body1: 'p'
-}; //  weak
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiTypography', function (theme) {
   return {
@@ -100,10 +82,23 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
   };
 });
 
-function Typography(props, context) {
+var headlineMapping = {
+  display4: 'h1',
+  display3: 'h1',
+  display2: 'h1',
+  display1: 'h1',
+  headline: 'h1',
+  title: 'h2',
+  subheading: 'h3',
+  body2: 'aside',
+  body1: 'p'
+};
+
+function Typography(props) {
   var _classNames;
 
   var align = props.align,
+      classes = props.classes,
       classNameProp = props.className,
       colorInherit = props.colorInherit,
       componentProp = props.component,
@@ -111,12 +106,14 @@ function Typography(props, context) {
       noWrap = props.noWrap,
       paragraph = props.paragraph,
       secondary = props.secondary,
-      type = props.type,
-      other = (0, _objectWithoutProperties3.default)(props, ['align', 'className', 'colorInherit', 'component', 'gutterBottom', 'noWrap', 'paragraph', 'secondary', 'type']);
+      typeProp = props.type,
+      other = (0, _objectWithoutProperties3.default)(props, ['align', 'classes', 'className', 'colorInherit', 'component', 'gutterBottom', 'noWrap', 'paragraph', 'secondary', 'type']);
 
-  var classes = context.styleManager.render(styleSheet);
+  // workaround: see https://github.com/facebook/flow/issues/1660#issuecomment-297775427
 
-  var className = (0, _classnames2.default)(classes.text, classes[type], (_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.colorInherit, colorInherit), (0, _defineProperty3.default)(_classNames, classes.noWrap, noWrap), (0, _defineProperty3.default)(_classNames, classes.secondary, secondary), (0, _defineProperty3.default)(_classNames, classes.gutterBottom, gutterBottom), (0, _defineProperty3.default)(_classNames, classes.paragraph, paragraph), (0, _defineProperty3.default)(_classNames, classes['align-' + align], align), _classNames), classNameProp);
+  var type = typeProp || Typography.defaultProps.type;
+
+  var className = (0, _classnames2.default)(classes.text, classes[type], (_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.colorInherit, colorInherit), (0, _defineProperty3.default)(_classNames, classes.noWrap, noWrap), (0, _defineProperty3.default)(_classNames, classes.secondary, secondary), (0, _defineProperty3.default)(_classNames, classes.gutterBottom, gutterBottom), (0, _defineProperty3.default)(_classNames, classes.paragraph, paragraph), (0, _defineProperty3.default)(_classNames, classes['align-' + String(align)], align), _classNames), classNameProp);
 
   var Component = componentProp || (paragraph ? 'p' : headlineMapping[type]) || 'span';
 
@@ -124,44 +121,18 @@ function Typography(props, context) {
 }
 
 Typography.propTypes = process.env.NODE_ENV !== "production" ? {
-  align: _propTypes2.default.oneOf(['left', 'center', 'right', 'justify']),
-  children: _propTypes2.default.node,
-  /**
-   * The CSS class name of the root element.
-   */
-  className: _propTypes2.default.string,
-  /**
-   * If `true`, the text will inherit its color.
-   */
-  colorInherit: _propTypes2.default.bool,
-  /**
-   * The component used for the root node.
-   * Either a string to use a DOM element or a component.
-   * By default we map the type to a good default headline component.
-   */
-  component: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.func]),
-  /**
-   * If `true`, the text will have a bottom margin.
-   */
-  gutterBottom: _propTypes2.default.bool,
-  /**
-   * If `true`, the text will not wrap, but instead will truncate with an ellipsis.
-   */
-  noWrap: _propTypes2.default.bool,
-  /**
-   * If `true`, the text will have a bottom margin.
-   */
-  paragraph: _propTypes2.default.bool,
-  /**
-   * If `true`, the secondary color will be applied.
-   */
-  secondary: _propTypes2.default.bool,
-  /**
-   * Applies the theme typography styles.
-   */
-  type: _propTypes2.default.oneOf(['display4', 'display3', 'display2', 'display1', 'headline', 'title', 'subheading', 'body2', 'body1', 'caption', 'button'])
+  align: require('prop-types').oneOf(['left', 'center', 'right', 'justify']),
+  children: typeof _react.Element === 'function' ? require('prop-types').instanceOf(_react.Element) : require('prop-types').any,
+  classes: require('prop-types').object.isRequired,
+  className: require('prop-types').string,
+  colorInherit: require('prop-types').bool,
+  component: require('prop-types').oneOfType([require('prop-types').string, require('prop-types').func]),
+  gutterBottom: require('prop-types').bool,
+  noWrap: require('prop-types').bool,
+  paragraph: require('prop-types').bool,
+  secondary: require('prop-types').bool,
+  type: require('prop-types').oneOf(['display4', 'display3', 'display2', 'display1', 'headline', 'title', 'subheading', 'body2', 'body1', 'caption', 'button'])
 } : {};
-
 Typography.defaultProps = {
   colorInherit: false,
   gutterBottom: false,
@@ -171,6 +142,4 @@ Typography.defaultProps = {
   type: 'body1'
 };
 
-Typography.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
+exports.default = (0, _withStyles2.default)(styleSheet)(Typography);

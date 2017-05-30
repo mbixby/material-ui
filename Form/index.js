@@ -3,23 +3,32 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.FormControl = exports.FormLabel = exports.FormGroup = undefined;
 
-var _FormGroup2 = require('./FormGroup');
+var _FormGroup = require('./FormGroup');
 
-var _FormGroup3 = _interopRequireDefault(_FormGroup2);
+Object.defineProperty(exports, 'FormGroup', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_FormGroup).default;
+  }
+});
 
-var _FormLabel2 = require('./FormLabel');
+var _FormLabel = require('./FormLabel');
 
-var _FormLabel3 = _interopRequireDefault(_FormLabel2);
+Object.defineProperty(exports, 'FormLabel', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_FormLabel).default;
+  }
+});
 
-var _FormControl2 = require('./FormControl');
+var _FormControl = require('./FormControl');
 
-var _FormControl3 = _interopRequireDefault(_FormControl2);
+Object.defineProperty(exports, 'FormControl', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_FormControl).default;
+  }
+});
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.FormGroup = _FormGroup3.default; /* eslint-disable flowtype/require-valid-file-annotation */
-
-exports.FormLabel = _FormLabel3.default;
-exports.FormControl = _FormControl3.default;

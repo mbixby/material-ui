@@ -12,8 +12,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.createMuiTheme = createMuiTheme;
-
 var _shadows = require('./shadows');
 
 var _shadows2 = _interopRequireDefault(_shadows);
@@ -51,20 +49,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //  weak
 
 function createMuiTheme() {
-  var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var _config$palette = config.palette,
-      palette = _config$palette === undefined ? (0, _palette2.default)() : _config$palette,
-      _config$breakpoints = config.breakpoints,
-      breakpoints = _config$breakpoints === undefined ? (0, _breakpoints2.default)() : _config$breakpoints,
-      _config$mixins = config.mixins,
-      mixins = _config$mixins === undefined ? (0, _mixins2.default)(breakpoints, _spacing2.default) : _config$mixins,
-      _config$typography = config.typography,
-      typography = _config$typography === undefined ? (0, _typography2.default)(palette) : _config$typography,
-      more = (0, _objectWithoutProperties3.default)(config, ['palette', 'breakpoints', 'mixins', 'typography']);
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var _options$palette = options.palette,
+      palette = _options$palette === undefined ? (0, _palette2.default)() : _options$palette,
+      _options$breakpoints = options.breakpoints,
+      breakpoints = _options$breakpoints === undefined ? (0, _breakpoints2.default)() : _options$breakpoints,
+      _options$mixins = options.mixins,
+      mixins = _options$mixins === undefined ? (0, _mixins2.default)(breakpoints, _spacing2.default) : _options$mixins,
+      _options$typography = options.typography,
+      typography = _options$typography === undefined ? (0, _typography2.default)(palette) : _options$typography,
+      more = (0, _objectWithoutProperties3.default)(options, ['palette', 'breakpoints', 'mixins', 'typography']);
 
 
-  var theme = (0, _extends3.default)({
-    dir: 'ltr',
+  return (0, _extends3.default)({
+    direction: 'ltr',
     palette: palette,
     typography: typography,
     shadows: _shadows2.default,
@@ -74,8 +72,6 @@ function createMuiTheme() {
     breakpoints: breakpoints,
     zIndex: _zIndex2.default
   }, more);
-
-  return theme;
 }
 
 exports.default = createMuiTheme;

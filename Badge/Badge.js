@@ -17,8 +17,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = Badge;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33,21 +31,15 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var radius = 12; //  weak
-
-var radius2x = 2 * radius;
+var RADIUS = 12; //  weak
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiBadge', function (theme) {
-  var typography = theme.typography,
-      palette = theme.palette;
-
-
   return {
     root: {
       position: 'relative',
@@ -61,49 +53,41 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       alignContent: 'center',
       alignItems: 'center',
       position: 'absolute',
-      top: -radius,
-      right: -radius,
+      top: -RADIUS,
+      right: -RADIUS,
       fontFamily: theme.typography.fontFamily,
-      fontWeight: typography.fontWeight,
-      fontSize: radius,
-      width: radius2x,
-      height: radius2x,
+      fontWeight: theme.typography.fontWeight,
+      fontSize: RADIUS,
+      width: RADIUS * 2,
+      height: RADIUS * 2,
       borderRadius: '50%',
-      backgroundColor: palette.color,
-      color: palette.textColor
+      backgroundColor: theme.palette.color,
+      color: theme.palette.textColor
     },
     primary: {
-      backgroundColor: palette.primary[500],
-      color: palette.getContrastText(palette.primary[500])
+      backgroundColor: theme.palette.primary[500],
+      color: theme.palette.getContrastText(theme.palette.primary[500])
     },
     accent: {
-      backgroundColor: palette.accent.A200,
-      color: palette.getContrastText(palette.accent.A200)
+      backgroundColor: theme.palette.accent.A200,
+      color: theme.palette.getContrastText(theme.palette.accent.A200)
     }
   };
 });
 
-/**
- *
- * ```jsx
- * <Badge badgeContent={4}>
- *   <Icon>folder</Icon>
- * </Badge>
- * ```
- */
-function Badge(props, context) {
+function Badge(props) {
   var _classNames2;
 
   var badgeClassNameProp = props.badgeClassName,
       badgeContent = props.badgeContent,
+      classes = props.classes,
       classNameProp = props.className,
       children = props.children,
       primary = props.primary,
       accent = props.accent,
-      other = (0, _objectWithoutProperties3.default)(props, ['badgeClassName', 'badgeContent', 'className', 'children', 'primary', 'accent']);
+      other = (0, _objectWithoutProperties3.default)(props, ['badgeClassName', 'badgeContent', 'classes', 'className', 'children', 'primary', 'accent']);
 
 
-  var classes = context.styleManager.render(styleSheet);
   var className = (0, _classnames2.default)((0, _defineProperty3.default)({}, classes.root, true), classNameProp);
   var badgeClassName = (0, _classnames2.default)((_classNames2 = {}, (0, _defineProperty3.default)(_classNames2, classes.badge, true), (0, _defineProperty3.default)(_classNames2, classes.primary, primary), (0, _defineProperty3.default)(_classNames2, classes.accent, accent), _classNames2), badgeClassNameProp);
 
@@ -137,7 +121,11 @@ Badge.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node.isRequired,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -151,6 +139,4 @@ Badge.defaultProps = {
   accent: false
 };
 
-Badge.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
+exports.default = (0, _withStyles2.default)(styleSheet)(Badge);

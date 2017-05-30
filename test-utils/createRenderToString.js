@@ -21,6 +21,8 @@ var _server = require('react-dom/server');
 
 var _theme = require('../styles/theme');
 
+var _theme2 = _interopRequireDefault(_theme);
+
 var _MuiThemeProvider = require('../styles/MuiThemeProvider');
 
 var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
@@ -28,7 +30,7 @@ var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function createRenderToString() {
-  var theme = (0, _theme.createMuiTheme)();
+  var theme = (0, _theme2.default)();
   var jss = (0, _jss.create)((0, _jssPresetDefault2.default)());
   var styleManager = (0, _jssThemeReactor.createStyleManager)({ jss: jss, theme: theme });
   var renderToStringWithContext = function renderToStringWithContext(node) {

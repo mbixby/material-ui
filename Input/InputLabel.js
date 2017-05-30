@@ -17,8 +17,6 @@ var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProp
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-exports.default = InputLabel;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33,9 +31,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _Form = require('../Form');
 
@@ -44,8 +42,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //  weak
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiInputLabel', function (theme) {
-  var transitions = theme.transitions;
-
   return {
     root: {
       transformOrigin: 'top left'
@@ -61,9 +57,9 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       transformOrigin: 'top left'
     },
     animated: {
-      transition: transitions.create('transform', {
-        duration: transitions.duration.shorter,
-        easing: transitions.easing.easeOut
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shorter,
+        easing: theme.transitions.easing.easeOut
       })
     }
   };
@@ -74,13 +70,11 @@ function InputLabel(props, context) {
 
   var disableAnimation = props.disableAnimation,
       children = props.children,
+      classes = props.classes,
       classNameProp = props.className,
       shrinkProp = props.shrink,
-      other = (0, _objectWithoutProperties3.default)(props, ['disableAnimation', 'children', 'className', 'shrink']);
-  var muiFormControl = context.muiFormControl,
-      styleManager = context.styleManager;
-
-  var classes = styleManager.render(styleSheet);
+      other = (0, _objectWithoutProperties3.default)(props, ['disableAnimation', 'children', 'classes', 'className', 'shrink']);
+  var muiFormControl = context.muiFormControl;
 
   var shrink = shrinkProp;
 
@@ -103,7 +97,11 @@ InputLabel.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -133,6 +131,7 @@ InputLabel.defaultProps = {
 };
 
 InputLabel.contextTypes = {
-  muiFormControl: _propTypes2.default.object,
-  styleManager: _customPropTypes2.default.muiRequired
+  muiFormControl: _propTypes2.default.object
 };
+
+exports.default = (0, _withStyles2.default)(styleSheet)(InputLabel);

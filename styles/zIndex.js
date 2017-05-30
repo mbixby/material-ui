@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 //  weak
 
+// Needed as the zIndex works with absolute values.
 exports.default = {
   menu: 1000,
   appBar: 1100,

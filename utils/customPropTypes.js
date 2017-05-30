@@ -10,8 +10,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var customPropTypes = {}; /* eslint-disable prefer-template */
-/* eslint-disable import/no-mutable-exports*/
+var customPropTypes = {}; /* eslint-disable prefer-template, import/no-mutable-exports */
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 if (process.env.NODE_ENV !== 'production') {

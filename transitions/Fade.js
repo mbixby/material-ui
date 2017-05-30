@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
@@ -32,13 +36,11 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
+var _ref2, _ref3; //  weak
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _Transition = require('../internal/Transition');
 
@@ -68,7 +70,7 @@ var Fade = function (_Component) {
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Fade.__proto__ || (0, _getPrototypeOf2.default)(Fade)).call.apply(_ref, [this].concat(args))), _this), _this.handleEnter = function (element) {
       element.style.opacity = 0;
-      var transitions = _this.context.theme.transitions;
+      var transitions = _this.context.styleManager.theme.transitions;
 
       element.style.transition = transitions.create('opacity', {
         duration: _this.props.enterTransitionDuration
@@ -82,7 +84,7 @@ var Fade = function (_Component) {
         _this.props.onEntering(element);
       }
     }, _this.handleExit = function (element) {
-      var transitions = _this.context.theme.transitions;
+      var transitions = _this.context.styleManager.theme.transitions;
 
       element.style.transition = transitions.create('opacity', {
         duration: _this.props.leaveTransitionDuration
@@ -119,52 +121,29 @@ var Fade = function (_Component) {
     }
   }]);
   return Fade;
-}(_react.Component); //  weak
+}(_react.Component);
 
 Fade.defaultProps = {
   in: false,
   enterTransitionDuration: _transitions.duration.enteringScreen,
   leaveTransitionDuration: _transitions.duration.leavingScreen
 };
+Fade.propTypes = process.env.NODE_ENV !== "production" ? (_ref2 = {
+  in: require('prop-types').bool.isRequired,
+  enterTransitionDuration: require('prop-types').number.isRequired,
+  leaveTransitionDuration: require('prop-types').number.isRequired,
+  children: typeof _react.Element === 'function' ? require('prop-types').instanceOf(_react.Element) : require('prop-types').any
+}, (0, _defineProperty3.default)(_ref2, 'in', require('prop-types').bool), (0, _defineProperty3.default)(_ref2, 'enterTransitionDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref2, 'leaveTransitionDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref2, 'onEnter', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onEntering', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onEntered', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onExit', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onExiting', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onExited', require('prop-types').func), _ref2) : {};
+Fade.propTypes = process.env.NODE_ENV !== "production" ? (_ref3 = {
+  in: require('prop-types').bool.isRequired,
+  enterTransitionDuration: require('prop-types').number.isRequired,
+  leaveTransitionDuration: require('prop-types').number.isRequired,
+  children: typeof _react.Element === 'function' ? require('prop-types').instanceOf(_react.Element) : require('prop-types').any
+}, (0, _defineProperty3.default)(_ref3, 'in', require('prop-types').bool), (0, _defineProperty3.default)(_ref3, 'enterTransitionDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref3, 'leaveTransitionDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref3, 'onEnter', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onEntering', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onEntered', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onExit', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onExiting', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onExited', require('prop-types').func), _ref3) : {};
+
+
 Fade.contextTypes = {
-  theme: _customPropTypes2.default.muiRequired
+  styleManager: _customPropTypes2.default.muiRequired
 };
+
 exports.default = Fade;
-Fade.propTypes = process.env.NODE_ENV !== "production" ? {
-  children: _propTypes2.default.node,
-  /**
-   * If `true`, the component will transition in.
-   */
-  in: _propTypes2.default.bool,
-  /**
-   * Duration of the animation when the element is entering.
-   */
-  enterTransitionDuration: _propTypes2.default.number, // eslint-disable-line react/sort-prop-types
-  /**
-   * Duration of the animation when the element is exiting.
-   */
-  leaveTransitionDuration: _propTypes2.default.number,
-  /**
-   * Callback fired before the component enters.
-   */
-  onEnter: _propTypes2.default.func,
-  /**
-   * Callback fired when the component is entering.
-   */
-  onEntering: _propTypes2.default.func,
-  /**
-   * Callback fired when the component has entered.
-   */
-  onEntered: _propTypes2.default.func, // eslint-disable-line react/sort-prop-types
-  /**
-   * Callback fired before the component exits.
-   */
-  onExit: _propTypes2.default.func,
-  /**
-   * Callback fired when the component is exiting.
-   */
-  onExiting: _propTypes2.default.func,
-  /**
-   * Callback fired when the component has exited.
-   */
-  onExited: _propTypes2.default.func } : {};

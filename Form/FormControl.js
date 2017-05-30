@@ -47,27 +47,25 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiFormControl', function () {
-  return {
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      position: 'relative'
-    },
-    row: {
-      flexDirection: 'row'
-    }
-  };
+var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiFormControl', {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative'
+  },
+  row: {
+    flexDirection: 'row'
+  }
 });
 
 /**
- * FormControl - provides context such as dirty/focused/error/required for form inputs
+ * Provides context such as dirty/focused/error/required for form inputs.
  */
 //  weak
 
@@ -89,10 +87,16 @@ var FormControl = function (_Component) {
       dirty: false,
       focused: false
     }, _this.handleFocus = function () {
+      if (_this.props.onFocus) {
+        _this.props.onFocus();
+      }
       if (!_this.state.focused) {
         _this.setState({ focused: true });
       }
     }, _this.handleBlur = function () {
+      if (_this.props.onBlur) {
+        _this.props.onBlur();
+      }
       if (_this.state.focused) {
         _this.setState({ focused: false });
       }
@@ -136,20 +140,20 @@ var FormControl = function (_Component) {
     value: function render() {
       var _props2 = this.props,
           children = _props2.children,
+          classes = _props2.classes,
           className = _props2.className,
           error = _props2.error,
-          other = (0, _objectWithoutProperties3.default)(_props2, ['children', 'className', 'error']);
+          other = (0, _objectWithoutProperties3.default)(_props2, ['children', 'classes', 'className', 'error']);
 
-
-      var classes = this.context.styleManager.render(styleSheet);
 
       return _react2.default.createElement(
         'div',
         (0, _extends3.default)({
-          onFocus: this.handleFocus,
-          onBlur: this.handleBlur,
           className: (0, _classnames2.default)(classes.root, className)
-        }, other),
+        }, other, {
+          onFocus: this.handleFocus,
+          onBlur: this.handleBlur
+        }),
         children
       );
     }
@@ -161,20 +165,19 @@ FormControl.defaultProps = {
   error: false,
   required: false
 };
-FormControl.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
-FormControl.childContextTypes = {
-  muiFormControl: _propTypes2.default.object.isRequired
-};
-exports.default = FormControl;
+
+
 FormControl.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The contents of the form control.
    */
   children: _propTypes2.default.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -182,7 +185,21 @@ FormControl.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   error: _propTypes2.default.bool,
   /**
+   * @ignore
+   */
+  onBlur: _propTypes2.default.func,
+  /**
+   * @ignore
+   */
+  onFocus: _propTypes2.default.func,
+  /**
    * If `true`, the label will indicate that the input is required.
    */
   required: _propTypes2.default.bool
 } : {};
+
+FormControl.childContextTypes = {
+  muiFormControl: _propTypes2.default.object.isRequired
+};
+
+exports.default = (0, _withStyles2.default)(styleSheet)(FormControl);

@@ -3,7 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.withStyles = exports.createStyleSheet = exports.MuiThemeProvider = undefined;
+
+var _MuiThemeProvider = require('./MuiThemeProvider');
+
+Object.defineProperty(exports, 'MuiThemeProvider', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_MuiThemeProvider).default;
+  }
+});
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
@@ -14,16 +22,31 @@ Object.defineProperty(exports, 'createStyleSheet', {
   }
 });
 
-var _MuiThemeProvider2 = require('./MuiThemeProvider');
+var _withStyles = require('./withStyles');
 
-var _MuiThemeProvider3 = _interopRequireDefault(_MuiThemeProvider2);
+Object.defineProperty(exports, 'withStyles', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_withStyles).default;
+  }
+});
 
-var _withStyles2 = require('./withStyles');
+var _withTheme = require('./withTheme');
 
-var _withStyles3 = _interopRequireDefault(_withStyles2);
+Object.defineProperty(exports, 'withTheme', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_withTheme).default;
+  }
+});
+
+var _theme = require('./theme');
+
+Object.defineProperty(exports, 'createMuiTheme', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_theme).default;
+  }
+});
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.MuiThemeProvider = _MuiThemeProvider3.default; /* eslint-disable flowtype/require-valid-file-annotation */
-
-exports.withStyles = _withStyles3.default;

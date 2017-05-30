@@ -51,9 +51,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _jssThemeReactor = require('jss-theme-reactor');
 
-var _customPropTypes = require('../utils/customPropTypes');
+var _withStyles = require('../styles/withStyles');
 
-var _customPropTypes2 = _interopRequireDefault(_customPropTypes);
+var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _ButtonBase = require('../internal/ButtonBase');
 
@@ -66,14 +66,10 @@ var _Icon2 = _interopRequireDefault(_Icon);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('MuiBottomNavigationButton', function (theme) {
-  var palette = theme.palette,
-      typography = theme.typography,
-      transitions = theme.transitions;
-
   return {
     root: {
-      transition: '' + transitions.create(['color', 'padding-top'], {
-        duration: transitions.duration.short
+      transition: theme.transitions.create(['color', 'padding-top'], {
+        duration: theme.transitions.duration.short
       }),
       paddingTop: 8,
       paddingBottom: 10,
@@ -82,25 +78,25 @@ var styleSheet = exports.styleSheet = (0, _jssThemeReactor.createStyleSheet)('Mu
       minWidth: 80,
       maxWidth: 168,
       background: 'none',
-      color: palette.text.secondary,
+      color: theme.palette.text.secondary,
       flex: '1'
     },
     selected: {
       paddingTop: 6,
-      color: palette.primary[500]
+      color: theme.palette.primary[500]
     },
     selectedIconOnly: {
       paddingTop: 16
     },
     label: {
-      fontFamily: typography.fontFamily,
-      fontSize: typography.fontSize - 2,
+      fontFamily: theme.typography.fontFamily,
+      fontSize: theme.typography.fontSize - 2,
       opacity: 1,
       transition: 'font-size 0.2s, opacity 0.2s',
       transitionDelay: '0.1s'
     },
     selectedLabel: {
-      fontSize: typography.fontSize
+      fontSize: theme.typography.fontSize
     },
     hiddenLabel: {
       opacity: 0,
@@ -151,13 +147,13 @@ var BottomNavigationButton = function (_Component) {
           label = _props.label,
           iconProp = _props.icon,
           selected = _props.selected,
+          classes = _props.classes,
           classNameProp = _props.className,
           showLabelProp = _props.showLabel,
           onChange = _props.onChange,
           index = _props.index,
-          other = (0, _objectWithoutProperties3.default)(_props, ['label', 'icon', 'selected', 'className', 'showLabel', 'onChange', 'index']);
+          other = (0, _objectWithoutProperties3.default)(_props, ['label', 'icon', 'selected', 'classes', 'className', 'showLabel', 'onChange', 'index']);
 
-      var classes = this.context.styleManager.render(styleSheet);
 
       var className = (0, _classnames2.default)(classes.root, (_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.selected, selected), (0, _defineProperty3.default)(_classNames, classes.selectedIconOnly, !showLabelProp && !selected), _classNames), classNameProp);
 
@@ -173,12 +169,7 @@ var BottomNavigationButton = function (_Component) {
 
       return _react2.default.createElement(
         _ButtonBase2.default,
-        (0, _extends3.default)({
-          className: className,
-          focusRipple: true
-        }, other, {
-          onClick: this.handleChange
-        }),
+        (0, _extends3.default)({ className: className, focusRipple: true }, other, { onClick: this.handleChange }),
         icon,
         _react2.default.createElement(
           'span',
@@ -191,13 +182,13 @@ var BottomNavigationButton = function (_Component) {
   return BottomNavigationButton;
 }(_react.Component);
 
-BottomNavigationButton.contextTypes = {
-  styleManager: _customPropTypes2.default.muiRequired
-};
-exports.default = BottomNavigationButton;
 BottomNavigationButton.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: _propTypes2.default.object.isRequired,
+  /**
+   * @ignore
    */
   className: _propTypes2.default.string,
   /**
@@ -229,3 +220,5 @@ BottomNavigationButton.propTypes = process.env.NODE_ENV !== "production" ? {
    */
   showLabel: _propTypes2.default.bool
 } : {};
+
+exports.default = (0, _withStyles2.default)(styleSheet)(BottomNavigationButton);

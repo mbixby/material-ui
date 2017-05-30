@@ -4,13 +4,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-var _react = require('react');
+var _warning = require('warning');
 
-var _react2 = _interopRequireDefault(_react);
+var _warning2 = _interopRequireDefault(_warning);
 
 var _breakpoints = require('../styles/breakpoints');
 
@@ -18,19 +26,16 @@ var _withWidth = require('../utils/withWidth');
 
 var _withWidth2 = _interopRequireDefault(_withWidth);
 
-var _Hidden = require('./Hidden');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var babelPluginFlowReactPropTypes_proptype_HiddenProps = require('./Hidden').babelPluginFlowReactPropTypes_proptype_HiddenProps || require('prop-types').any;
+var babelPluginFlowReactPropTypes_proptype_HiddenProps = require('./types').babelPluginFlowReactPropTypes_proptype_HiddenProps || require('prop-types').any;
+
 /**
- * Responsively hides children by omission.
+ * @ignore
+ * Responsively hides by omission.
  */
-
-
 function HiddenJs(props) {
   var children = props.children,
-      component = props.component,
       only = props.only,
       xsUp = props.xsUp,
       smUp = props.smUp,
@@ -43,23 +48,34 @@ function HiddenJs(props) {
       lgDown = props.lgDown,
       xlDown = props.xlDown,
       width = props.width,
-      other = (0, _objectWithoutProperties3.default)(props, ['children', 'component', 'only', 'xsUp', 'smUp', 'mdUp', 'lgUp', 'xlUp', 'xsDown', 'smDown', 'mdDown', 'lgDown', 'xlDown', 'width']);
+      other = (0, _objectWithoutProperties3.default)(props, ['children', 'only', 'xsUp', 'smUp', 'mdUp', 'lgUp', 'xlUp', 'xsDown', 'smDown', 'mdDown', 'lgDown', 'xlDown', 'width']);
 
-  // workaround: see https://github.com/facebook/flow/issues/1660#issuecomment-297775427
 
-  var ComponentProp = component || _Hidden.defaultProps.component;
   var visible = true;
 
-  // `only` takes priority.
-  if (only && width === only) {
-    visible = false;
-  } else {
+  // `only` check is faster to get out sooner if used.
+  if (only) {
+    if (Array.isArray(only)) {
+      for (var i = 0; i < only.length; i += 1) {
+        var breakpoint = only[i];
+        if (width === breakpoint) {
+          visible = false;
+          break;
+        }
+      }
+    } else if (only && width === only) {
+      visible = false;
+    }
+  }
+
+  // Allow `only` to be combined with other props. If already hidden, no need to check others.
+  if (visible) {
     // determine visibility based on the smallest size up
-    for (var i = 0; i < _breakpoints.keys.length; i += 1) {
-      var breakpoint = _breakpoints.keys[i];
-      var breakpointUp = props[breakpoint + 'Up'];
-      var breakpointDown = props[breakpoint + 'Down'];
-      if (breakpointUp && (0, _withWidth.isWidthUp)(width, breakpoint) || breakpointDown && (0, _withWidth.isWidthDown)(width, breakpoint, true)) {
+    for (var _i = 0; _i < _breakpoints.keys.length; _i += 1) {
+      var _breakpoint = _breakpoints.keys[_i];
+      var breakpointUp = props[_breakpoint + 'Up'];
+      var breakpointDown = props[_breakpoint + 'Down'];
+      if (breakpointUp && (0, _withWidth.isWidthUp)(_breakpoint, width) || breakpointDown && (0, _withWidth.isWidthDown)(_breakpoint, width)) {
         visible = false;
         break;
       }
@@ -70,13 +86,9 @@ function HiddenJs(props) {
     return null;
   }
 
-  return _react2.default.createElement(
-    ComponentProp,
-    other,
-    children
-  );
-}
+  process.env.NODE_ENV !== "production" ? (0, _warning2.default)((0, _keys2.default)(other).length === 0, 'Material-UI: Unsupported properties received ' + (0, _stringify2.default)(other)) : void 0;
 
-HiddenJs.defaultProps = _Hidden.defaultProps;
+  return children;
+}
 
 exports.default = (0, _withWidth2.default)()(HiddenJs);
