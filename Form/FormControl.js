@@ -88,14 +88,14 @@ var FormControl = function (_Component) {
       focused: false
     }, _this.handleFocus = function () {
       if (_this.props.onFocus) {
-        _this.props.onFocus();
+        _this.props.onFocus(event);
       }
       if (!_this.state.focused) {
         _this.setState({ focused: true });
       }
     }, _this.handleBlur = function () {
       if (_this.props.onBlur) {
-        _this.props.onBlur();
+        _this.props.onBlur(event);
       }
       if (_this.state.focused) {
         _this.setState({ focused: false });
